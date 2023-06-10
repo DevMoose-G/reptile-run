@@ -63,7 +63,7 @@ public class UI : MonoBehaviour
         player = GameObject.Find("Reptile");
 
         adsManager = GameObject.Find("Ads Manager");
-        adsManager.GetComponent<RewardedAdsButton>().LoadAd();
+        adsManager.GetComponent<AdsInitializer>().LoadRewardedAd();
 
         UpdateUpgrades();
     }
@@ -246,9 +246,9 @@ public class UI : MonoBehaviour
         if(adUpgradeCounter >= MAX_NUM_OF_AD_UPGRADES) {
             return; // stop watching ads after you hit max ads
         }
-        adsManager.GetComponent<RewardedAdsButton>().data_for_BoughtUpgrade = data;
-        adsManager.GetComponent<RewardedAdsButton>().ShowAd();
-        adsManager.GetComponent<RewardedAdsButton>().LoadAd();
+        adsManager.GetComponent<AdsInitializer>().data_for_BoughtUpgrade = data;
+        adsManager.GetComponent<AdsInitializer>().ShowRewardedAd();
+        adsManager.GetComponent<AdsInitializer>().LoadRewardedAd();
     }
 
     private void BuyUpgrade(ClickEvent evt, UpgradeNode node)
