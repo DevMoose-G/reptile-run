@@ -1,0 +1,104 @@
+{
+  "nodes": [
+    {
+      "id": 1,
+      "category": "TongueLength",
+      "description": "Increases tongue length by 10",
+      "level": 1,
+      "amount": 10,
+      "cost": 50,
+      "pre_reqs_ids": []
+    },
+    {
+      "id": 2,
+      "category": "TongueSpeed",
+      "description": "Increases tongue speed by 50%",
+      "level": 1,
+      "amount": 1.5,
+      "cost": 50,
+      "pre_reqs_ids": []
+    },
+    {
+      "id": 3,
+      "category": "Health",
+      "description": "Increases health by 1 heart",
+      "level": 1,
+      "amount": 1,
+      "cost": 100,
+      "pre_reqs_ids": []
+    },
+    {
+      "id": 4,
+      "category": "Damage",
+      "description": "Increases damage by 1 heart",
+      "level": 1,
+      "amount": 1,
+      "cost": 125,
+      "pre_reqs_ids": []
+    },
+    {
+      "id": 5,
+      "category": "AttackSpeed",
+      "description": "Increases attack speed by 50%",
+      "level": 1,
+      "amount": 1.5,
+      "cost": 150,
+      "pre_reqs_ids": []
+    },
+    {
+      "id": 6,
+      "category": "TongueLength",
+      "description": "Increases tongue length by 15",
+      "level": 2,
+      "amount": 15,
+      "cost": 150,
+      "pre_reqs_ids": []
+    },
+    {
+      "id": 7,
+      "category": "TongueSpeed",
+      "description": "Increases tongue speed by 75%",
+      "level": 2,
+      "amount": 1.75,
+      "cost": 150,
+      "pre_reqs_ids": []
+    },
+    {
+      "id": 11,
+      "category": "Health",
+      "description": "Increases health by 1.5 heart",
+      "level": 2,
+      "amount": 1.5,
+      "cost": 200,
+      "pre_reqs_ids": []
+    },
+    {
+      "id": 8,
+      "category": "AttackSpeed",
+      "description": "Increases attack speed by 75%",
+      "level": 2,
+      "amount": 1.75,
+      "cost": 250,
+      "pre_reqs_ids": []
+    },
+    {
+      "id": 9,
+      "category": "TongueLength",
+      "description": "Increases tongue length by 20",
+      "level": 3,
+      "amount": 20,
+      "cost": 250,
+      "pre_reqs_ids": []
+    },
+    {
+      "id": 10,
+      "category": "TongueSpeed",
+      "description": "Doubles tongue speed",
+      "level": 3,
+      "amount": 2.0,
+      "cost": 250,
+      "pre_reqs_ids": []
+    }
+  ],
+  "nodes_obtained": []
+}
