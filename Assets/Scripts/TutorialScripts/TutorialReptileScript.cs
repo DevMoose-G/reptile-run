@@ -30,10 +30,10 @@ public class TutorialReptileScript : ReptileScript
             health -= 1.0f;
             if(health == 1.0f)
             {
-                level.GetComponent<TutorialLevelScript>().hitRock = true;
+                level.GetComponent<TutorialLevelScript>().hitRock = TutorialLevelScript.TipStatus.JustSeen;
             } else if (health == 0.0f)
             {
-                level.GetComponent<TutorialLevelScript>().died = true;
+                level.GetComponent<TutorialLevelScript>().died = TutorialLevelScript.TipStatus.JustSeen;
             }
         }
     }

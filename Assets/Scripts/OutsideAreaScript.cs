@@ -32,7 +32,7 @@ public class OutsideAreaScript : MonoBehaviour
             while (randX > -2.0f && randX < 2.0f) {
                 randX = Random.Range(-5f, 5f);
             }
-            float randZ = Random.Range(furthestZ, furthestZ+0.5f);
+            float randZ = Random.Range(furthestZ + 0.15f, furthestZ+0.6f);
             Vector3 newObject_position = new Vector3(randX, 0.0f, randZ);
             furthestZ = randZ;
 

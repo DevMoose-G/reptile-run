@@ -947,6 +947,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 792dcd2b58264b840b20c0dbe176bf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _androidGameId: 
+  _iOSGameId: 
+  _testMode: 1
   data_for_BoughtUpgrade:
     id: 0
     category: 
@@ -1521,7 +1524,7 @@ MonoBehaviour:
   - {fileID: 8260138256759733058, guid: d24f8afacb318ca4e8a9f9e5ca32b748, type: 3}
   - {fileID: 5528434484387463266, guid: 7318798068b803e42b8cde32693884fc, type: 3}
   - {fileID: 8333023413289118218, guid: 538f8ed47d7763e4291c94aecd496b5c, type: 3}
-  battleStagePrefab: {fileID: 1746732674880768576, guid: 2cf8509ab97de5c45b384f67e081acad,
+  battleStagePrefab: {fileID: 1746732674880768576, guid: 8bad1f7bd4053084e9f1e1b568c9ac4a,
     type: 3}
   timeToStopBuilding: 32
   timeTillStage: 45
@@ -1530,17 +1533,19 @@ MonoBehaviour:
   startRocksTimer: 0.25
   rockPathPrefab: {fileID: 4559361127222372489, guid: e73ec6cbb0eb6724dace1b943bf67403,
     type: 3}
+  timeSinceTip: 0
   hitRock: 0
-  diedHitRock: 0
-  diedOffMap: 0
+  died: 0
+  diedFromMapShown: 0
   upgradeTipShown: 0
   evoPointsTipShown: 0
   swipeUpTipShown: 0
-  afterPreyTipShown: 0
+  afterPreyShown: 0
   preyRunsShown: 0
-  battleStageIntroShown: 0
+  battleStageShown: 0
   timingAttackShown: 0
-  crownTipShown: 0
+  crownShown: 0
+  endOfTutorialShown: 0
 --- !u!1 &955552884
 GameObject:
   m_ObjectHideFlags: 0
@@ -3257,10 +3262,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bc42e965848a9f41b432bcd1f47be44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 1
-  devMode: 1
+  devMode: 0
   tongue: {fileID: 4100950678690515277}
-  evoParticles: {fileID: 0}
   level: {fileID: 902922356}
   UI: {fileID: 0}
   damageIndicator: {fileID: 0}

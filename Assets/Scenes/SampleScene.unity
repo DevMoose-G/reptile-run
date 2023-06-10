@@ -526,7 +526,6 @@ GameObject:
   m_Component:
   - component: {fileID: 774887526}
   - component: {fileID: 774887525}
-  - component: {fileID: 774887527}
   m_Layer: 0
   m_Name: Ads Manager
   m_TagString: Untagged
@@ -549,7 +548,13 @@ MonoBehaviour:
   _androidGameId: 5284557
   _iOSGameId: 5284556
   _testMode: 1
-  rewardedAdsButton: {fileID: 774887527}
+  data_for_BoughtUpgrade:
+    id: 0
+    category: 
+    level: 0
+    amount: 0
+    amount2: 0
+    cost: 0
 --- !u!4 &774887526
 Transform:
   m_ObjectHideFlags: 0
@@ -565,27 +570,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &774887527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 774887524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af76c7e24d8b08a40b7d93513b91a4ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _androidAdUnitId: Rewarded_Android
-  _iOSAdUnitId: Rewarded_iOS
-  data_for_BoughtUpgrade:
-    id: 0
-    category: 
-    level: 0
-    amount: 0
-    amount2: 0
-    cost: 0
 --- !u!1 &846711578
 GameObject:
   m_ObjectHideFlags: 0
@@ -1598,7 +1582,7 @@ PrefabInstance:
     - target: {fileID: 6898495278774675181, guid: baca88338cb09e04aad608916a8bfbe7,
         type: 3}
       propertyPath: devMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7468947847631724035, guid: baca88338cb09e04aad608916a8bfbe7,
         type: 3}

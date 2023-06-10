@@ -11,6 +11,7 @@ public class ReptileScript : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private float playerSpeed = 3.5f;
+    private bool canMove = true;
     public bool devMode = false; // for some reason, now i can't play the game b/c player moves too slow on unity simulator
     public GameObject tongue;
 
@@ -90,6 +91,7 @@ public class ReptileScript : MonoBehaviour
     }
 
     void Evolve(int stage_num) { // stage 1, 2, 3
+        GameObject model = transform.Find("Model").gameObject;
         GameObject mesh = transform.Find("Model").Find("Mesh").gameObject;
         if (stage_num == 1) {
             GameObject loadedModel = Resources.Load("Evolutions/Gecko_Stage1") as GameObject;
@@ -101,6 +103,14 @@ public class ReptileScript : MonoBehaviour
             loadedModel = loadedModel.transform.Find("Mesh").gameObject;
             mesh.GetComponent<SkinnedMeshRenderer>().sharedMesh = loadedModel.GetComponent<SkinnedMeshRenderer>().sharedMesh;
             mesh.GetComponent<Renderer>().material = loadedModel.GetComponent<Renderer>().sharedMaterial;
+        }
+        else if (stage_num == 3)
+        {
+            GameObject loadedModel = Resources.Load("Evolutions/Gecko_Stage3") as GameObject;
+            loadedModel = loadedModel.transform.Find("Mesh").gameObject;
+            DestroyImmediate(mesh);
+            GameObject newMesh = Instantiate(loadedModel, model.transform, true);
+            newMesh.name = "Mesh";
         }
         GameState.current.currentEvolution = stage_num;
     }
@@ -162,6 +172,13 @@ public class ReptileScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // temp
+        if(GameState.current.evoPoints < GameState.current.stage2Evolution)
+        {
+            GameState.current.addEvoPoints(15);
+        }
+        // temp
+
         if(health <= 0)
         {
             return; // don't do anything if dead
@@ -170,7 +187,7 @@ public class ReptileScript : MonoBehaviour
         // flashing damage animation
         GameObject model = gameObject.transform.Find("Model").gameObject;
         GameObject mesh = model.transform.Find("Mesh").gameObject;
-        if (timeSinceHurt > 0)
+        if (timeSinceHurt > 0 && GameState.current.currentEvolution != 3)
         {
             gameObject.GetComponent<CapsuleCollider>().enabled = false;
             tongue.transform.Find("Tongue").gameObject.GetComponent<BoxCollider>().enabled = false;
@@ -192,7 +209,7 @@ public class ReptileScript : MonoBehaviour
 
             timeSinceHurt -= Time.deltaTime;
             timeSinceFlash -= Time.deltaTime;
-        } else
+        } else if (GameState.current.currentEvolution != 3)
         {
             mesh.GetComponent<Renderer>().enabled = true;
             gameObject.GetComponent<CapsuleCollider>().enabled = true;
@@ -218,7 +235,14 @@ public class ReptileScript : MonoBehaviour
             return;
         }
 
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 move = new Vector3(0, 0, 0);
+        if (canMove)
+        {
+            move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        } else
+        {
+            animator.SetBool("isMoving", false);
+        }
 
         if (tongueOut)
         {
