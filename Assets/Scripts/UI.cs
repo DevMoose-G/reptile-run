@@ -16,6 +16,7 @@ public class UI : MonoBehaviour
     public Label theirHealth;
 
     public GameObject player;
+    public GameObject level;
     public GameObject upgradeScreen;
     public Button playGame;
     public Button storeButton;
@@ -41,11 +42,11 @@ public class UI : MonoBehaviour
     private int MAX_NUM_OF_AD_UPGRADES = 1;
     public int adUpgradeCounter = 0;
 
+    public List<bool> UIActiveStates = new List<bool>{true, true, true, true};
+
     // Start is called before the first frame update
     void Start()
     {
-
-        GameState.current.Clear();
         IStyle style = OuterCircle.style;
         style.width = MAX_SIZE;
         style.height = MAX_SIZE;
@@ -61,6 +62,8 @@ public class UI : MonoBehaviour
         opponentInfoStyle.visibility = Visibility.Hidden;
 
         player = GameObject.Find("Reptile");
+        level = GameObject.Find("Level");
+        winScreenContinue.RegisterCallback<ClickEvent>(level.GetComponent<LevelScript>().EndGame);
 
         adsManager = GameObject.Find("Ads Manager");
         adsManager.GetComponent<AdsInitializer>().LoadRewardedAd();
@@ -68,18 +71,13 @@ public class UI : MonoBehaviour
         UpdateUpgrades();
     }
 
-    private void OnEnable() {
-        upgradeScreen = GameObject.Find("UpgradeScreen");
-        UpgradeTree.Load();
-        winScreen = GameObject.Find("WinScreen");
-        progressScreen = GameObject.Find("ProgressScreen");
-
+    public void GetUIVariables()
+    {
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
         EVPoints = root.Q<Label>("EVPoints");
         quickTime = root.Q<GroupBox>("QuickTime");
         OuterCircle = root.Q<VisualElement>("OuterCircle");
         InnerCircle = root.Q<VisualElement>("InnerCircle");
-
         yourHealth = root.Q<Label>("Health");
 
         opponentName = root.Q<Label>("OpponentName");
@@ -98,16 +96,58 @@ public class UI : MonoBehaviour
         upgrade2 = upgradeRoot.Q<Button>("Upgrade2");
         upgrade3 = upgradeRoot.Q<Button>("Upgrade3");
         upgrade4 = upgradeRoot.Q<Button>("Upgrade4");
+
+        // anything you do hear has to be redone when you renable winScreen
+        if (winScreen.activeSelf)
+        {
+            VisualElement winRoot = winScreen.GetComponent<UIDocument>().rootVisualElement;
+            winScreenContinue = winRoot.Q<Button>("Continue");
+        }
+    }
+
+    private void OnEnable() {
+        upgradeScreen = GameObject.Find("UpgradeScreen");
+        UpgradeTree.Load();
+        winScreen = GameObject.Find("WinScreen");
+        progressScreen = GameObject.Find("ProgressScreen");
+
+        GetUIVariables();
         UpdateUpgrades();
 
         progressScreen.SetActive(false);
 
-        // anything you do hear has to be redone when you renable winScreen
-        VisualElement winRoot = winScreen.GetComponent<UIDocument>().rootVisualElement;
-
-        winScreenContinue = winRoot.Q<Button>("Continue");
-        winScreenContinue.RegisterCallback<ClickEvent>(EndGame);
         winScreen.SetActive(false);
+    }
+
+
+    public void UISetActive(bool on)
+    {
+        if (on == false)
+        {
+            // saves UI states
+            UIActiveStates[0] = gameObject.GetComponent<UIDocument>().enabled;
+            UIActiveStates[1] = upgradeScreen.activeSelf;
+            UIActiveStates[2] = progressScreen.activeSelf;
+            UIActiveStates[3] = winScreen.activeSelf;
+            // turns all UI stuff off
+            winScreen.SetActive(on);
+            gameObject.GetComponent<UIDocument>().enabled = on;
+            progressScreen.SetActive(on);
+            upgradeScreen.SetActive(on);
+        } else
+        {
+            gameObject.GetComponent<UIDocument>().enabled = UIActiveStates[0];
+            upgradeScreen.SetActive(UIActiveStates[1]);
+            progressScreen.SetActive(UIActiveStates[2]);
+            winScreen.SetActive(UIActiveStates[3]);
+
+            GetUIVariables();
+            IStyle quickTimeStyle = quickTime.style;
+            quickTimeStyle.display = DisplayStyle.None;
+
+            IStyle opponentInfoStyle = opponentInfo.style;
+            opponentInfoStyle.visibility = Visibility.Hidden;
+        }
     }
 
     private void StoreScene(ClickEvent evt)
@@ -302,12 +342,6 @@ public class UI : MonoBehaviour
         GameObject.Find("Level").GetComponent<LevelScript>().isMoving = true;
         upgradeScreen.SetActive(false);
         player.GetComponent<ReptileScript>().animator.SetBool("isMoving", true);
-    }
-
-    public void EndGame(ClickEvent evt) {
-        print("ENDING GAME");
-        upgradeScreen.SetActive(false);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // Update is called once per frame

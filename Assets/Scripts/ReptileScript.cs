@@ -74,11 +74,9 @@ public class ReptileScript : MonoBehaviour
                 GameState.current.crowns += 1;
             }
             UI.GetComponent<UI>().winScreen.SetActive(true);
-            
+
             // renabling winscreen button (continue)
-            VisualElement winRoot = UI.GetComponent<UI>().winScreen.GetComponent<UIDocument>().rootVisualElement;
-            Button winScreenContinue = winRoot.Q<Button>("Continue");
-            winScreenContinue.RegisterCallback<ClickEvent>(UI.GetComponent<UI>().EndGame);
+            UI.GetComponent<UI>().GetUIVariables();
             level.GetComponent<LevelScript>().isMoving = false;
         }
         else if (collision.gameObject.name != "Floor" && collision.gameObject.GetComponent<PreyScript>() == null)

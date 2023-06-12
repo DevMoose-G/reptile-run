@@ -11,6 +11,7 @@ public class LevelScript : MonoBehaviour
     public bool stationary = false;
     public bool isMoving = false;
     public bool pauseGame = false;
+    public bool isTutorial = false;
 
     protected GameObject lastObjectPlaced = null;
     protected static float starting_minZ_SpawnDistance = 6.0f;
@@ -36,16 +37,23 @@ public class LevelScript : MonoBehaviour
 
     void Awake()
     {
+        playerCam = GameObject.Find("Main Camera");
+        print("REAWAKING LEVEL");
+
         // check if you need tutoral
         if (PlayerPrefs.GetInt("FinishTutorial", 0) == 0)
+        {
             SceneManager.LoadSceneAsync(2);// tutorial scene
+        }
+        else
+            playerCam.GetComponent<CameraScript>().stageIntro = true;
     }
 
     // Start is called before the first frame update
     protected void Start()
     {
         player = GameObject.Find("Reptile");
-        playerCam = GameObject.Find("Main Camera");
+        
         lastObjectPlaced = GameObject.Find("StartingRock");
         UI = GameObject.Find("UIDocument");
         UpgradeScreen = GameObject.Find("UpgradeScreen");
@@ -83,7 +91,7 @@ public class LevelScript : MonoBehaviour
         // after progressScreen is re-activated, you have to get all the previous variables again
         VisualElement progressRoot = UI.GetComponent<UI>().progressScreen.GetComponent<UIDocument>().rootVisualElement;
         Button progressContinueButton = progressRoot.Q<Button>("Continue");
-        progressContinueButton.RegisterCallback<ClickEvent>(UI.GetComponent<UI>().EndGame);
+        progressContinueButton.RegisterCallback<ClickEvent>(EndGame);
 
         /*
         VisualElement progressImage = progressRoot.Q<VisualElement>("ProgressImage");
@@ -93,13 +101,26 @@ public class LevelScript : MonoBehaviour
         progressImageStyle.top = new StyleLength(Length.Percent(100.0f - (GameState.current.progressTowardsEvolution() * 100.0f) ));
         print(progressImageStyle.top);
         */
-        
 
         VisualElement progressBar = progressRoot.Q<VisualElement>("ProgressBar");
         IStyle progressStyle = progressBar.style;
         progressStyle.width = new StyleLength(Length.Percent(GameState.current.progressTowardsEvolution() * 100));
 
         UI.GetComponent<UI>().upgradeScreen.SetActive(false);
+    }
+
+    public void EndGame(ClickEvent evt)
+    {
+        print("ENDING GAME");
+        if (isTutorial)
+        {
+            SceneManager.LoadSceneAsync(2);
+
+        }
+        else
+        {
+            SceneManager.LoadSceneAsync(0);
+        }
     }
 
     // Update is called once per frame

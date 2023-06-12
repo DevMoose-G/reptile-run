@@ -11,6 +11,8 @@ public class OutsideAreaScript : MonoBehaviour
     private GameObject lastObjectPlaced;
     public GameObject treeModel;
 
+    public bool loadingScreenOn = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,15 @@ public class OutsideAreaScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (loadingScreenOn)
+        {
+            GameObject.Find("LoadingScreen").SetActive(true);
+        }
+        else if (GameObject.Find("LoadingScreen") != null)
+        {
+            GameObject.Find("LoadingScreen").SetActive(false);
+        }
+
         if (level.GetComponent<LevelScript>().isMoving && level.GetComponent<LevelScript>().battleStage == null) {
             Vector3 currPos = gameObject.GetComponent<Transform>().position;
             gameObject.GetComponent<Transform>().position = new Vector3(currPos.x, currPos.y, currPos.z - Time.deltaTime * level.GetComponent<LevelScript>().levelSpeed);
@@ -40,6 +51,9 @@ public class OutsideAreaScript : MonoBehaviour
             lastObjectPlaced.transform.localPosition = newObject_position;
             float randRot = Random.Range(0.0f, 360.0f);
             lastObjectPlaced.transform.Rotate(0, randRot, 0);
+        } else
+        {
+            loadingScreenOn = false;
         }
 
         // deleting all trees on the right side when battle happens and all trees behind player

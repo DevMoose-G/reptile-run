@@ -21,7 +21,7 @@ public class TutorialReptileScript : ReptileScript
             // renabling winscreen button (continue)
             VisualElement winRoot = UI.GetComponent<UI>().winScreen.GetComponent<UIDocument>().rootVisualElement;
             Button winScreenContinue = winRoot.Q<Button>("Continue");
-            winScreenContinue.RegisterCallback<ClickEvent>(UI.GetComponent<UI>().EndGame);
+            winScreenContinue.RegisterCallback<ClickEvent>(level.GetComponent<LevelScript>().EndGame);
             level.GetComponent<LevelScript>().isMoving = false;
         }
         else if (collision.gameObject.name != "Floor" && collision.gameObject.GetComponent<PreyScript>() == null && level.GetComponent<TutorialLevelScript>().isMoving)

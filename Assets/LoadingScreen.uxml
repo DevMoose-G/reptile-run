@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; flex-shrink: 0; background-color: rgb(190, 170, 240); align-items: center; justify-content: center;">
+        <ui:GroupBox>
+            <ui:VisualElement style="background-image: url(&apos;project://database/Assets/iosIcon180.png?fileID=2800000&amp;guid=228b01ffa783946418e6f69b409ca4c4&amp;type=3#iosIcon180&apos;); width: 128px; height: 128px; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); justify-content: flex-start; align-items: center;" />
+            <ui:Label text="Loading..." display-tooltip-when-elided="true" style="-unity-text-align: upper-center; -unity-font: url(&apos;project://database/Assets/Fonts/Tsukimi_Rounded/TsukimiRounded-Bold.ttf?fileID=12800000&amp;guid=caf3d058790db5c488efcbe3f5553cd7&amp;type=3#TsukimiRounded-Bold&apos;); -unity-font-definition: initial; font-size: 16px; color: rgb(187, 241, 78); -unity-text-outline-width: 0.75px; -unity-font-style: bold; -unity-text-outline-color: rgb(0, 0, 0);" />
+        </ui:GroupBox>
+    </ui:VisualElement>
+</ui:UXML>

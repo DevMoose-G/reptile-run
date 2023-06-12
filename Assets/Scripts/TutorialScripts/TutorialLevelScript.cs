@@ -55,12 +55,21 @@ public class TutorialLevelScript : LevelScript
 
     private GameObject exitTutorialButton;
 
+    new void Awake() // overrides the LevelScript Awake (so it never checks if you need tutorial as you already in tutorial)
+    {
+        playerCam = GameObject.Find("Main Camera");
+        isTutorial = true;
+        playerCam.GetComponent<CameraScript>().tutorialIntro = true;
+    }
 
     new void Start()
     {
         Load();
 
         base.Start();
+
+        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(2));
+
         hitRockLabel = GameObject.Find("HitRock");
         diedLabel = GameObject.Find("Died");
         diedFromMapTip = GameObject.Find("DiedFromMapTip");
