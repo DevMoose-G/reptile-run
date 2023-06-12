@@ -11,9 +11,9 @@ public class GameState
     public int currentEvolution = 1; // stage 1 of evolution
     public UpgradeTree upgradeTree;
 
-    public float tongueSpeed = 30.0f;
-    public float tongueRetractionSpeed = 45.0f;
-    public float tonguePeakLength = 16.0f;
+    public float tongueSpeed = 20.0f;
+    public float tongueRetractionSpeed = 35.0f;
+    public float tonguePeakLength = 12.0f;
 
     public float MAX_HEALTH = 2.0f;
     public float attackSpeed = 3.5f; // num of seconds it takes to hit an attack

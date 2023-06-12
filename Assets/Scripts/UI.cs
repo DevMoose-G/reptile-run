@@ -223,6 +223,9 @@ public class UI : MonoBehaviour
                 upgradeStyle.visibility = Visibility.Visible;
                 upgrades[i].Q<Label>("Category").text = nodes[i].category + " " + toRomanNumerals(nodes[i].level);
 
+                // removes previous callbacks
+                upgrades[i].UnregisterCallback<ClickEvent, UpgradeNode>(BuyUpgrade, TrickleDown.TrickleDown);
+                upgrades[i].UnregisterCallback<ClickEvent, UpgradeNode>(AdUpgrade, TrickleDown.TrickleDown);
 
                 if (GameState.current.evoPoints >= nodes[i].cost || adUpgradeCounter >= MAX_NUM_OF_AD_UPGRADES) // if you have enough evo points, show the cost
                 {
@@ -310,6 +313,7 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         EVPoints.text = GameState.current.evoPoints.ToString();
         if (player.GetComponent<ReptileScript>().health < 0)
         {
@@ -319,6 +323,9 @@ public class UI : MonoBehaviour
         {
             yourHealth.text = (System.Math.Truncate(player.GetComponent<ReptileScript>().health * 100) / 100).ToString();
         }
+
+        if (GameObject.Find("Level").GetComponent<LevelScript>().pauseGame)
+            return;
 
         // making outer circle smaller but still centered
         IStyle quickTimeStyle = quickTime.style;

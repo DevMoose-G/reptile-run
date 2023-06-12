@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class TutorialLevelScript : LevelScript
@@ -52,6 +53,8 @@ public class TutorialLevelScript : LevelScript
     public TipStatus endOfTutorialShown = TipStatus.NotSeen;
     private GameObject endOfTutorialTip;
 
+    private GameObject exitTutorialButton;
+
 
     new void Start()
     {
@@ -70,6 +73,8 @@ public class TutorialLevelScript : LevelScript
         timingAttackTip = GameObject.Find("TimingAttackTip");
         crownTip = GameObject.Find("CrownTip");
         endOfTutorialTip = GameObject.Find("EndOfTutorialTip");
+
+        exitTutorialButton = GameObject.Find("ExitTutorial");
 
         TurnOffAllLabels();
     }
@@ -133,6 +138,28 @@ public class TutorialLevelScript : LevelScript
             endOfTutorialShown = TipStatus.BeenSeen;
     }
 
+    void PauseGame()
+    {
+        pauseGame = true;
+        isMoving = false;
+        player.GetComponent<ReptileScript>().canMove = false;
+    }
+
+    void UnpauseGame()
+    {
+        pauseGame = false;
+        isMoving = true;
+        player.GetComponent<ReptileScript>().canMove = true;
+    }
+
+    public void FinishTutorial()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        PlayerPrefs.SetInt("FinishTutorial", 1);
+        SceneManager.LoadSceneAsync(0);
+    }
+
     // Update is called once per frame
 
     void Update()
@@ -140,15 +167,12 @@ public class TutorialLevelScript : LevelScript
         timeSinceTip += Time.deltaTime;
         if (Mathf.Abs(player.transform.position.x) > 1.5)
         { // you have falled off map
-            PlayerPrefs.SetInt("diedFromMap", 1);
+            diedFromMapShown = TipStatus.JustSeen;
             PlayerPrefs.Save();
-            Debug.Log("You have fallen off the map");
             EndRun();
         }
         if (player.GetComponent<ReptileScript>().health <= 0)
         {
-            PlayerPrefs.SetInt("diedFromHealth", 1);
-            PlayerPrefs.Save();
             EndRun();
         }
 
@@ -159,7 +183,7 @@ public class TutorialLevelScript : LevelScript
         if(startMoving && startRocksTimer > 0)
             startRocksTimer -= Time.deltaTime;
 
-        if (startRocksTimer <= 0 && rockPath == null)
+        if (startRocksTimer <= 0 && rockPath == null && !(preyRunsShown == TipStatus.BeenSeen && died == TipStatus.BeenSeen && upgradeTipShown == TipStatus.BeenSeen))
         {
             Vector3 rockPathPos = new Vector3(gameObject.transform.position.x + 0.9f, gameObject.transform.position.y, rockPathZOffset);
             rockPath = Instantiate(rockPathPrefab, gameObject.transform, true);
@@ -170,7 +194,7 @@ public class TutorialLevelScript : LevelScript
         if (hitRock == TipStatus.JustSeen)
         {
             hitRock = TipStatus.BeenSeen;
-            isMoving = false;
+            PauseGame();
             hitRockLabel.SetActive(true);
             timeSinceTip = 0.0f;
         }
@@ -179,7 +203,7 @@ public class TutorialLevelScript : LevelScript
         if (died == TipStatus.JustSeen)
         {
             died = TipStatus.BeenSeen;
-            isMoving = false;
+            PauseGame();
             timeSinceTip = 0.0f;
             diedLabel.SetActive(true);
         }
@@ -188,15 +212,24 @@ public class TutorialLevelScript : LevelScript
         if(diedFromMapShown == TipStatus.JustSeen)
         {
             diedFromMapShown = TipStatus.BeenSeen;
-            isMoving = false;
+            PauseGame();
             diedFromMapTip.SetActive(true);
             timeSinceTip = 0.0f;
         }
 
-        // upgrade tip on screen
-        if (UpgradeScreen.activeSelf && died == TipStatus.BeenSeen && upgradeTipShown == TipStatus.NotSeen)
+        // swipe up
+        if (rockPath != null && rockPath.transform.position.z < -43 && swipeUpTipShown == TipStatus.NotSeen)
         {
-            isMoving = false;
+            PauseGame();
+            swipeUpTip.SetActive(true);
+            swipeUpTipShown = TipStatus.JustSeen;
+            timeSinceTip = 0;
+        }
+
+        // upgrade tip on screen
+        if (UpgradeScreen.activeSelf && swipeUpTipShown == TipStatus.BeenSeen && upgradeTipShown == TipStatus.NotSeen)
+        {
+            PauseGame();
             upgradeTip.SetActive(true);
             upgradeTipShown = TipStatus.JustSeen;
             timeSinceTip = 0.0f;
@@ -207,18 +240,9 @@ public class TutorialLevelScript : LevelScript
             evoPointsTipShown = TipStatus.JustSeen;
             GameState.current.addEvoPoints(250);
             UI.GetComponent<UI>().UpdateUpgrades();
-            isMoving = false;
+            PauseGame();
             evoPointsTip.SetActive(true);
             timeSinceTip = 0.0f;
-        }
-
-        // swipe up
-        if (rockPath != null && rockPath.transform.position.z < -43 && swipeUpTipShown == TipStatus.NotSeen)
-        {
-            isMoving = false;
-            swipeUpTip.SetActive(true);
-            swipeUpTipShown = TipStatus.JustSeen;
-            timeSinceTip = 0;
         }
 
         // points to evo points
@@ -229,7 +253,7 @@ public class TutorialLevelScript : LevelScript
             {
                 afterPreyTip.SetActive(true);
                 afterPreyShown = TipStatus.JustSeen;
-                isMoving = false;
+                PauseGame();
                 timeSinceTip = 0.0f;
             }
         }
@@ -238,7 +262,7 @@ public class TutorialLevelScript : LevelScript
         if(afterPreyShown == TipStatus.BeenSeen && rockPath != null && rockPath.transform.position.z < -53 && preyRunsShown == TipStatus.NotSeen)
         {
             preyRunsTip.SetActive(true);
-            isMoving = false;
+            PauseGame();
             timeSinceTip = 0.0f;
             preyRunsShown = TipStatus.JustSeen;
         }
@@ -250,6 +274,7 @@ public class TutorialLevelScript : LevelScript
         // increasingly hard obstacles until died == TipStatus.BeenSeen && upgradeScreen == TipStatus.BeenSeen
         if (preyRunsShown == TipStatus.BeenSeen && (died != TipStatus.BeenSeen || upgradeTipShown != TipStatus.BeenSeen))
         {
+            minZ_SpawnDistance -= 0.1f * Time.deltaTime; 
             // creating the level as you go
             if (lastObjectPlaced != null
                     && (Vector3.Distance(player.transform.position, lastObjectPlaced.transform.position) < 50 || lastObjectPlaced.transform.position.y < -2))/*if off map*/
@@ -286,7 +311,7 @@ public class TutorialLevelScript : LevelScript
 
         // battle stage intro tip
         // enter battle stage
-        if (battleStage == null)
+        if (battleStage == null && preyRunsShown == TipStatus.BeenSeen && died == TipStatus.BeenSeen && upgradeTipShown == TipStatus.BeenSeen && gameObject.transform.position.z < -5)
         {
             Debug.Log("ENTERING BATTLE STAGE");
             battleStage = Instantiate(battleStagePrefab, gameObject.transform, true);
@@ -302,28 +327,35 @@ public class TutorialLevelScript : LevelScript
 
             battleStageShown = TipStatus.JustSeen;
             battleStageTip.SetActive(true);
-            isMoving = false;
+            PauseGame();
             timeSinceTip = 0.0f;
         }
 
         // timing attacks tip
-        if(battleStageShown == TipStatus.BeenSeen && timeSinceTip > 1.5f)
+        if(battleStage != null && battleStageShown == TipStatus.BeenSeen && timeSinceTip > 1.5f)
         {
             timingAttackTip.SetActive(true);
             timingAttackShown = TipStatus.JustSeen;
-            isMoving = false;
+            PauseGame();
             timeSinceTip = 0.0f;
         }
 
         // there's the crown tip
         if(timingAttackShown == TipStatus.BeenSeen && battleStage.transform.position.z < -6)
         {
+            crownShown = TipStatus.JustSeen;
             crownTip.SetActive(true);
         }
 
         // end of tutorial tip
+        if(UpgradeScreen.activeSelf && crownShown == TipStatus.BeenSeen) {
+            endOfTutorialShown = TipStatus.JustSeen;
+            endOfTutorialTip.SetActive(true);
+            PauseGame();
+        }
 
-        if (isMoving && timeElapsed < timeTillStage)
+
+        if (isMoving)
         {
             timeElapsed += Time.deltaTime;
             Vector3 currPos = gameObject.GetComponent<Transform>().position;
@@ -333,23 +365,30 @@ public class TutorialLevelScript : LevelScript
         {
             if (Input.touchCount > 0)
             { // currently touching
+                Touch theTouch = Input.GetTouch(0);
                 if (swipeUpTip.activeSelf) {
                     // check if it is a vertical swipe
                     print(player.GetComponent<ReptileScript>().tongueOut);
                     if (player.GetComponent<ReptileScript>().tongueOut)
                     {
                         if(UpgradeScreen.activeSelf == false)
-                            isMoving = true;
+                            UnpauseGame();
                         JustSeenToBeenSeen();
                         TurnOffAllLabels();
                     }
                 }
-                else if(timeSinceTip > 1.0f)
+                else if(timeSinceTip > 1.0f && theTouch.phase == TouchPhase.Began)
                 {
                     if(UpgradeScreen.activeSelf == false)
-                        isMoving = true;
+                        UnpauseGame();
                     JustSeenToBeenSeen();
                     TurnOffAllLabels();
+
+                    if(endOfTutorialShown == TipStatus.BeenSeen)
+                    {
+                        // move to main game
+                        FinishTutorial();
+                    }
                 }
             }
         }

@@ -49,7 +49,7 @@ public class OutsideAreaScript : MonoBehaviour
             {
                 DestroyImmediate(child.gameObject);
             }
-            if (child.position.z < level.GetComponent<LevelScript>().player.transform.position.z - 6)
+            if (child != null && child.position.z < level.GetComponent<LevelScript>().player.transform.position.z - 6)
             {
                 DestroyImmediate(child.gameObject);
             }

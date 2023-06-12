@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class LevelScript : MonoBehaviour
@@ -9,6 +10,7 @@ public class LevelScript : MonoBehaviour
     public float levelSpeed = 4.5f;
     public bool stationary = false;
     public bool isMoving = false;
+    public bool pauseGame = false;
 
     protected GameObject lastObjectPlaced = null;
     protected static float starting_minZ_SpawnDistance = 6.0f;
@@ -31,6 +33,13 @@ public class LevelScript : MonoBehaviour
 
     private List<GameObject> flowers = new List<GameObject> { }; // list of flower prefabs for decoration
     public GameObject lastDecorationPlaced;
+
+    void Awake()
+    {
+        // check if you need tutoral
+        if (PlayerPrefs.GetInt("FinishTutorial", 0) == 0)
+            SceneManager.LoadSceneAsync(2);// tutorial scene
+    }
 
     // Start is called before the first frame update
     protected void Start()

@@ -11,7 +11,7 @@ public class ReptileScript : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private float playerSpeed = 3.5f;
-    private bool canMove = true;
+    public bool canMove = true;
     public bool devMode = false; // for some reason, now i can't play the game b/c player moves too slow on unity simulator
     public GameObject tongue;
 
@@ -172,13 +172,6 @@ public class ReptileScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // temp
-        if(GameState.current.evoPoints < GameState.current.stage2Evolution)
-        {
-            GameState.current.addEvoPoints(15);
-        }
-        // temp
-
         if(health <= 0)
         {
             return; // don't do anything if dead
@@ -228,7 +221,7 @@ public class ReptileScript : MonoBehaviour
             Evolve(3);
         }
 
-        if (level.GetComponent<LevelScript>().GetCurrentStage() == "BATTLE") {
+        if (level.GetComponent<LevelScript>().battleStage != null) {
             tongue.GetComponent<Transform>().localScale = new Vector3(1, 1, 0);
             tongue.SetActive(false);
             BattleUpdate();

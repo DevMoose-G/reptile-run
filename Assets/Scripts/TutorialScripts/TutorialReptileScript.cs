@@ -24,14 +24,14 @@ public class TutorialReptileScript : ReptileScript
             winScreenContinue.RegisterCallback<ClickEvent>(UI.GetComponent<UI>().EndGame);
             level.GetComponent<LevelScript>().isMoving = false;
         }
-        else if (collision.gameObject.name != "Floor" && collision.gameObject.GetComponent<PreyScript>() == null)
+        else if (collision.gameObject.name != "Floor" && collision.gameObject.GetComponent<PreyScript>() == null && level.GetComponent<TutorialLevelScript>().isMoving)
         {
             Debug.Log("You hit a " + collision.gameObject.name);
             health -= 1.0f;
-            if(health == 1.0f)
+            if(level.GetComponent<TutorialLevelScript>().hitRock == TutorialLevelScript.TipStatus.NotSeen)
             {
                 level.GetComponent<TutorialLevelScript>().hitRock = TutorialLevelScript.TipStatus.JustSeen;
-            } else if (health == 0.0f)
+            } else if (health == 0.0f && level.GetComponent<TutorialLevelScript>().died == TutorialLevelScript.TipStatus.NotSeen)
             {
                 level.GetComponent<TutorialLevelScript>().died = TutorialLevelScript.TipStatus.JustSeen;
             }
