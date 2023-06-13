@@ -42,11 +42,6 @@ public class ReptileScript : MonoBehaviour
     private float timeSinceHurt = 0.0f;
     private float timeSinceFlash = 0.0f; // time in between flashes
 
-    void Awake()
-    {
-        SaveGameScript.Load();
-    }
-
     // Start is called before the first frame update
     void Start()
     {

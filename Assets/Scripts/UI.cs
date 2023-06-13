@@ -47,6 +47,20 @@ public class UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        player = GameObject.Find("Reptile");
+        level = GameObject.Find("Level");
+
+        adsManager = GameObject.Find("Ads Manager");
+        adsManager.GetComponent<AdsInitializer>().LoadRewardedAd();
+
+        GetUIVariables();
+        UpdateUpgrades();
+        SetupBattleUI();
+    }
+
+    public void SetupBattleUI()
+    {
         IStyle style = OuterCircle.style;
         style.width = MAX_SIZE;
         style.height = MAX_SIZE;
@@ -60,19 +74,12 @@ public class UI : MonoBehaviour
 
         IStyle opponentInfoStyle = opponentInfo.style;
         opponentInfoStyle.visibility = Visibility.Hidden;
-
-        player = GameObject.Find("Reptile");
-        level = GameObject.Find("Level");
-        winScreenContinue.RegisterCallback<ClickEvent>(level.GetComponent<LevelScript>().EndGame);
-
-        adsManager = GameObject.Find("Ads Manager");
-        adsManager.GetComponent<AdsInitializer>().LoadRewardedAd();
-
-        UpdateUpgrades();
     }
 
     public void GetUIVariables()
     {
+        if (upgradeScreen == null || winScreen == null || progressScreen == null)
+            GetUIDocuments();
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
         EVPoints = root.Q<Label>("EVPoints");
         quickTime = root.Q<GroupBox>("QuickTime");
@@ -98,19 +105,26 @@ public class UI : MonoBehaviour
         upgrade4 = upgradeRoot.Q<Button>("Upgrade4");
 
         // anything you do hear has to be redone when you renable winScreen
-        if (winScreen.activeSelf)
+        if (winScreen != null && winScreen.activeSelf)
         {
             VisualElement winRoot = winScreen.GetComponent<UIDocument>().rootVisualElement;
             winScreenContinue = winRoot.Q<Button>("Continue");
+            if(level != null)
+                winScreenContinue.RegisterCallback<ClickEvent>(level.GetComponent<LevelScript>().EndGame);
         }
     }
 
-    private void OnEnable() {
+    public void GetUIDocuments()
+    {
         upgradeScreen = GameObject.Find("UpgradeScreen");
-        UpgradeTree.Load();
         winScreen = GameObject.Find("WinScreen");
         progressScreen = GameObject.Find("ProgressScreen");
+    }
 
+    private void OnEnable() {
+        UpgradeTree.Load();
+
+        GetUIDocuments();
         GetUIVariables();
         UpdateUpgrades();
 
@@ -136,6 +150,8 @@ public class UI : MonoBehaviour
             upgradeScreen.SetActive(on);
         } else
         {
+            GetUIDocuments();
+
             gameObject.GetComponent<UIDocument>().enabled = UIActiveStates[0];
             upgradeScreen.SetActive(UIActiveStates[1]);
             progressScreen.SetActive(UIActiveStates[2]);
@@ -366,7 +382,7 @@ public class UI : MonoBehaviour
         IStyle outerStyle = OuterCircle.style;
         IStyle innerStyle = InnerCircle.style;
 
-        if (quickTimeStyle.display != DisplayStyle.None && !progressScreen.activeSelf) {
+        if (quickTimeStyle.display != DisplayStyle.None && progressScreen != null && !progressScreen.activeSelf) {
             
 
             if (outerStyle.width.value.value <= MIN_SIZE) // resets circle once it hits the inner circle

@@ -28,6 +28,7 @@ public class UpgradeTree
 {
     // public static UpgradeTree current = new UpgradeTree();
 
+    // [System.NonSerialized]
     public List<UpgradeNode> nodes;
 
     public List<int> nodes_obtained;

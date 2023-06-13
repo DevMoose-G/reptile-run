@@ -6,12 +6,19 @@ using System.IO;
 
 public static class SaveGameScript
 {
-    public static GameState gameState = new GameState();
 
     //it's static so we can call it from anywhere 
     public static void Save()
     {
-         GameState.current.Save();
+        /*
+        string json = JsonUtility.ToJson(GameState.current);
+
+        StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/game.rr", true);
+        writer.Write(json);
+        writer.Close();
+        */
+
+        GameState.current.Save();
 
         /*
         BinaryFormatter bf = new BinaryFormatter();
@@ -24,6 +31,14 @@ public static class SaveGameScript
 
     public static void Load()
     {
+        /*
+        StreamReader reader = new StreamReader(Application.persistentDataPath + "/game.rr");
+        string jsonData = reader.ReadToEnd();
+        Debug.Log(jsonData);
+        GameState.current = JsonUtility.FromJson<GameState>(jsonData);
+        reader.Close();
+        */
+
         GameState.current.Load();
 
         /*

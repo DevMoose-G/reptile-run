@@ -321,11 +321,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 0}
+  player: {fileID: 0}
   furthestZ: 0
   distanceFromPlayer: 55
   treeModel: {fileID: 1093910475669316081, guid: 0e2708590e854424fbcaf4164e97a4b6,
     type: 3}
-  loadingScreenOn: 1
+  addLoadingScreen: 1
+  loadingScreenOn: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

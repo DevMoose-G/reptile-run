@@ -37,16 +37,24 @@ public class LevelScript : MonoBehaviour
 
     void Awake()
     {
+
+        SaveGameScript.Load();
+
         playerCam = GameObject.Find("Main Camera");
         print("REAWAKING LEVEL");
 
         // check if you need tutoral
+        /*
         if (PlayerPrefs.GetInt("FinishTutorial", 0) == 0)
         {
             SceneManager.LoadSceneAsync(2);// tutorial scene
         }
         else
-            playerCam.GetComponent<CameraScript>().stageIntro = true;
+        {
+            if(PlayerPrefs.GetInt("NumberOfRuns", 0) == 0)
+                playerCam.GetComponent<CameraScript>().stageIntro = true;
+        }
+        */
     }
 
     // Start is called before the first frame update
@@ -78,7 +86,7 @@ public class LevelScript : MonoBehaviour
     }
 
     public void EndRun() { // ends run & shows progressScreen
-        if (UI.GetComponent<UI>().progressScreen.activeSelf) { // if progressScreen already displayed, then don't do anything
+        if (UI.GetComponent<UI>().progressScreen != null && UI.GetComponent<UI>().progressScreen.activeSelf) { // if progressScreen already displayed, then don't do anything
             return;
         }
         player.GetComponent<ReptileScript>().animator.SetBool("isDead", true);
@@ -112,6 +120,8 @@ public class LevelScript : MonoBehaviour
     public void EndGame(ClickEvent evt)
     {
         print("ENDING GAME");
+        PlayerPrefs.SetInt("NumberOfRuns", PlayerPrefs.GetInt("NumberOfRuns", 0) + 1);
+        PlayerPrefs.Save();
         if (isTutorial)
         {
             SceneManager.LoadSceneAsync(2);

@@ -59,7 +59,8 @@ public class TutorialLevelScript : LevelScript
     {
         playerCam = GameObject.Find("Main Camera");
         isTutorial = true;
-        playerCam.GetComponent<CameraScript>().tutorialIntro = true;
+        //if(PlayerPrefs.GetInt("NumberOfRuns", 0) == 0)
+        // playerCam.GetComponent<CameraScript>().tutorialIntro = true;
     }
 
     new void Start()

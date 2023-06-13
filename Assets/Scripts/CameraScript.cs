@@ -63,6 +63,7 @@ public class CameraScript : MonoBehaviour
         {
             tutorialIntro = false;
             UI.GetComponent<UI>().UISetActive(true);
+            UI.GetComponent<UI>().SetupBattleUI();
         }
     }
 
@@ -91,12 +92,13 @@ public class CameraScript : MonoBehaviour
 
         if (stageIntroTimer >= STAGEINTRO_TIME) {
             // gameObject.transform.LookAt(gameObject.transform.position + new Vector3(0, 0, 1.0f));
-            // gameObject.transform.position = starterPos;
+            gameObject.transform.position = starterPos;
             gameObject.transform.LookAt(player.transform.position + new Vector3(0, 1.5f, 0));
             // gameObject.transform.rotation = starterQuat;
             stageIntro = false;
             stageIntroTimer = 0.0f;
             UI.GetComponent<UI>().UISetActive(true);
+            UI.GetComponent<UI>().SetupBattleUI();
         }
 
     }
@@ -104,6 +106,10 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // wait for loading to finish
+        if (GameObject.Find("LoadingScreen") != null)
+            return;
+
         if(stageIntro)
         {
             StageIntro();
@@ -117,10 +123,6 @@ public class CameraScript : MonoBehaviour
         {
             stageIntroTimer += Time.deltaTime;
             gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, starterQuat, stageIntroTimer);
-        }
-        else
-        {
-            gameObject.transform.position = starterPos;
         }
         
         Vector3 currPos = gameObject.GetComponent<Transform>().position;

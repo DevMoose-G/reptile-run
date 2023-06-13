@@ -5,18 +5,21 @@ using UnityEngine;
 public class OutsideAreaScript : MonoBehaviour
 {
     public GameObject level;
+    public GameObject player;
 
     public float furthestZ = 0.0f;
     public float distanceFromPlayer = 55.0f;
     private GameObject lastObjectPlaced;
     public GameObject treeModel;
 
+    public bool addLoadingScreen = true;
     public bool loadingScreenOn = true;
 
     // Start is called before the first frame update
     void Start()
     {
         level = GameObject.Find("Level");
+        player = GameObject.Find("Reptile");
     }
 
     // Update is called once per frame
@@ -37,7 +40,7 @@ public class OutsideAreaScript : MonoBehaviour
         }
 
         // creating trees as background
-        if (level.GetComponent<LevelScript>().player.transform.position.z + distanceFromPlayer > furthestZ + gameObject.GetComponent<Transform>().position.z) {
+        if (player.transform.position.z + distanceFromPlayer > furthestZ + gameObject.GetComponent<Transform>().position.z) {
             // figure out position
             float randX = Random.Range(-5f, 5f);
             while (randX > -2.0f && randX < 2.0f) {
@@ -51,7 +54,7 @@ public class OutsideAreaScript : MonoBehaviour
             lastObjectPlaced.transform.localPosition = newObject_position;
             float randRot = Random.Range(0.0f, 360.0f);
             lastObjectPlaced.transform.Rotate(0, randRot, 0);
-        } else
+        } else if(addLoadingScreen)
         {
             loadingScreenOn = false;
         }
@@ -63,7 +66,7 @@ public class OutsideAreaScript : MonoBehaviour
             {
                 DestroyImmediate(child.gameObject);
             }
-            if (child != null && child.position.z < level.GetComponent<LevelScript>().player.transform.position.z - 6)
+            if (child != null && child.position.z < player.transform.position.z - 6)
             {
                 DestroyImmediate(child.gameObject);
             }
