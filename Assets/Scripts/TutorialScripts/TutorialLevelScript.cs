@@ -178,8 +178,8 @@ public class TutorialLevelScript : LevelScript
         if (Mathf.Abs(player.transform.position.x) > 1.5)
         { // you have falled off map
             diedFromMapShown = TipStatus.JustSeen;
-            PlayerPrefs.Save();
             EndRun();
+            PlayerPrefs.Save();
         }
         if (player.GetComponent<ReptileScript>().health <= 0)
         {
@@ -243,6 +243,7 @@ public class TutorialLevelScript : LevelScript
             upgradeTip.SetActive(true);
             upgradeTipShown = TipStatus.JustSeen;
             timeSinceTip = 0.0f;
+            UI.GetComponent<UI>().playGame.UnregisterCallback<ClickEvent>(UI.GetComponent<UI>().StartGame);
         }
 
         if (upgradeTipShown == TipStatus.BeenSeen && evoPointsTipShown == TipStatus.NotSeen)
@@ -253,6 +254,12 @@ public class TutorialLevelScript : LevelScript
             PauseGame();
             evoPointsTip.SetActive(true);
             timeSinceTip = 0.0f;
+        }
+
+        // re-enables play game button after upgradeTip and evoTip
+        if(upgradeTipShown == TipStatus.BeenSeen && evoPointsTipShown == TipStatus.BeenSeen && battleStageShown == TipStatus.NotSeen)
+        {
+            UI.GetComponent<UI>().playGame.RegisterCallback<ClickEvent>(UI.GetComponent<UI>().StartGame);
         }
 
         // points to evo points
@@ -389,7 +396,7 @@ public class TutorialLevelScript : LevelScript
                 }
                 else if(timeSinceTip > 1.0f && theTouch.phase == TouchPhase.Began)
                 {
-                    if(UpgradeScreen.activeSelf == false)
+                    if(UpgradeScreen.activeSelf == false && UI.GetComponent<UI>().progressScreen.activeSelf == false)
                         UnpauseGame();
                     JustSeenToBeenSeen();
                     TurnOffAllLabels();

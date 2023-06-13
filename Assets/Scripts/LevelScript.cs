@@ -26,7 +26,6 @@ public class LevelScript : MonoBehaviour
     public GameObject battleStagePrefab;
     protected GameObject UI;
     protected GameObject UpgradeScreen;
-    protected GameObject ProgressScreen;
 
     protected float timeElapsed = 0.0f;
     public float timeToStopBuilding = 33.0f; // x seconds to stop building the level forward
@@ -65,7 +64,6 @@ public class LevelScript : MonoBehaviour
         lastObjectPlaced = GameObject.Find("StartingRock");
         UI = GameObject.Find("UIDocument");
         UpgradeScreen = GameObject.Find("UpgradeScreen");
-        ProgressScreen = GameObject.Find("ProgressScreen");
 
         flowers.Add(Resources.Load("Prefabs/flower01") as GameObject);
         flowers.Add(Resources.Load("Prefabs/flower02") as GameObject);
@@ -86,13 +84,16 @@ public class LevelScript : MonoBehaviour
     }
 
     public void EndRun() { // ends run & shows progressScreen
-        if (UI.GetComponent<UI>().progressScreen != null && UI.GetComponent<UI>().progressScreen.activeSelf) { // if progressScreen already displayed, then don't do anything
+        if (UI.GetComponent<UI>().progressScreen.activeSelf) { // if progressScreen already displayed, then don't do anything
             return;
         }
         player.GetComponent<ReptileScript>().animator.SetBool("isDead", true);
 
         isMoving = false;
         SaveGameScript.Save();
+
+        if (UI.GetComponent<UI>().progressScreen == null)
+            UI.GetComponent<UI>().GetUIDocuments();
 
         UI.GetComponent<UI>().progressScreen.SetActive(true);
 
@@ -230,7 +231,7 @@ public class LevelScript : MonoBehaviour
             Vector3 currPos = gameObject.GetComponent<Transform>().position;
             gameObject.GetComponent<Transform>().position = new Vector3(currPos.x, currPos.y, currPos.z - Time.deltaTime * levelSpeed);
         }
-        else if (!stationary && UpgradeScreen.activeSelf == false && ProgressScreen.activeSelf == false)
+        else if (!stationary && UI.GetComponent<UI>().upgradeScreen.activeSelf == false && UI.GetComponent<UI>().progressScreen.activeSelf == false)
         {
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
             { // currently touching
@@ -241,6 +242,6 @@ public class LevelScript : MonoBehaviour
 
     void OnDestroy()
     {
-        GameState.current.Save();
+        // GameState.current.Save();
     }
 }

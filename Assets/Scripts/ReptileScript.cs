@@ -38,8 +38,8 @@ public class ReptileScript : MonoBehaviour
     public float health = GameState.current.MAX_HEALTH;
     public GameObject battleStage;
 
-    private float HURT_TIME = 0.75f;
-    private float timeSinceHurt = 0.0f;
+    internal float HURT_TIME = 0.75f;
+    internal float timeSinceHurt = 0.0f;
     private float timeSinceFlash = 0.0f; // time in between flashes
 
     // Start is called before the first frame update
@@ -162,15 +162,8 @@ public class ReptileScript : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void CheckDamageAnimation()
     {
-        if(health <= 0)
-        {
-            return; // don't do anything if dead
-        }
-
-        // flashing damage animation
         GameObject model = gameObject.transform.Find("Model").gameObject;
         GameObject mesh = model.transform.Find("Mesh").gameObject;
         if (timeSinceHurt > 0 && GameState.current.currentEvolution != 3)
@@ -184,18 +177,20 @@ public class ReptileScript : MonoBehaviour
                 m_Material.color = Color.red;
             }
 
-            if(timeSinceFlash <= 0)
+            if (timeSinceFlash <= 0)
             {
                 mesh.GetComponent<Renderer>().enabled = false;
                 timeSinceFlash = 0.225f;
-            } else if (timeSinceFlash < 0.15f)
+            }
+            else if (timeSinceFlash < 0.15f)
             {
                 mesh.GetComponent<Renderer>().enabled = true;
             }
 
             timeSinceHurt -= Time.deltaTime;
             timeSinceFlash -= Time.deltaTime;
-        } else if (GameState.current.currentEvolution != 3)
+        }
+        else if (GameState.current.currentEvolution != 3)
         {
             mesh.GetComponent<Renderer>().enabled = true;
             gameObject.GetComponent<CapsuleCollider>().enabled = true;
@@ -203,6 +198,21 @@ public class ReptileScript : MonoBehaviour
 
             Material m_Material = mesh.GetComponent<Renderer>().material;
             m_Material.color = Color.white;
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(health <= 0)
+        {
+            return; // don't do anything if dead
+        }
+
+        // flashing damage animation
+        if (!level.GetComponent<LevelScript>().pauseGame) // if not paused
+        {
+            CheckDamageAnimation();
         }
 
         // evolve if total Evo points is enough
@@ -221,14 +231,7 @@ public class ReptileScript : MonoBehaviour
             return;
         }
 
-        Vector3 move = new Vector3(0, 0, 0);
-        if (canMove)
-        {
-            move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        } else
-        {
-            animator.SetBool("isMoving", false);
-        }
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
         if (tongueOut)
         {
@@ -315,6 +318,17 @@ public class ReptileScript : MonoBehaviour
         }
 
         // move.y -= GRAVITY * Time.deltaTime;
+
+        if (canMove)
+        {
+            animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            print("STOPPED MOVING");
+            move = new Vector3(0, 0, 0);
+            animator.SetBool("isMoving", false);
+        }
 
         controller.MovePosition(transform.position + (move * Time.deltaTime * playerSpeed));
     }

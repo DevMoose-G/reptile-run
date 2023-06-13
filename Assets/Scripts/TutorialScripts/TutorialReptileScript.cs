@@ -28,7 +28,9 @@ public class TutorialReptileScript : ReptileScript
         {
             Debug.Log("You hit a " + collision.gameObject.name);
             health -= 1.0f;
-            if(level.GetComponent<TutorialLevelScript>().hitRock == TutorialLevelScript.TipStatus.NotSeen)
+
+            timeSinceHurt = HURT_TIME;
+            if (level.GetComponent<TutorialLevelScript>().hitRock == TutorialLevelScript.TipStatus.NotSeen)
             {
                 level.GetComponent<TutorialLevelScript>().hitRock = TutorialLevelScript.TipStatus.JustSeen;
             } else if (health == 0.0f && level.GetComponent<TutorialLevelScript>().died == TutorialLevelScript.TipStatus.NotSeen)

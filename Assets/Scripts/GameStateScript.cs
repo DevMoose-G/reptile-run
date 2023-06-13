@@ -49,9 +49,15 @@ public class GameState
         PlayerPrefs.SetString("upgradeTreeNodes", string.Join(",", upgradeTree.nodes_obtained));
     }
 
-    public void Load()
+    public bool Load()
     {
         UpgradeTree.Load();
+
+        int playerPrefsSet = PlayerPrefs.GetInt("evoPoints", -1);
+        if(playerPrefsSet == -1)
+        {
+            return false;
+        }
 
         evoPoints = PlayerPrefs.GetInt("evoPoints", evoPoints);
         totalEvoPoints = PlayerPrefs.GetInt("totalEvoPoints", totalEvoPoints);
@@ -85,6 +91,8 @@ public class GameState
             upgradeTree.nodes_obtained.Add(int.Parse(upgradeNodesStrings[i]));
         }
         */
+
+        return true;
     }
 
     public float progressTowardsEvolution() {

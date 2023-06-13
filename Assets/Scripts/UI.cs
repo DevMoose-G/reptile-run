@@ -54,9 +54,14 @@ public class UI : MonoBehaviour
         adsManager = GameObject.Find("Ads Manager");
         adsManager.GetComponent<AdsInitializer>().LoadRewardedAd();
 
+        GetUIDocuments();
+
         GetUIVariables();
         UpdateUpgrades();
         SetupBattleUI();
+
+        progressScreen.SetActive(false);
+        winScreen.SetActive(false);
     }
 
     public void SetupBattleUI()
@@ -116,21 +121,16 @@ public class UI : MonoBehaviour
 
     public void GetUIDocuments()
     {
-        upgradeScreen = GameObject.Find("UpgradeScreen");
-        winScreen = GameObject.Find("WinScreen");
-        progressScreen = GameObject.Find("ProgressScreen");
+        if(upgradeScreen == null)
+            upgradeScreen = GameObject.Find("UpgradeScreen");
+        if (winScreen == null)
+            winScreen = GameObject.Find("WinScreen");
+        if (progressScreen == null)
+            progressScreen = GameObject.Find("ProgressScreen");
     }
 
     private void OnEnable() {
         UpgradeTree.Load();
-
-        GetUIDocuments();
-        GetUIVariables();
-        UpdateUpgrades();
-
-        progressScreen.SetActive(false);
-
-        winScreen.SetActive(false);
     }
 
 
@@ -353,7 +353,7 @@ public class UI : MonoBehaviour
         UpdateUpgrades();
     }
 
-    private void StartGame(ClickEvent evt)
+    public void StartGame(ClickEvent evt)
     {
         GameObject.Find("Level").GetComponent<LevelScript>().isMoving = true;
         upgradeScreen.SetActive(false);

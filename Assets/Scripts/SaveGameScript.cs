@@ -10,15 +10,15 @@ public static class SaveGameScript
     //it's static so we can call it from anywhere 
     public static void Save()
     {
-        /*
+        
         string json = JsonUtility.ToJson(GameState.current);
 
-        StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/game.rr", true);
+        StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/game.rr", false);
         writer.Write(json);
         writer.Close();
-        */
+        
 
-        GameState.current.Save();
+        // GameState.current.Save();
 
         /*
         BinaryFormatter bf = new BinaryFormatter();
@@ -32,14 +32,21 @@ public static class SaveGameScript
     public static void Load()
     {
         /*
-        StreamReader reader = new StreamReader(Application.persistentDataPath + "/game.rr");
-        string jsonData = reader.ReadToEnd();
-        Debug.Log(jsonData);
-        GameState.current = JsonUtility.FromJson<GameState>(jsonData);
-        reader.Close();
+        
         */
+        if (GameState.current.Load())
+        {
+            PlayerPrefs.DeleteAll();
+        } else
+        {
+            UpgradeTree.Load();
 
-        GameState.current.Load();
+            StreamReader reader = new StreamReader(Application.persistentDataPath + "/game.rr");
+            string jsonData = reader.ReadToEnd();
+            Debug.Log(jsonData);
+            reader.Close();
+            GameState.current = JsonUtility.FromJson<GameState>(jsonData);
+        }
 
         /*
         if (File.Exists(Application.persistentDataPath + "/gameData.rr"))
