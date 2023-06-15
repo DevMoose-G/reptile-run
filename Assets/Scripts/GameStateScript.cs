@@ -19,8 +19,8 @@ public class GameState
     public float attackSpeed = 3.5f; // num of seconds it takes to hit an attack
     public float damage = 1.0f;
 
-    public float stage1Evolution = 2500f;
-    public float stage2Evolution = 12500f;
+    public float stage1Evolution = 3500f;
+    public float stage2Evolution = 9800f;
 
     public GameState() { 
         evoPoints = 0;

@@ -99,16 +99,18 @@ public class ReptileScript : MonoBehaviour
         }
         else if (stage_num == 3)
         {
+            DestroyImmediate(model);
             GameObject loadedModel = Resources.Load("Evolutions/Gecko_Stage3") as GameObject;
-            loadedModel = loadedModel.transform.Find("Mesh").gameObject;
-            DestroyImmediate(mesh);
-            GameObject newMesh = Instantiate(loadedModel, model.transform, true);
-            newMesh.name = "Mesh";
+            GameObject newModel = Instantiate(loadedModel, gameObject.transform);
+            newModel.transform.localPosition = new Vector3(0, 0.676f, 0);
+            print(newModel.name);
+            newModel.name = "Model";
+            animator = gameObject.transform.Find("Model").gameObject.GetComponent<Animator>();
         }
         GameState.current.currentEvolution = stage_num;
     }
 
-    void BattleUpdate() {
+    internal void BattleUpdate() {
         if (battleStage.GetComponent<BattleStageScript>().opponentsOrdering.Count == 0 && battleStage.GetComponent<BattleStageScript>().crown != null) {  // defeated all enemies so go get the crown
             animator.SetBool("isMoving", true);
             controller.MovePosition(transform.position + (new Vector3(0, 0, 1.0f) * Time.deltaTime * playerSpeed));
@@ -166,7 +168,7 @@ public class ReptileScript : MonoBehaviour
     {
         GameObject model = gameObject.transform.Find("Model").gameObject;
         GameObject mesh = model.transform.Find("Mesh").gameObject;
-        if (timeSinceHurt > 0 && GameState.current.currentEvolution != 3)
+        if (timeSinceHurt > 0)
         {
             gameObject.GetComponent<CapsuleCollider>().enabled = false;
             tongue.transform.Find("Tongue").gameObject.GetComponent<BoxCollider>().enabled = false;
@@ -190,7 +192,7 @@ public class ReptileScript : MonoBehaviour
             timeSinceHurt -= Time.deltaTime;
             timeSinceFlash -= Time.deltaTime;
         }
-        else if (GameState.current.currentEvolution != 3)
+        else 
         {
             mesh.GetComponent<Renderer>().enabled = true;
             gameObject.GetComponent<CapsuleCollider>().enabled = true;
@@ -204,6 +206,7 @@ public class ReptileScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if(health <= 0)
         {
             return; // don't do anything if dead
@@ -321,7 +324,11 @@ public class ReptileScript : MonoBehaviour
 
         if (canMove)
         {
-            animator.SetBool("isMoving", true);
+            if(move.magnitude > 0 || level.GetComponent<LevelScript>().isMoving)
+                animator.SetBool("isMoving", true);
+            else
+                animator.SetBool("isMoving", false);
+
         }
         else
         {

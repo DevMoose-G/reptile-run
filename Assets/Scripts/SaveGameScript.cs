@@ -16,30 +16,20 @@ public static class SaveGameScript
         StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/game.rr", false);
         writer.Write(json);
         writer.Close();
-        
-
-        // GameState.current.Save();
-
-        /*
-        BinaryFormatter bf = new BinaryFormatter();
-        //Application.persistentDataPath is a string, so if you wanted you can put that into debug.log if you want to know where save games are located 
-        FileStream file = File.Create(Application.persistentDataPath + "/gameData.rr"); //you can call it anything you want 
-        bf.Serialize(file, SaveGameScript.gameState);
-        file.Close();
-        */
     }
 
     public static void Load()
     {
-        /*
-        
-        */
         if (GameState.current.Load())
         {
             PlayerPrefs.DeleteAll();
         } else
         {
             UpgradeTree.Load();
+            if (System.IO.File.Exists(Application.persistentDataPath + "/game.rr") == false)
+            {
+                return;
+            }
 
             StreamReader reader = new StreamReader(Application.persistentDataPath + "/game.rr");
             string jsonData = reader.ReadToEnd();
@@ -57,5 +47,17 @@ public static class SaveGameScript
             file.Close();
         }
         */
+    }
+
+    public static void Clear()
+    {
+        Debug.Log("CLEARING DATA");
+        GameState.current = new GameState();
+        
+        if (System.IO.File.Exists(Application.persistentDataPath + "/game.rr"))
+        {
+            // If file found, delete it
+            System.IO.File.Delete(Application.persistentDataPath + "/game.rr");
+        }
     }
 }

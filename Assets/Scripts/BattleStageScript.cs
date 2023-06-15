@@ -5,15 +5,17 @@ using UnityEngine.UIElements;
 
 public class BattleStageScript : MonoBehaviour
 {
-    private GameObject UI;
+    internal GameObject UI;
     public GameObject level;
     public GameObject player;
     public GameObject crown;
     public List<GameObject> opponentsOrdering;
-    private OpponentScript currentOpponent;
+    internal OpponentScript currentOpponent;
     private Animator currentOpponentAnimator;
 
-    private float timeSinceLastAttack = 0.0f;
+    internal float timeSinceLastAttack = 0.0f;
+
+    internal int defeatedOpponents = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +64,7 @@ public class BattleStageScript : MonoBehaviour
             GameState.current.addEvoPoints(currentOpponent.evoPoints);
             Destroy(opponentsOrdering[0]);
             opponentsOrdering.RemoveAt(0);
+            defeatedOpponents++;
             if (opponentsOrdering.Count > 0)
             {
                 currentOpponent = opponentsOrdering[0].GetComponent<OpponentScript>();

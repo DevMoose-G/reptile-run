@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1746732674880768577}
-  - component: {fileID: 1746732674880768590}
+  - component: {fileID: 2889977117415799907}
   m_Layer: 0
   m_Name: TutorialBattleStage
   m_TagString: Untagged
@@ -35,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1746732674880768590
+--- !u!114 &2889977117415799907
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1746732674880768576}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 583f451ee4b7d3540ab2a0ac165279cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 19bc55c11b1727546bd6e27999a0db3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 0}
@@ -53,9 +53,6 @@ MonoBehaviour:
   opponentsOrdering:
   - {fileID: 1512309856379511402}
   - {fileID: 3592877946391814788}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1001 &991489483
 PrefabInstance:
   m_ObjectHideFlags: 0

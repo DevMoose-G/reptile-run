@@ -55,12 +55,12 @@ public class TutorialLevelScript : LevelScript
 
     private GameObject exitTutorialButton;
 
-    new void Awake() // overrides the LevelScript Awake (so it never checks if you need tutorial as you already in tutorial)
+    void Awake() // overrides the LevelScript Awake (so it never checks if you need tutorial as you already in tutorial)
     {
         playerCam = GameObject.Find("Main Camera");
         isTutorial = true;
-        //if(PlayerPrefs.GetInt("NumberOfRuns", 0) == 0)
-        // playerCam.GetComponent<CameraScript>().tutorialIntro = true;
+        if(PlayerPrefs.GetInt("NumberOfRuns", 0) == 0)
+            playerCam.GetComponent<CameraScript>().tutorialIntro = true;
     }
 
     new void Start()
@@ -158,12 +158,14 @@ public class TutorialLevelScript : LevelScript
     void UnpauseGame()
     {
         pauseGame = false;
-        isMoving = true;
+        if(battleStage == null)
+            isMoving = true;
         player.GetComponent<ReptileScript>().canMove = true;
     }
 
     public void FinishTutorial()
     {
+        SaveGameScript.Clear();
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
         PlayerPrefs.SetInt("FinishTutorial", 1);
@@ -171,7 +173,6 @@ public class TutorialLevelScript : LevelScript
     }
 
     // Update is called once per frame
-
     void Update()
     {
         timeSinceTip += Time.deltaTime;
@@ -328,7 +329,8 @@ public class TutorialLevelScript : LevelScript
 
         // battle stage intro tip
         // enter battle stage
-        if (battleStage == null && preyRunsShown == TipStatus.BeenSeen && died == TipStatus.BeenSeen && upgradeTipShown == TipStatus.BeenSeen && gameObject.transform.position.z < -5)
+        if (battleStage == null && preyRunsShown == TipStatus.BeenSeen && died == TipStatus.BeenSeen && upgradeTipShown == TipStatus.BeenSeen 
+            && gameObject.transform.position.z < -5 && player.gameObject.transform.position.z > lastObjectPlaced.transform.position.z + 3)
         {
             Debug.Log("ENTERING BATTLE STAGE");
             battleStage = Instantiate(battleStagePrefab, gameObject.transform, true);
@@ -349,7 +351,7 @@ public class TutorialLevelScript : LevelScript
         }
 
         // timing attacks tip
-        if(battleStage != null && battleStageShown == TipStatus.BeenSeen && timeSinceTip > 1.5f)
+        if(battleStage != null && battleStageShown == TipStatus.BeenSeen && timeSinceTip > 1.5f && timingAttackShown == TipStatus.NotSeen)
         {
             timingAttackTip.SetActive(true);
             timingAttackShown = TipStatus.JustSeen;
@@ -358,7 +360,7 @@ public class TutorialLevelScript : LevelScript
         }
 
         // there's the crown tip
-        if(timingAttackShown == TipStatus.BeenSeen && battleStage.transform.position.z < -6)
+        if(timingAttackShown == TipStatus.BeenSeen && battleStage.transform.position.z >= 4.9)
         {
             crownShown = TipStatus.JustSeen;
             crownTip.SetActive(true);

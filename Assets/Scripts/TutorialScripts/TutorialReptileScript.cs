@@ -7,8 +7,16 @@ using TMPro;
 
 public class TutorialReptileScript : ReptileScript
 {
-    //Detect when there is a collision starting
-    void OnCollisionEnter(Collision collision)
+    void BattleUpdate()
+    { 
+        if(level.GetComponent<TutorialLevelScript>().pauseGame == false)
+        {
+            base.BattleUpdate();
+        }
+    }
+
+        //Detect when there is a collision starting
+        void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name == "Crown")
         {

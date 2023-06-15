@@ -324,10 +324,11 @@ MonoBehaviour:
   player: {fileID: 0}
   furthestZ: 0
   distanceFromPlayer: 55
+  distanceTillPlayerSees: 40
   treeModel: {fileID: 1093910475669316081, guid: 0e2708590e854424fbcaf4164e97a4b6,
     type: 3}
   addLoadingScreen: 1
-  loadingScreenOn: 0
+  loadingScreenOn: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,9 +549,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 792dcd2b58264b840b20c0dbe176bf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _androidGameId: 5284557
-  _iOSGameId: 5284556
-  _testMode: 1
   data_for_BoughtUpgrade:
     id: 0
     category: 
@@ -1006,7 +1004,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 973117198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e90bc92d9ff4de642800a679b5236545, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b8396d178b753d489efe5ac3ae54e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
@@ -1220,7 +1218,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1954352294}
   - component: {fileID: 1954352293}
-  - component: {fileID: 1954352292}
   m_Layer: 5
   m_Name: LoadingScreen
   m_TagString: Untagged
@@ -1228,25 +1225,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1954352292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1954352291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e90bc92d9ff4de642800a679b5236545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  level: {fileID: 0}
-  upgradeScreen: {fileID: 0}
-  progressScreen: {fileID: 0}
-  winScreen: {fileID: 0}
-  adUpgradeCounter: 0
-  UIActiveStates: 01010101
 --- !u!114 &1954352293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1665,8 +1643,18 @@ PrefabInstance:
       objectReference: {fileID: 902922356}
     - target: {fileID: 6898495278774675181, guid: baca88338cb09e04aad608916a8bfbe7,
         type: 3}
+      propertyPath: canMove
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6898495278774675181, guid: baca88338cb09e04aad608916a8bfbe7,
+        type: 3}
       propertyPath: devMode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6898495280859167599, guid: baca88338cb09e04aad608916a8bfbe7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7468947847631724035, guid: baca88338cb09e04aad608916a8bfbe7,
         type: 3}

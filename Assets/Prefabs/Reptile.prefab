@@ -386,9 +386,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d05d83b4b6d212f488807c833381ef6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canMove: 1
+  devMode: 0
   tongue: {fileID: 6898495280859167599}
   level: {fileID: 0}
   UI: {fileID: 0}
+  damageIndicator: {fileID: 0}
+  animator: {fileID: 0}
   isRetracting: 0
   tongueOut: 0
   tongueTimer: 0
@@ -440,7 +444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6898495280859167596
 Transform:
   m_ObjectHideFlags: 0

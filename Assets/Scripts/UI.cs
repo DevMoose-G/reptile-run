@@ -163,6 +163,8 @@ public class UI : MonoBehaviour
 
             IStyle opponentInfoStyle = opponentInfo.style;
             opponentInfoStyle.visibility = Visibility.Hidden;
+
+            UpdateUpgrades();
         }
     }
 
@@ -295,7 +297,15 @@ public class UI : MonoBehaviour
             }
             else
             {
-                upgradeStyle.visibility = Visibility.Hidden;
+                upgradeStyle.visibility = Visibility.Visible;
+
+                upgrades[i].Q<Label>("Category").text = nodes[i].category + " " + toRomanNumerals(nodes[i].level);
+
+                // removes previous callbacks
+                upgrades[i].UnregisterCallback<ClickEvent, UpgradeNode>(BuyUpgrade, TrickleDown.TrickleDown);
+                upgrades[i].UnregisterCallback<ClickEvent, UpgradeNode>(AdUpgrade, TrickleDown.TrickleDown);
+
+                upgrades[i].Q<Label>("EvoAmount").text = "MAX";
             }
         }
     }
@@ -310,7 +320,7 @@ public class UI : MonoBehaviour
         adsManager.GetComponent<AdsInitializer>().LoadRewardedAd();
     }
 
-    private void BuyUpgrade(ClickEvent evt, UpgradeNode node)
+    public void BuyUpgrade(ClickEvent evt, UpgradeNode node)
     {
         print("Buying UPGRADE");
         if (GameState.current.evoPoints >= node.cost)
@@ -358,12 +368,12 @@ public class UI : MonoBehaviour
         GameObject.Find("Level").GetComponent<LevelScript>().isMoving = true;
         upgradeScreen.SetActive(false);
         player.GetComponent<ReptileScript>().animator.SetBool("isMoving", true);
+        player.GetComponent<ReptileScript>().canMove = true;
     }
 
     // Update is called once per frame
-    void Update()
+    internal void Update()
     {
-
         EVPoints.text = GameState.current.evoPoints.ToString();
         if (player.GetComponent<ReptileScript>().health < 0)
         {

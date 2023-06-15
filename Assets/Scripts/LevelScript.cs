@@ -43,7 +43,7 @@ public class LevelScript : MonoBehaviour
         print("REAWAKING LEVEL");
 
         // check if you need tutoral
-        /*
+        
         if (PlayerPrefs.GetInt("FinishTutorial", 0) == 0)
         {
             SceneManager.LoadSceneAsync(2);// tutorial scene
@@ -53,7 +53,7 @@ public class LevelScript : MonoBehaviour
             if(PlayerPrefs.GetInt("NumberOfRuns", 0) == 0)
                 playerCam.GetComponent<CameraScript>().stageIntro = true;
         }
-        */
+        
     }
 
     // Start is called before the first frame update
@@ -231,7 +231,8 @@ public class LevelScript : MonoBehaviour
             Vector3 currPos = gameObject.GetComponent<Transform>().position;
             gameObject.GetComponent<Transform>().position = new Vector3(currPos.x, currPos.y, currPos.z - Time.deltaTime * levelSpeed);
         }
-        else if (!stationary && UI.GetComponent<UI>().upgradeScreen.activeSelf == false && UI.GetComponent<UI>().progressScreen.activeSelf == false)
+        else if (!stationary && UI.GetComponent<UI>().upgradeScreen.activeSelf == false && UI.GetComponent<UI>().progressScreen.activeSelf == false 
+            && (!playerCam.GetComponent<CameraScript>().stageIntro && !playerCam.GetComponent<CameraScript>().tutorialIntro) )
         {
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
             { // currently touching
@@ -242,6 +243,6 @@ public class LevelScript : MonoBehaviour
 
     void OnDestroy()
     {
-        // GameState.current.Save();
+        SaveGameScript.Save();
     }
 }

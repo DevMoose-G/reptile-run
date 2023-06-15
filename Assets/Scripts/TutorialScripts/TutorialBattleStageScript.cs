@@ -3,62 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class TutorialBattleStageScript : MonoBehaviour
+public class TutorialBattleStageScript : BattleStageScript
 {
-    private GameObject UI;
-    public GameObject level;
-    public GameObject player;
-    public GameObject crown;
-    public List<GameObject> opponentsOrdering;
-    private OpponentScript currentOpponent;
-
-    private float timeSinceLastAttack = 0.0f;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        UI = GameObject.Find("UIDocument");
-        level = GameObject.Find("Level");
-        player = GameObject.Find("Reptile");
-        crown = GameObject.Find("Crown");
-
-        UI.GetComponent<UI>().quickTime.style.display = DisplayStyle.Flex;
-
-        currentOpponent = opponentsOrdering[0].GetComponent<OpponentScript>();
-    }
-
     // Update is called once per frame
     void Update()
     {
-        timeSinceLastAttack += Time.deltaTime;
-
         crown.transform.Rotate(0, 50.0f * Time.deltaTime, 0, Space.World);
 
-        UI.GetComponent<UI>().theirHealth.text = "Their: " + (System.Math.Truncate(currentOpponent.health * 100) / 100).ToString();
+        IStyle healthbarStyle = UI.GetComponent<UI>().opponentHealthBar.style;
+        healthbarStyle.width = new StyleLength(Length.Percent((currentOpponent.health / currentOpponent.MAX_HEALTH) * 100));
 
-        if (timeSinceLastAttack >= currentOpponent.attackSpeed) {
-            timeSinceLastAttack = 0.0f;
-            DamagePlayer(currentOpponent.damage);
-        }
-    }
+        if (defeatedOpponents >= 1)
+        {
+            timeSinceLastAttack += Time.deltaTime;
 
-    public void DamageOpponent(float amount) {
-        currentOpponent.health -= amount;
-
-        if (currentOpponent.health <= 0) {
-            timeSinceLastAttack = 0.0f;
-            GameState.current.addEvoPoints(currentOpponent.evoPoints);
-            Destroy(opponentsOrdering[0]);
-            opponentsOrdering.RemoveAt(0);
-            if (opponentsOrdering.Count > 0)
+            if (timeSinceLastAttack >= currentOpponent.attackSpeed && player.GetComponent<ReptileScript>().health > 0)
             {
-                currentOpponent = opponentsOrdering[0].GetComponent<OpponentScript>();
-            }  
+                timeSinceLastAttack = 0.0f;
+                DamagePlayer(currentOpponent.damage);
+            }
         }
-    }
-
-    public void DamagePlayer(float amount)
-    {
-        player.GetComponent<ReptileScript>().health -= amount;
     }
 }
