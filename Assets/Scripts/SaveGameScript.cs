@@ -23,6 +23,7 @@ public static class SaveGameScript
         if (GameState.current.Load())
         {
             PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
         } else
         {
             UpgradeTree.Load();

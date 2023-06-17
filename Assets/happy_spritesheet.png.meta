@@ -1,0 +1,1369 @@
+fileFormatVersion: 2
+guid: ed16dd4fe18055f4d894d6ca2af9ffa8
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: happy_spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6010
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c2221bba0210b94e847ee992f5238d5
+      internalID: -2000842327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 6010
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e6d6b583af31ac4584efb48f0b4c9e5
+      internalID: -147420880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 6010
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 133e96fd71e66164d867d650e09e3408
+      internalID: 1953187117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 6010
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cbc68d756bf5ec4d9e711862b324f61
+      internalID: 97268237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 6010
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bec14058fd259f5439310b698336af73
+      internalID: 658785727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5409
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dfff5fb6fe95f04288f288863ebb221
+      internalID: 1251575443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 5409
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89e1712b6dcbc7341a06425623c44558
+      internalID: -1472896903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 5409
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8df12b9248ecd974b8b09941f7c15253
+      internalID: 928981220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 5409
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbc05b466966eff4d85ab923a8181213
+      internalID: -599649546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 5409
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d007d7d36f453844abfd09e0d3f08845
+      internalID: -1992511512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4808
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 075e2a37449972d47b9c27bd43bc8a5b
+      internalID: 425510915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 4808
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 761782438b054364fa5987dd74a9e393
+      internalID: 755902255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 4808
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7c8488f061510d408bec5310c10b689
+      internalID: -896681887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 4808
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac0b612d46765a5418127f67101e4ef7
+      internalID: -653203422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 4808
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b3ec5ee4a9b83f48862a7cbe0a324f1
+      internalID: -1812142047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4207
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4eb1dfcf9b57c5b4c9871bcbb88026c4
+      internalID: -2026426022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_16
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 4207
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76d7c3116f25f4146a63db002d7e88eb
+      internalID: -361806895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_17
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 4207
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 639d72374acaf6442a41c8451383a8cd
+      internalID: -1219455999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_18
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 4207
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8614adf0d6058db4199df4807a07237d
+      internalID: -975228265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_19
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 4207
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e4ae9c33922e9642a112031f6b08fa7
+      internalID: 179929421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3606
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 404e1c66080de164ba9e507a1c2f3caf
+      internalID: 1253752578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_21
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 3606
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5c6bd1dce2620d49b89cfcff56dc174
+      internalID: 1439484873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_22
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 3606
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 814f49dbbfcfd6a41a4e038260cf406c
+      internalID: -885256696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_23
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 3606
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88f9f21f7d060084195d1187329eecb1
+      internalID: -1723804007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_24
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 3606
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c092c01823198b24aa5cc9881b28ed44
+      internalID: 1156576509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3005
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f886a44b27412064f93df0a15d40fb65
+      internalID: 881168047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_26
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 3005
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be914fe68b80e494db2103b04346a0fd
+      internalID: -1247146006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_27
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 3005
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b81a99e84868754469a6b99212585a41
+      internalID: -565166236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_28
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 3005
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb486bdca9d27f448b21f221e90dae67
+      internalID: -895157801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_29
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 3005
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c5540bb9411ac44fb0ee2b5db65fea2
+      internalID: 2018097130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2404
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c820eb39da361994bb5848b14cb4ab1f
+      internalID: 801711562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_31
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 2404
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0f13d50783a9a640bbc082cde182a1c
+      internalID: 1671517572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_32
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 2404
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b04d2e3a61333f4e8edd28040d5ae54
+      internalID: 600435760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_33
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 2404
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 438e128d5b7b6d44aba2b156f83d4d79
+      internalID: 1455784628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_34
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 2404
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e0ca41b7c509f343b8b265ee88221ee
+      internalID: -1410853671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_35
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1803
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 169e2f038934adf4fb74ef40bd3f7e81
+      internalID: 321724205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_36
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 1803
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54e4e9ae30813364aaa61b9620e80dfa
+      internalID: -2117376782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_37
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 1803
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71538dffb6ccab447b73bfa8e48f4e5e
+      internalID: -110924091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_38
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 1803
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4be585eccafa3564b9c207351326e0da
+      internalID: -317603738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_39
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 1803
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b79e871ca8550654fb3a22bca93f002a
+      internalID: 1851535532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1202
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee4d50d07375f214a9384975dbc9fb71
+      internalID: 1847160182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_41
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 1202
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d778d9538f8a5f4e8a508bc913cdb65
+      internalID: 2044467161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_42
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 1202
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4359a958a2092cb4189e0d827efc7f7f
+      internalID: -1187511252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_43
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 1202
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5cf77293d19d534e8c4ad29e32a8fc6
+      internalID: 361764930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_44
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 1202
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9d59376206d44446822d7cc0fc06cab
+      internalID: 1947598496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 601
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a796541e6d44a6468abcb129090f41a
+      internalID: -813829421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_46
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 601
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0ba031e16b5c1d4fb591274e44e8454
+      internalID: 1888009103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_47
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 601
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a963d173ed278bd46a0883d72d4a56c7
+      internalID: -1679166176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_48
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 601
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5195c7d622a74b44088de83953b1ea50
+      internalID: -1363212130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_49
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 601
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0df8f486bf3062e4daa1cab002215e59
+      internalID: -1620858502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_50
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa12e6e27c653194583fb0d1fba8cf78
+      internalID: 351187362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_51
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 0
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b64a8ce67df1b4449818b09f23dee3c1
+      internalID: 1464947631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_52
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 0
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65bad9a2a94baec4e856f1e23f48483d
+      internalID: -1386873919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_53
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 0
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0b5fffda0a463545a52507c194057b9
+      internalID: -1131089426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: happy_spritesheet_54
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 0
+        width: 800
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 916bb72e49729014e91133d5489356ea
+      internalID: -1193194461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 27aca90bec9be464e9c1bf1951f338e7
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      happy_spritesheet_0: -2000842327
+      happy_spritesheet_1: -147420880
+      happy_spritesheet_10: 425510915
+      happy_spritesheet_11: 755902255
+      happy_spritesheet_12: -896681887
+      happy_spritesheet_13: -653203422
+      happy_spritesheet_14: -1812142047
+      happy_spritesheet_15: -2026426022
+      happy_spritesheet_16: -361806895
+      happy_spritesheet_17: -1219455999
+      happy_spritesheet_18: -975228265
+      happy_spritesheet_19: 179929421
+      happy_spritesheet_2: 1953187117
+      happy_spritesheet_20: 1253752578
+      happy_spritesheet_21: 1439484873
+      happy_spritesheet_22: -885256696
+      happy_spritesheet_23: -1723804007
+      happy_spritesheet_24: 1156576509
+      happy_spritesheet_25: 881168047
+      happy_spritesheet_26: -1247146006
+      happy_spritesheet_27: -565166236
+      happy_spritesheet_28: -895157801
+      happy_spritesheet_29: 2018097130
+      happy_spritesheet_3: 97268237
+      happy_spritesheet_30: 801711562
+      happy_spritesheet_31: 1671517572
+      happy_spritesheet_32: 600435760
+      happy_spritesheet_33: 1455784628
+      happy_spritesheet_34: -1410853671
+      happy_spritesheet_35: 321724205
+      happy_spritesheet_36: -2117376782
+      happy_spritesheet_37: -110924091
+      happy_spritesheet_38: -317603738
+      happy_spritesheet_39: 1851535532
+      happy_spritesheet_4: 658785727
+      happy_spritesheet_40: 1847160182
+      happy_spritesheet_41: 2044467161
+      happy_spritesheet_42: -1187511252
+      happy_spritesheet_43: 361764930
+      happy_spritesheet_44: 1947598496
+      happy_spritesheet_45: -813829421
+      happy_spritesheet_46: 1888009103
+      happy_spritesheet_47: -1679166176
+      happy_spritesheet_48: -1363212130
+      happy_spritesheet_49: -1620858502
+      happy_spritesheet_5: 1251575443
+      happy_spritesheet_50: 351187362
+      happy_spritesheet_51: 1464947631
+      happy_spritesheet_52: -1386873919
+      happy_spritesheet_53: -1131089426
+      happy_spritesheet_54: -1193194461
+      happy_spritesheet_6: -1472896903
+      happy_spritesheet_7: 928981220
+      happy_spritesheet_8: -599649546
+      happy_spritesheet_9: -1992511512
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

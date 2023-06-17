@@ -194,8 +194,10 @@ public class LevelScript : MonoBehaviour
             {
                 lastObjectPlaced = Instantiate(preyPrefabs[1], gameObject.transform, true);
             }
-            else 
+            else // butterfly
             {
+                if(Mathf.Abs(randX) > 1.2)
+                    randX = Random.Range(-1.2f, 1.2f);
                 lastObjectPlaced = Instantiate(preyPrefabs[2], gameObject.transform, true);
             }
             lastObjectPlaced.transform.position = newObject_position;

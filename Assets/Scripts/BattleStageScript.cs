@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -50,7 +50,7 @@ public class BattleStageScript : MonoBehaviour
         IStyle healthbarStyle = UI.GetComponent<UI>().opponentHealthBar.style;
         healthbarStyle.width = new StyleLength(Length.Percent((currentOpponent.health / currentOpponent.MAX_HEALTH) * 100));
 
-        if (timeSinceLastAttack >= currentOpponent.attackSpeed && player.GetComponent<ReptileScript>().health > 0) {
+        if (timeSinceLastAttack >= currentOpponent.attackSpeed && player.GetComponent<ReptileScript>().health > 0 && currentOpponent != null) {
             timeSinceLastAttack = 0.0f;
             DamagePlayer(currentOpponent.damage);
         }

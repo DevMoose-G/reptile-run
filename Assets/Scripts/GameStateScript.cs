@@ -80,18 +80,6 @@ public class GameState
                 upgradeTree.nodes_obtained.Add(upgradeNodeID);
         }
 
-        // Debug.Log(upgradeNodesStrings);
-        /*
-        // converts '1,2,5,8' to [1, 2, 5, 8] for checking what upgrades you already obtained
-        string upgradeNodesStr = PlayerPrefs.GetString("upgradeTreeNodes", "");
-        string[] upgradeNodesStrings = upgradeNodesStr.Split(new char[] { ',' });
-        Debug.Log(upgradeNodesStrings);
-        for(int i = 0; i < upgradeNodesStrings.Length; i++)
-        {
-            upgradeTree.nodes_obtained.Add(int.Parse(upgradeNodesStrings[i]));
-        }
-        */
-
         return true;
     }
 

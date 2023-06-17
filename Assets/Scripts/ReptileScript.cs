@@ -19,6 +19,7 @@ public class ReptileScript : MonoBehaviour
     
     public GameObject level;
     public GameObject UI;
+    public GameObject particleSystem;
 
     public GameObject damageIndicator;
     private float fadeSpeed = 0.35f;
@@ -42,6 +43,9 @@ public class ReptileScript : MonoBehaviour
     internal float timeSinceHurt = 0.0f;
     private float timeSinceFlash = 0.0f; // time in between flashes
 
+    private float evolveTimer = 0.0f;
+    private float EVOLVE_TIME = 2.0f; // half the time of particle system
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,10 +55,12 @@ public class ReptileScript : MonoBehaviour
         level = GameObject.Find("Level");
         damageIndicator = GameObject.Find("Indicator");
 
+        particleSystem = gameObject.transform.Find("ParticleSystem").gameObject;
+
         animator = gameObject.transform.Find("Model").gameObject.GetComponent<Animator>();
 
         health = GameState.current.MAX_HEALTH;
-        Evolve(1);
+        Evolve(GameState.current.currentEvolution);
 
         if (devMode)
             playerSpeed *= 35.0f;
@@ -87,15 +93,21 @@ public class ReptileScript : MonoBehaviour
         GameObject model = transform.Find("Model").gameObject;
         GameObject mesh = transform.Find("Model").Find("Mesh").gameObject;
         if (stage_num == 1) {
+            DestroyImmediate(model);
             GameObject loadedModel = Resources.Load("Evolutions/Gecko_Stage1") as GameObject;
-            loadedModel = loadedModel.transform.Find("Mesh").gameObject;
-            mesh.GetComponent<SkinnedMeshRenderer>().sharedMesh = loadedModel.GetComponent<SkinnedMeshRenderer>().sharedMesh;
-            mesh.GetComponent<Renderer>().material = loadedModel.GetComponent<Renderer>().sharedMaterial;
+            GameObject newModel = Instantiate(loadedModel, gameObject.transform);
+            newModel.transform.localPosition = new Vector3(0, 0.676f, 0);
+            print(newModel.name);
+            newModel.name = "Model";
+            animator = gameObject.transform.Find("Model").gameObject.GetComponent<Animator>();
         } else if(stage_num == 2) {
+            DestroyImmediate(model);
             GameObject loadedModel = Resources.Load("Evolutions/Gecko_Stage2") as GameObject;
-            loadedModel = loadedModel.transform.Find("Mesh").gameObject;
-            mesh.GetComponent<SkinnedMeshRenderer>().sharedMesh = loadedModel.GetComponent<SkinnedMeshRenderer>().sharedMesh;
-            mesh.GetComponent<Renderer>().material = loadedModel.GetComponent<Renderer>().sharedMaterial;
+            GameObject newModel = Instantiate(loadedModel, gameObject.transform);
+            newModel.transform.localPosition = new Vector3(0, 0.676f, 0);
+            print(newModel.name);
+            newModel.name = "Model";
+            animator = gameObject.transform.Find("Model").gameObject.GetComponent<Animator>();
         }
         else if (stage_num == 3)
         {
@@ -106,14 +118,26 @@ public class ReptileScript : MonoBehaviour
             print(newModel.name);
             newModel.name = "Model";
             animator = gameObject.transform.Find("Model").gameObject.GetComponent<Animator>();
+            tongue.transform.localPosition = new Vector3(0, 0.076f, 0.84f);
         }
+        
         GameState.current.currentEvolution = stage_num;
+        evolveTimer = 0;
     }
 
     internal void BattleUpdate() {
-        if (battleStage.GetComponent<BattleStageScript>().opponentsOrdering.Count == 0 && battleStage.GetComponent<BattleStageScript>().crown != null) {  // defeated all enemies so go get the crown
-            animator.SetBool("isMoving", true);
-            controller.MovePosition(transform.position + (new Vector3(0, 0, 1.0f) * Time.deltaTime * playerSpeed));
+
+        if (battleStage.GetComponent<BattleStageScript>().opponentsOrdering.Count == 0) {
+            if (battleStage.GetComponent<BattleStageScript>().crown != null)
+            {
+                // defeated all enemies so go get the crown
+                animator.SetBool("isMoving", true);
+                controller.MovePosition(transform.position + (new Vector3(0, 0, 1.0f) * Time.deltaTime * playerSpeed));
+            } else
+            {
+                print("PICKED UP CROWN");
+                animator.SetBool("isMoving", false);
+            }
         }
         // move close to current opponent
         else if (Vector3.Distance(battleStage.GetComponent<BattleStageScript>().opponentsOrdering[0].transform.position, gameObject.transform.position) > 4.5f) {
@@ -124,12 +148,7 @@ public class ReptileScript : MonoBehaviour
             animator.SetBool("isMoving", false);
         }
 
-        // makes damage indicators slowly fade away
-        if(damageIndicator.GetComponent<TMP_Text>().color.a > 0)
-        {
-            Color prevColor = damageIndicator.GetComponent<TMP_Text>().color;
-            damageIndicator.GetComponent<TMP_Text>().color = new Color(prevColor.r, prevColor.g, prevColor.b, prevColor.a - (Time.deltaTime * fadeSpeed));
-        }
+        
 
         // tap to attack (timing)
         if (Input.touchCount > 0)
@@ -206,8 +225,19 @@ public class ReptileScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /* temp 
+        if(GameState.current.currentEvolution != 3)
+            Evolve(3); */
+        GameState.current.addEvoPoints(1);
 
-        if(health <= 0)
+        // makes damage indicators slowly fade away
+        if (damageIndicator.GetComponent<TMP_Text>().color.a > 0)
+        {
+            Color prevColor = damageIndicator.GetComponent<TMP_Text>().color;
+            damageIndicator.GetComponent<TMP_Text>().color = new Color(prevColor.r, prevColor.g, prevColor.b, prevColor.a - (Time.deltaTime * fadeSpeed));
+        }
+
+        if (health <= 0)
         {
             return; // don't do anything if dead
         }
@@ -221,10 +251,18 @@ public class ReptileScript : MonoBehaviour
         // evolve if total Evo points is enough
         if (GameState.current.totalEvoPoints >= GameState.current.stage1Evolution && GameState.current.currentEvolution == 1)
         {
-            Evolve(2);
+            if(!particleSystem.GetComponent<ParticleSystem>().isPlaying)
+                particleSystem.GetComponent<ParticleSystem>().Play();
+            evolveTimer += Time.deltaTime;
+            if(evolveTimer >= EVOLVE_TIME)
+                Evolve(2);
         } else if (GameState.current.totalEvoPoints >= GameState.current.stage2Evolution && GameState.current.currentEvolution == 2)
         {
-            Evolve(3);
+            if (!particleSystem.GetComponent<ParticleSystem>().isPlaying)
+                particleSystem.GetComponent<ParticleSystem>().Play();
+            evolveTimer += Time.deltaTime;
+            if (evolveTimer >= EVOLVE_TIME)
+                Evolve(3);
         }
 
         if (level.GetComponent<LevelScript>().battleStage != null) {
@@ -238,27 +276,39 @@ public class ReptileScript : MonoBehaviour
 
         if (tongueOut)
         {
+            tongue.SetActive(true);
+            animator.SetBool("tongueOut", true);
             tongueTimer += Time.deltaTime;
-            float tongueLength = tongueTimer * GameState.current.tongueSpeed;
-            if ((tongueTimer * GameState.current.tongueSpeed) > GameState.current.tonguePeakLength || isRetracting)
+            if (GameState.current.currentEvolution != 3 || tongueTimer > 0.13f) // tongue doesn't start until gecko3 bends his head down
             {
-                if (!isRetracting) { // if not retracting, then reset timer
-                    tongueTimer = 0.0f;
-                }
-                isRetracting = true;
-                tongueLength = tongue.GetComponent<Transform>().localScale.z - (Time.deltaTime * GameState.current.tongueRetractionSpeed);
-                if (tongueLength < 0)
+                float tongueLength = tongueTimer * GameState.current.tongueSpeed;
+                if ((tongueTimer * GameState.current.tongueSpeed) > GameState.current.tonguePeakLength || isRetracting)
                 {
-                    isRetracting = false;
-                    tongueOut = false;
-                    tongueTimer = 0.0f;
-                    tongueLength = 0;
+                    if (!isRetracting)
+                    { // if not retracting, then reset timer
+                        tongueTimer = 0.0f;
+                    }
+                    isRetracting = true;
+                    tongueLength = tongue.GetComponent<Transform>().localScale.z - (Time.deltaTime * GameState.current.tongueRetractionSpeed);
+                    if (tongueLength < 0)
+                    {
+                        isRetracting = false;
+                        tongueOut = false;
+                        tongueTimer = 0.0f;
+                        tongueLength = 0;
+                    }
                 }
+                tongue.GetComponent<Transform>().localScale = new Vector3(1, 1, tongueLength);
             }
-            tongue.GetComponent<Transform>().localScale = new Vector3(1, 1, tongueLength);
         }
         else if (tongue.GetComponent<Transform>().localScale.z > 1) {
+            animator.SetBool("tongueOut", false);
             tongue.GetComponent<Transform>().localScale = new Vector3(1, 1, tongue.GetComponent<Transform>().localScale.z - (Time.deltaTime * GameState.current.tongueRetractionSpeed));
+        } else
+        {
+            tongue.SetActive(false);
+            if(GameState.current.currentEvolution == 3)
+                animator.SetBool("tongueOut", false);
         }
 
         if (touchType == "SPECIAL_ABILITY")

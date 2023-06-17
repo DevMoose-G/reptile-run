@@ -601,6 +601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff3f411e3235724f929518c651cb458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preyFleeDistance: 2.5
-  preySpeed: 2
-  evoPoints: 15
+  name: Spider
+  preyFleeDistance: 3
+  preySpeed: 2.25
+  evoPoints: 25

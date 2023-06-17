@@ -1757,6 +1757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff3f411e3235724f929518c651cb458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: Ladybug
   preyFleeDistance: 2
   preySpeed: 1
   evoPoints: 5
