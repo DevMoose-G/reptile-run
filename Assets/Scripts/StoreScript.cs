@@ -9,10 +9,9 @@ public class StoreScript : MonoBehaviour
     public Button backButton;
     public Label crownsLabel;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        SaveGameScript.Load();
     }
 
     private void OnEnable()

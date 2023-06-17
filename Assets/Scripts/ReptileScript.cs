@@ -227,8 +227,9 @@ public class ReptileScript : MonoBehaviour
     {
         /* temp 
         if(GameState.current.currentEvolution != 3)
-            Evolve(3); */
+            Evolve(3); 
         GameState.current.addEvoPoints(1);
+        */
 
         // makes damage indicators slowly fade away
         if (damageIndicator.GetComponent<TMP_Text>().color.a > 0)

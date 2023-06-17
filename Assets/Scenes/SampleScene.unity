@@ -425,7 +425,7 @@ MonoBehaviour:
   distanceTillPlayerSees: 40
   treeModel: {fileID: 1093910475669316081, guid: 0e2708590e854424fbcaf4164e97a4b6,
     type: 3}
-  addLoadingScreen: 0
+  addLoadingScreen: 1
   loadingScreenOn: 1
 --- !u!1 &451385277
 GameObject:
@@ -480,7 +480,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 400}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 1
+  m_MatchWidthOrHeight: 0.693
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
