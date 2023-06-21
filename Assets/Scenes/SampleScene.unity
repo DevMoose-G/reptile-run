@@ -883,7 +883,7 @@ MonoBehaviour:
   - {fileID: 8333023413289118218, guid: 538f8ed47d7763e4291c94aecd496b5c, type: 3}
   battleStagePrefab: {fileID: 1746732674880768576, guid: 2cf8509ab97de5c45b384f67e081acad,
     type: 3}
-  timeToStopBuilding: 32
+  timeToStopBuilding: 32.5
   timeTillStage: 45
   lastDecorationPlaced: {fileID: 1266244826}
 --- !u!4 &902922358
@@ -1206,6 +1206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90bc92d9ff4de642800a679b5236545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timerTillShown: 3.5
   player: {fileID: 0}
   level: {fileID: 0}
   upgradeScreen: {fileID: 0}

@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 public class UI : MonoBehaviour
 {
     private Label EVPoints;
-    private VisualElement OuterCircle;
-    private VisualElement InnerCircle;
+    public VisualElement OuterCircle;
+    public VisualElement InnerCircle;
     public GroupBox quickTime;
-    private float timerTillShown = GameState.current.attackSpeed;
+    public float timerTillShown = GameState.current.attackSpeed;
 
     public Label yourHealth;
     public Label theirHealth;
@@ -170,6 +170,7 @@ public class UI : MonoBehaviour
 
     private void StoreScene(ClickEvent evt)
     {
+        PlayerPrefs.SetInt("NumberOfRuns", 0);
         SceneManager.LoadSceneAsync(1);
     }
 

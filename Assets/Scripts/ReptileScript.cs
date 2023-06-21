@@ -74,6 +74,8 @@ public class ReptileScript : MonoBehaviour
             {
                 GameState.current.crowns += 1;
             }
+            Destroy(collision.gameObject);
+
             UI.GetComponent<UI>().winScreen.SetActive(true);
 
             // renabling winscreen button (continue)
@@ -123,6 +125,8 @@ public class ReptileScript : MonoBehaviour
         
         GameState.current.currentEvolution = stage_num;
         evolveTimer = 0;
+
+        level.GetComponent<LevelScript>().pauseGame = false;
     }
 
     internal void BattleUpdate() {
@@ -147,8 +151,6 @@ public class ReptileScript : MonoBehaviour
         {
             animator.SetBool("isMoving", false);
         }
-
-        
 
         // tap to attack (timing)
         if (Input.touchCount > 0)
@@ -252,13 +254,15 @@ public class ReptileScript : MonoBehaviour
         // evolve if total Evo points is enough
         if (GameState.current.totalEvoPoints >= GameState.current.stage1Evolution && GameState.current.currentEvolution == 1)
         {
-            if(!particleSystem.GetComponent<ParticleSystem>().isPlaying)
+            level.GetComponent<LevelScript>().pauseGame = true;
+            if (!particleSystem.GetComponent<ParticleSystem>().isPlaying)
                 particleSystem.GetComponent<ParticleSystem>().Play();
             evolveTimer += Time.deltaTime;
             if(evolveTimer >= EVOLVE_TIME)
                 Evolve(2);
         } else if (GameState.current.totalEvoPoints >= GameState.current.stage2Evolution && GameState.current.currentEvolution == 2)
         {
+            level.GetComponent<LevelScript>().pauseGame = true;
             if (!particleSystem.GetComponent<ParticleSystem>().isPlaying)
                 particleSystem.GetComponent<ParticleSystem>().Play();
             evolveTimer += Time.deltaTime;

@@ -21,7 +21,7 @@
     <ui:GroupBox style="align-items: flex-end;">
         <ui:GroupBox name="QuickTime" class="QuickTime">
             <ui:VisualElement name="InnerCircle" style="position: relative; background-image: url(&apos;project://database/Assets/CircleOutline.png?fileID=2800000&amp;guid=8e7c03f1a15cd2042a6606675eccdf89&amp;type=3#CircleOutline&apos;); width: 42px; height: 42px; top: 32px; left: 32px; right: 0; bottom: 0; overflow: visible; display: flex; visibility: visible;" />
-            <ui:VisualElement name="OuterCircle" class="OuterCircle" style="left: -16px; top: -48px;" />
+            <ui:VisualElement name="OuterCircle" class="OuterCircle" style="left: -12px; top: -54px;" />
             <ui:VisualElement name="KEEPS_SIZE" style="width: 128px; height: 0;" />
         </ui:GroupBox>
     </ui:GroupBox>

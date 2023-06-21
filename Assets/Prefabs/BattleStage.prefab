@@ -430,7 +430,7 @@ MonoBehaviour:
   attackSpeed: 1.5
   health: 3
   MAX_HEALTH: 3
-  evoPoints: 250
+  evoPoints: 300
   Name: Colobus
 --- !u!4 &2285327642631309753 stripped
 Transform:
@@ -774,7 +774,7 @@ MonoBehaviour:
   attackSpeed: 2.5
   health: 2
   MAX_HEALTH: 2
-  evoPoints: 50
+  evoPoints: 75
   Name: Muskrat
 --- !u!4 &2285327642009991376 stripped
 Transform:
@@ -1049,7 +1049,7 @@ MonoBehaviour:
   attackSpeed: 2
   health: 3
   MAX_HEALTH: 3
-  evoPoints: 125
+  evoPoints: 165
   Name: Sparrow
 --- !u!4 &4222027723158370366 stripped
 Transform:
@@ -1309,7 +1309,7 @@ MonoBehaviour:
   attackSpeed: 1
   health: 6
   MAX_HEALTH: 6
-  evoPoints: 375
+  evoPoints: 580
   Name: Pudu
 --- !u!1001 &8030000224212847033
 PrefabInstance:
@@ -1422,7 +1422,7 @@ MonoBehaviour:
   attackSpeed: 0.666
   health: 5
   MAX_HEALTH: 5
-  evoPoints: 500
+  evoPoints: 775
   Name: Taipan
 --- !u!4 &7564626623501102674 stripped
 Transform:

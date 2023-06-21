@@ -102,6 +102,24 @@ public class LevelScript : MonoBehaviour
         Button progressContinueButton = progressRoot.Q<Button>("Continue");
         progressContinueButton.RegisterCallback<ClickEvent>(EndGame);
 
+        
+        VisualElement bgImage = progressRoot.Q<VisualElement>("BGImage");
+        print(bgImage);
+        IStyle bgStyle = bgImage.style;
+        switch (GameState.current.currentEvolution)
+        {
+            case 1:
+                print("ALSO HERE");
+                bgStyle.backgroundImage = Background.FromTexture2D(Resources.Load("Evolutions/GeckoStage2_whiteout") as Texture2D);
+                break;
+            case 2:
+                print("GOT HERE");
+                bgStyle.backgroundImage = Background.FromTexture2D(Resources.Load("Evolutions/Gecko3-whiteout") as Texture2D);
+                break;
+        }
+        print(bgStyle.backgroundImage);
+        
+
         /*
         VisualElement progressImage = progressRoot.Q<VisualElement>("ProgressImage");
         IStyle progressImageStyle = progressImage.style;
