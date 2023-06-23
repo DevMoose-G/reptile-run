@@ -10,7 +10,7 @@ public class UI : MonoBehaviour
     public VisualElement OuterCircle;
     public VisualElement InnerCircle;
     public GroupBox quickTime;
-    public float timerTillShown = GameState.current.attackSpeed;
+    public float timerTillShown = GameState.current.reptiles[GameState.current.current_reptile_idx].attackSpeed;
 
     public Label yourHealth;
     public Label theirHealth;
@@ -271,7 +271,7 @@ public class UI : MonoBehaviour
         IStyle upgrade3Style = upgrade3.style;
         IStyle upgrade4Style = upgrade4.style;
 
-        UpgradeGroup nodeGroup = GameState.current.upgradeTree.GetUpgradeGroup();
+        UpgradeGroup nodeGroup = GameState.current.currentReptile().upgradeTree.GetUpgradeGroup();
         List<UpgradeNode> nodes = nodeGroup.toList();
         List<VisualElement> upgrades = new List<VisualElement> { upgrade1, upgrade2, upgrade3, upgrade4 };
         for (int i = 0; i < nodes.Count; i++)
@@ -286,7 +286,7 @@ public class UI : MonoBehaviour
                 upgrades[i].UnregisterCallback<ClickEvent, UpgradeNode>(BuyUpgrade, TrickleDown.TrickleDown);
                 upgrades[i].UnregisterCallback<ClickEvent, UpgradeNode>(AdUpgrade, TrickleDown.TrickleDown);
 
-                if (GameState.current.evoPoints >= nodes[i].cost || adUpgradeCounter >= MAX_NUM_OF_AD_UPGRADES) // if you have enough evo points, show the cost
+                if (GameState.current.currentReptile().evoPoints >= nodes[i].cost || adUpgradeCounter >= MAX_NUM_OF_AD_UPGRADES || adsManager == null) // if you have enough evo points, show the cost
                 {
                     upgrades[i].Q<Label>("EvoAmount").text = nodes[i].cost.ToString();
                     upgrades[i].RegisterCallback<ClickEvent, UpgradeNode>(BuyUpgrade, nodes[i]);
@@ -324,7 +324,7 @@ public class UI : MonoBehaviour
     public void BuyUpgrade(ClickEvent evt, UpgradeNode node)
     {
         print("Buying UPGRADE");
-        if (GameState.current.evoPoints >= node.cost)
+        if (GameState.current.currentReptile().evoPoints >= node.cost)
         {
             GameState.current.subtractEvoPoints(node.cost);
             ApplyUpgrade(evt, node);
@@ -335,30 +335,30 @@ public class UI : MonoBehaviour
     {
         print("BOUGHT UPGRADE");
         
-        GameState.current.upgradeTree.nodes_obtained.Add(node.id);
+        GameState.current.currentReptile().upgradeTree.nodes_obtained.Add(node.id);
 
         // apply the upgrade
         print(node.category);
         if (node.category == "Tongue")
         {
-            GameState.current.tonguePeakLength += node.amount;
-            GameState.current.tongueRetractionSpeed *= node.amount2;
-            GameState.current.tongueSpeed *= node.amount2;
+            GameState.current.currentReptile().tonguePeakLength += node.amount;
+            GameState.current.currentReptile().tongueRetractionSpeed *= node.amount2;
+            GameState.current.currentReptile().tongueSpeed *= node.amount2;
         }
         else if (node.category == "Health") { 
-            GameState.current.MAX_HEALTH += node.amount;
-            player.GetComponent<ReptileScript>().health = GameState.current.MAX_HEALTH;
+            GameState.current.currentReptile().MAX_HEALTH += node.amount;
+            player.GetComponent<ReptileScript>().health = GameState.current.currentReptile().MAX_HEALTH;
         }
         else if (node.category == "AttackSpeed")
         {
-            GameState.current.attackSpeed /= node.amount;
+            GameState.current.currentReptile().attackSpeed /= node.amount;
         }
         else if (node.category == "Damage")
         {
             print("Got here");
-            GameState.current.damage += node.amount;
+            GameState.current.currentReptile().damage += node.amount;
             print(node.amount);
-            print(GameState.current.damage);
+            print(GameState.current.currentReptile().damage);
         }
 
         UpdateUpgrades();
@@ -375,7 +375,7 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     internal void Update()
     {
-        EVPoints.text = GameState.current.evoPoints.ToString();
+        EVPoints.text = GameState.current.currentReptile().evoPoints.ToString();
         if (player.GetComponent<ReptileScript>().health < 0)
         {
             yourHealth.text = "0";
@@ -400,23 +400,27 @@ public class UI : MonoBehaviour
             {
                 outerStyle.width = MAX_SIZE;
                 outerStyle.height = MAX_SIZE;
-                timerTillShown = GameState.current.attackSpeed;
+                timerTillShown = GameState.current.currentReptile().attackSpeed;
             }
 
             if (outerStyle.display == DisplayStyle.None) // if outer circle is invisible, wait for timerTillShown to hit 0, then show both circles
             {
                 timerTillShown -= Time.deltaTime;
                 if (timerTillShown <= 0) {
-                    timerTillShown = GameState.current.attackSpeed;
+                    timerTillShown = GameState.current.currentReptile().attackSpeed;
                     outerStyle.display = DisplayStyle.Flex;
                     innerStyle.display = DisplayStyle.Flex;
                 }
             }
             else
             {
-                circleSpeed = (MAX_SIZE - MIN_SIZE) / GameState.current.attackSpeed;
+                circleSpeed = (MAX_SIZE - MIN_SIZE) / GameState.current.currentReptile().attackSpeed;
 
                 timerTillShown -= Time.deltaTime;
+
+                outerStyle.unityBackgroundImageTintColor = new StyleColor(new Color(1 - ratioInnerOuterCircle(), ratioInnerOuterCircle(), 0, 1));
+                innerStyle.unityBackgroundImageTintColor = new StyleColor(new Color(1 - ratioInnerOuterCircle(), ratioInnerOuterCircle(), 0, 1));
+
                 outerStyle.width = OuterCircle.style.width.value.value - (Time.deltaTime * circleSpeed);
                 outerStyle.height = OuterCircle.style.height.value.value - (Time.deltaTime * circleSpeed);
 

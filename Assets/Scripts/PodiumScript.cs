@@ -10,7 +10,7 @@ public class PodiumScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        switch (GameState.current.currentEvolution)
+        switch (GameState.current.currentReptile().currentEvolution)
         {
             case 1:
                 GameObject loadedModel = Resources.Load("Evolutions/Gecko_Stage1") as GameObject;

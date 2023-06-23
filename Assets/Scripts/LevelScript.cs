@@ -106,7 +106,7 @@ public class LevelScript : MonoBehaviour
         VisualElement bgImage = progressRoot.Q<VisualElement>("BGImage");
         print(bgImage);
         IStyle bgStyle = bgImage.style;
-        switch (GameState.current.currentEvolution)
+        switch (GameState.current.currentReptile().currentEvolution)
         {
             case 1:
                 print("ALSO HERE");

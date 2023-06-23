@@ -20,24 +20,17 @@ public static class SaveGameScript
 
     public static void Load()
     {
-        if (GameState.current.Load())
+        UpgradeTree.Load();
+        if (System.IO.File.Exists(Application.persistentDataPath + "/game.rr") == false)
         {
-            PlayerPrefs.DeleteAll();
-            PlayerPrefs.Save();
-        } else
-        {
-            UpgradeTree.Load();
-            if (System.IO.File.Exists(Application.persistentDataPath + "/game.rr") == false)
-            {
-                return;
-            }
-
-            StreamReader reader = new StreamReader(Application.persistentDataPath + "/game.rr");
-            string jsonData = reader.ReadToEnd();
-            Debug.Log(jsonData);
-            reader.Close();
-            GameState.current = JsonUtility.FromJson<GameState>(jsonData);
+            return;
         }
+
+        StreamReader reader = new StreamReader(Application.persistentDataPath + "/game.rr");
+        string jsonData = reader.ReadToEnd();
+        Debug.Log(jsonData);
+        reader.Close();
+        GameState.current = JsonUtility.FromJson<GameState>(jsonData);
 
         /*
         if (File.Exists(Application.persistentDataPath + "/gameData.rr"))

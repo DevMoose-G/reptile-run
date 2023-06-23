@@ -328,7 +328,8 @@ public class TutorialLevelScript : LevelScript
         }
 
         // battle stage intro tip
-        // enter battle stage
+        // enter battle stage (if battle stage is not created, you have seen preytip & diedTip & upgradeTip & you have traveled 5 units of level
+        // & you are 3 units in front of last gameobject
         if (battleStage == null && preyRunsShown == TipStatus.BeenSeen && died == TipStatus.BeenSeen && upgradeTipShown == TipStatus.BeenSeen 
             && gameObject.transform.position.z < -5 && player.gameObject.transform.position.z > lastObjectPlaced.transform.position.z + 3)
         {
@@ -350,6 +351,22 @@ public class TutorialLevelScript : LevelScript
             timeSinceTip = 0.0f;
         }
 
+        // if somehow you created battle stage before, but you died, then create it again w/o tip
+        if(battleStage == null && battleStageShown == TipStatus.BeenSeen 
+            && gameObject.transform.position.z < -5 && player.gameObject.transform.position.z > lastObjectPlaced.transform.position.z + 3)
+        {
+            battleStage = Instantiate(battleStagePrefab, gameObject.transform, true);
+            battleStage.transform.position = new Vector3(0, 0, player.transform.position.z + 5.0f);
+
+            // center player
+            player.GetComponent<Transform>().position = new Vector3(0, player.transform.position.y, player.transform.position.z);
+
+            player.GetComponent<ReptileScript>().battleStage = battleStage;
+            print("BATTLE STAGE");
+            print(player.GetComponent<ReptileScript>().battleStage);
+            playerCam.GetComponent<CameraScript>().BattleModeSetup(battleStage);
+        }
+
         // timing attacks tip
         if(battleStage != null && battleStageShown == TipStatus.BeenSeen && timeSinceTip > 1.5f && timingAttackShown == TipStatus.NotSeen)
         {
@@ -360,14 +377,17 @@ public class TutorialLevelScript : LevelScript
         }
 
         // there's the crown tip
-        if(timingAttackShown == TipStatus.BeenSeen && battleStage.transform.position.z >= 4.9)
+        float playerDistBattleStage = 0.0f;
+        if (battleStage != null)
+            playerDistBattleStage = (gameObject.transform.position.z + battleStage.transform.position.z) + player.transform.position.z;
+        if (timingAttackShown == TipStatus.BeenSeen && playerDistBattleStage >= 8 && crownShown == TipStatus.NotSeen)
         {
             crownShown = TipStatus.JustSeen;
             crownTip.SetActive(true);
         }
 
         // end of tutorial tip
-        if(UpgradeScreen.activeSelf && crownShown == TipStatus.BeenSeen) {
+        if(UpgradeScreen.activeSelf && crownShown == TipStatus.BeenSeen && endOfTutorialShown == TipStatus.NotSeen) {
             endOfTutorialShown = TipStatus.JustSeen;
             endOfTutorialTip.SetActive(true);
             PauseGame();

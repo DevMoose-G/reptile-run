@@ -41,9 +41,9 @@ public class UpgradeTree
 
         var jsonData = Resources.Load<TextAsset>("upgrades_new");
 
-        if (GameState.current.upgradeTree == null)
+        if (GameState.current.currentReptile().upgradeTree == null)
         {
-            GameState.current.upgradeTree = JsonUtility.FromJson<UpgradeTree>(jsonData.text);
+            GameState.current.currentReptile().upgradeTree = JsonUtility.FromJson<UpgradeTree>(jsonData.text);
         }
     }
 

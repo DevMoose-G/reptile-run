@@ -36,7 +36,7 @@ public class ReptileScript : MonoBehaviour
     public bool tongueOut = false;
     public float tongueTimer = 0.0f;
 
-    public float health = GameState.current.MAX_HEALTH;
+    public float health = GameState.current.reptiles[GameState.current.current_reptile_idx].MAX_HEALTH;
     public GameObject battleStage;
 
     internal float HURT_TIME = 0.75f;
@@ -59,8 +59,8 @@ public class ReptileScript : MonoBehaviour
 
         animator = gameObject.transform.Find("Model").gameObject.GetComponent<Animator>();
 
-        health = GameState.current.MAX_HEALTH;
-        Evolve(GameState.current.currentEvolution);
+        health = GameState.current.currentReptile().MAX_HEALTH;
+        Evolve(GameState.current.currentReptile().currentEvolution);
 
         if (devMode)
             playerSpeed *= 35.0f;
@@ -123,7 +123,7 @@ public class ReptileScript : MonoBehaviour
             tongue.transform.localPosition = new Vector3(0, 0.076f, 0.84f);
         }
         
-        GameState.current.currentEvolution = stage_num;
+        GameState.current.currentReptile().currentEvolution = stage_num;
         evolveTimer = 0;
 
         level.GetComponent<LevelScript>().pauseGame = false;
@@ -178,7 +178,7 @@ public class ReptileScript : MonoBehaviour
                     damageIndicator.GetComponent<TMP_Text>().color = new Color(1, 0.0f, 0, 1);
                 }
 
-                float currentDamage = ( Mathf.Pow(16.0f, timingRatio) / 16.0f ) * GameState.current.damage;
+                float currentDamage = ( Mathf.Pow(16.0f, timingRatio) / 16.0f ) * GameState.current.currentReptile().damage;
                 UI.GetComponent<UI>().circleHit();
                 battleStage.GetComponent<BattleStageScript>().DamageOpponent(currentDamage);
             }
@@ -252,7 +252,7 @@ public class ReptileScript : MonoBehaviour
         }
 
         // evolve if total Evo points is enough
-        if (GameState.current.totalEvoPoints >= GameState.current.stage1Evolution && GameState.current.currentEvolution == 1)
+        if (GameState.current.currentReptile().totalEvoPoints >= GameState.current.currentReptile().stage1Evolution && GameState.current.currentReptile().currentEvolution == 1)
         {
             level.GetComponent<LevelScript>().pauseGame = true;
             if (!particleSystem.GetComponent<ParticleSystem>().isPlaying)
@@ -260,7 +260,7 @@ public class ReptileScript : MonoBehaviour
             evolveTimer += Time.deltaTime;
             if(evolveTimer >= EVOLVE_TIME)
                 Evolve(2);
-        } else if (GameState.current.totalEvoPoints >= GameState.current.stage2Evolution && GameState.current.currentEvolution == 2)
+        } else if (GameState.current.currentReptile().totalEvoPoints >= GameState.current.currentReptile().stage2Evolution && GameState.current.currentReptile().currentEvolution == 2)
         {
             level.GetComponent<LevelScript>().pauseGame = true;
             if (!particleSystem.GetComponent<ParticleSystem>().isPlaying)
@@ -284,17 +284,17 @@ public class ReptileScript : MonoBehaviour
             tongue.SetActive(true);
             animator.SetBool("tongueOut", true);
             tongueTimer += Time.deltaTime;
-            if (GameState.current.currentEvolution != 3 || tongueTimer > 0.13f) // tongue doesn't start until gecko3 bends his head down
+            if (GameState.current.currentReptile().currentEvolution != 3 || tongueTimer > 0.13f) // tongue doesn't start until gecko3 bends his head down
             {
-                float tongueLength = tongueTimer * GameState.current.tongueSpeed;
-                if ((tongueTimer * GameState.current.tongueSpeed) > GameState.current.tonguePeakLength || isRetracting)
+                float tongueLength = tongueTimer * GameState.current.currentReptile().tongueSpeed;
+                if ((tongueTimer * GameState.current.currentReptile().tongueSpeed) > GameState.current.currentReptile().tonguePeakLength || isRetracting)
                 {
                     if (!isRetracting)
                     { // if not retracting, then reset timer
                         tongueTimer = 0.0f;
                     }
                     isRetracting = true;
-                    tongueLength = tongue.GetComponent<Transform>().localScale.z - (Time.deltaTime * GameState.current.tongueRetractionSpeed);
+                    tongueLength = tongue.GetComponent<Transform>().localScale.z - (Time.deltaTime * GameState.current.currentReptile().tongueRetractionSpeed);
                     if (tongueLength < 0)
                     {
                         isRetracting = false;
@@ -308,11 +308,11 @@ public class ReptileScript : MonoBehaviour
         }
         else if (tongue.GetComponent<Transform>().localScale.z > 1) {
             animator.SetBool("tongueOut", false);
-            tongue.GetComponent<Transform>().localScale = new Vector3(1, 1, tongue.GetComponent<Transform>().localScale.z - (Time.deltaTime * GameState.current.tongueRetractionSpeed));
+            tongue.GetComponent<Transform>().localScale = new Vector3(1, 1, tongue.GetComponent<Transform>().localScale.z - (Time.deltaTime * GameState.current.currentReptile().tongueRetractionSpeed));
         } else
         {
             tongue.SetActive(false);
-            if(GameState.current.currentEvolution == 3)
+            if(GameState.current.currentReptile().currentEvolution == 3)
                 animator.SetBool("tongueOut", false);
         }
 

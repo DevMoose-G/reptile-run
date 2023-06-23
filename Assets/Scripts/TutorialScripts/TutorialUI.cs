@@ -40,7 +40,7 @@ public class TutorialUI : UI
         IStyle upgrade3Style = upgrade3.style;
         IStyle upgrade4Style = upgrade4.style;
 
-        UpgradeGroup nodeGroup = GameState.current.upgradeTree.GetUpgradeGroup();
+        UpgradeGroup nodeGroup = GameState.current.currentReptile().upgradeTree.GetUpgradeGroup();
         List<UpgradeNode> nodes = nodeGroup.toList();
         List<VisualElement> upgrades = new List<VisualElement> { upgrade1, upgrade2, upgrade3, upgrade4 };
         for (int i = 0; i < nodes.Count; i++)
