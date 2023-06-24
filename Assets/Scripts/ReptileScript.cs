@@ -70,10 +70,9 @@ public class ReptileScript : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.name == "Crown") {
-            if (GameState.current.crowns < 1)
-            {
-                GameState.current.crowns += 1;
-            }
+            GameState.current.crowns += 1;
+            GameState.current.currentReptile().stage_levels["Forest Stage"] += 1; // next level of stage
+
             Destroy(collision.gameObject);
 
             UI.GetComponent<UI>().winScreen.SetActive(true);

@@ -21,8 +21,12 @@ public class ReptileData {
     public float stage1Evolution = 3500f;
     public float stage2Evolution = 9800f;
 
+    public Dictionary<string, int> stage_levels = new Dictionary<string, int>(); // each reptile has progress on what level they are on
+
     public ReptileData()
     {
+        // stage level first
+        stage_levels.Add("ForestStage", 1);
         evoPoints = 0;
     }
 
@@ -39,10 +43,13 @@ public class GameState
     
     public int crowns; 
 
-    public GameState() { 
+    public GameState() {
+
+        
 
         // load gary gecko as first reptile
         reptiles.Add(new ReptileData());
+
         current_reptile_idx = 0;
     }
 

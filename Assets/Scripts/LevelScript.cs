@@ -65,6 +65,16 @@ public class LevelScript : MonoBehaviour
         UI = GameObject.Find("UIDocument");
         UpgradeScreen = GameObject.Find("UpgradeScreen");
 
+        switch(GameState.current.currentReptile().stage_levels["Forest Stage"])
+        {
+            case 1:
+                battleStagePrefab = Resources.Load("Prefabs/1_BattleStage") as GameObject;
+                break;
+            case 2:
+                battleStagePrefab = Resources.Load("Prefabs/2_BattleStage") as GameObject;
+                break;
+        }
+
         flowers.Add(Resources.Load("Prefabs/flower01") as GameObject);
         flowers.Add(Resources.Load("Prefabs/flower02") as GameObject);
         flowers.Add(Resources.Load("Prefabs/flower03") as GameObject);
