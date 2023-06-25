@@ -161,12 +161,12 @@ public class ReptileScript : MonoBehaviour
 
                 damageIndicator.transform.position = theTouch.position;
                 float timingRatio = UI.GetComponent<UI>().ratioInnerOuterCircle();
-                if (timingRatio > 0.95)
+                if (timingRatio > 0.90)
                 {
                     damageIndicator.GetComponent<TMP_Text>().text = "Perfect";
                     damageIndicator.GetComponent<TMP_Text>().color = new Color(0, 1, 0, 1);
                 }
-                else if (timingRatio > 0.75)
+                else if (timingRatio > 0.70)
                 {
                     damageIndicator.GetComponent<TMP_Text>().text = "A little early";
                     damageIndicator.GetComponent<TMP_Text>().color = new Color(0.75f, 0.6f, 0, 1);

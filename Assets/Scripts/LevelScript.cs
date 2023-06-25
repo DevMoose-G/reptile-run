@@ -65,7 +65,7 @@ public class LevelScript : MonoBehaviour
         UI = GameObject.Find("UIDocument");
         UpgradeScreen = GameObject.Find("UpgradeScreen");
 
-        switch(GameState.current.currentReptile().stage_levels["Forest Stage"])
+        switch(GameState.current.currentReptile().stage_levels["ForestStage"])
         {
             case 1:
                 battleStagePrefab = Resources.Load("Prefabs/1_BattleStage") as GameObject;
@@ -216,10 +216,14 @@ public class LevelScript : MonoBehaviour
             }
             else if (typeToSpawn > 0.15)
             {
+                if (Mathf.Abs(randX) > 1.25)
+                    randX = Random.Range(-1.25f, 1.25f);
                 lastObjectPlaced = Instantiate(preyPrefabs[0], gameObject.transform, true);
             }
             else if (typeToSpawn > 0.05)
             {
+                if (Mathf.Abs(randX) > 1.25)
+                    randX = Random.Range(-1.25f, 1.25f);
                 lastObjectPlaced = Instantiate(preyPrefabs[1], gameObject.transform, true);
             }
             else // butterfly

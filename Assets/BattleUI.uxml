@@ -1,0 +1,31 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UIStyle.uss?fileID=7433441132597879392&amp;guid=080a930d30e68e54090f86684a636576&amp;type=3#UIStyle" />
+    <ui:GroupBox style="align-items: stretch; height: 13%;">
+        <ui:GroupBox style="align-items: center; flex-direction: row; justify-content: space-between; margin-top: 7%; flex-grow: 1; flex-wrap: nowrap; height: 100%; padding-right: 3px;">
+            <ui:GroupBox name="OpponentInfo" style="align-items: center; justify-content: center; margin-left: 4px; margin-right: 4px; margin-top: 0; margin-bottom: 0; padding-right: 0; width: auto; flex-grow: 1; padding-left: 0; padding-top: 0; padding-bottom: 0; height: 16px;">
+                <ui:VisualElement style="border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; align-items: stretch; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); overflow: hidden; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; height: 16px; flex-grow: 1; flex-shrink: 0; width: 100%;">
+                    <ui:VisualElement name="OpponentHealthBar" class="ProgressBar" style="width: 100%; height: 100%; background-color: rgb(255, 0, 0);" />
+                </ui:VisualElement>
+                <ui:Label text="Mouse" display-tooltip-when-elided="true" name="OpponentName" style="-unity-text-align: upper-center; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+            </ui:GroupBox>
+        </ui:GroupBox>
+    </ui:GroupBox>
+    <ui:GroupBox style="align-items: flex-end; flex-direction: column; flex-grow: 1; margin-top: 0; justify-content: flex-start; opacity: 1;">
+        <ui:GroupBox name="QuickTime" class="QuickTime" style="margin-top: 100%; margin-bottom: 0; flex-direction: column; justify-content: flex-end; margin-left: 0; margin-right: 0; padding-left: 0; padding-top: 0; padding-bottom: 0;">
+            <ui:VisualElement name="InnerCircle" style="position: relative; background-image: url(&apos;project://database/Assets/CircleOutline.png?fileID=2800000&amp;guid=8e7c03f1a15cd2042a6606675eccdf89&amp;type=3#CircleOutline&apos;); width: 42px; height: 42px; top: 32px; left: 32px; right: 0; bottom: 0; overflow: visible; display: flex; visibility: visible;" />
+            <ui:VisualElement name="OuterCircle" class="OuterCircle" style="left: -12px; top: -54px; background-color: rgba(0, 0, 0, 0); -unity-background-image-tint-color: rgb(255, 255, 255);" />
+            <ui:VisualElement name="KEEPS_SIZE" style="width: 128px; height: 0;" />
+        </ui:GroupBox>
+    </ui:GroupBox>
+    <ui:GroupBox style="top: auto; position: absolute; bottom: 2%; right: 0;">
+        <ui:GroupBox style="align-items: flex-end; flex-direction: row; justify-content: flex-end; margin-top: 7%; flex-grow: 1; flex-wrap: nowrap; height: 100%; padding-right: 3px;">
+            <ui:VisualElement style="background-color: rgba(171, 171, 171, 0); height: 17px; width: 20%; justify-content: flex-end; align-items: flex-end; flex-direction: row;">
+                <ui:Label name="EVPoints" enable-rich-text="true" text="0" style="white-space: nowrap; -unity-text-align: middle-right; height: 17px; width: 13px; flex-direction: row-reverse; flex-wrap: nowrap; position: relative; top: 0; left: 0; align-items: auto; justify-content: flex-start; background-color: rgba(0, 0, 0, 0); color: rgb(255, 255, 255); -unity-text-outline-width: 1px; -unity-text-outline-color: rgb(255, 255, 255); font-size: 12%; padding-left: 0; padding-right: 0; -unity-font: url(&apos;project://database/Assets/Fonts/Tsukimi_Rounded/TsukimiRounded-Regular.ttf?fileID=12800000&amp;guid=2e304010366cd4a428b9b91fdb5eb06a&amp;type=3#TsukimiRounded-Regular&apos;); -unity-font-definition: initial; -unity-font-style: normal;" />
+                <ui:VisualElement style="justify-content: flex-start; align-items: auto; flex-direction: column; height: 100%; background-image: url(&apos;project://database/Assets/evolutionIcon.png?fileID=2800000&amp;guid=1f341967b13d8314b8bde52e737fceb1&amp;type=3#evolutionIcon&apos;); -unity-background-scale-mode: scale-to-fit; width: 24px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-shrink: 0; flex-grow: 0; min-width: auto;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; align-items: stretch; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); overflow: hidden; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; height: 128px; flex-grow: 0; flex-shrink: 0; width: 16px; flex-direction: column;">
+                <ui:VisualElement name="HealthBar" class="ProgressBar" style="width: 16px; height: 100%; background-color: rgb(255, 0, 0);" />
+            </ui:VisualElement>
+        </ui:GroupBox>
+    </ui:GroupBox>
+</ui:UXML>

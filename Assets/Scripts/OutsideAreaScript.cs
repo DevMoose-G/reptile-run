@@ -21,6 +21,7 @@ public class OutsideAreaScript : MonoBehaviour
     {
         level = GameObject.Find("Level");
         player = GameObject.Find("Reptile");
+        furthestZ = GameObject.Find("StartingTree").transform.position.z;
     }
 
     // Update is called once per frame

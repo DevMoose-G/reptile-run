@@ -99,6 +99,7 @@ public class UI : MonoBehaviour
         VisualElement upgradeRoot = upgradeScreen.GetComponent<UIDocument>().rootVisualElement;
 
         playGame = upgradeRoot.Q<Button>("PlayGame");
+        playGame.UnregisterCallback<ClickEvent>(StartGame);
         playGame.RegisterCallback<ClickEvent>(StartGame);
 
         storeButton = upgradeRoot.Q<Button>("Store");
@@ -165,6 +166,8 @@ public class UI : MonoBehaviour
             opponentInfoStyle.visibility = Visibility.Hidden;
 
             UpdateUpgrades();
+
+            GetUIVariables();
         }
     }
 
@@ -366,6 +369,7 @@ public class UI : MonoBehaviour
 
     public void StartGame(ClickEvent evt)
     {
+        print("TRYING TO PLAY GAME");
         GameObject.Find("Level").GetComponent<LevelScript>().isMoving = true;
         upgradeScreen.SetActive(false);
         player.GetComponent<ReptileScript>().animator.SetBool("isMoving", true);

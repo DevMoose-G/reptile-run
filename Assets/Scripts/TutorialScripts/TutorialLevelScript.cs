@@ -69,7 +69,7 @@ public class TutorialLevelScript : LevelScript
 
         base.Start();
 
-        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(2));
+        // SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(2));
 
         hitRockLabel = GameObject.Find("HitRock");
         diedLabel = GameObject.Find("Died");
