@@ -207,20 +207,20 @@ public class LevelScript : MonoBehaviour
             newObject_position.x = randX;
 
             float typeToSpawn = Random.Range(0.0f, 1.0f);
-            // percents: stone/0.5, ladybug/0.35, spider/0.1, butterfly/0.05
-            if (typeToSpawn > 0.5)
+            // percents: stone/0.2, ladybug/0.45, spider/0.25, butterfly/0.10
+            if (typeToSpawn > 0.8)
             {
                 lastObjectPlaced = Instantiate(treePrefab, gameObject.transform, true);
                 float randRot = Random.Range(0.0f, 360.0f);
                 lastObjectPlaced.transform.Rotate(0, randRot, 0);
             }
-            else if (typeToSpawn > 0.15)
+            else if (typeToSpawn > 0.35)
             {
                 if (Mathf.Abs(randX) > 1.25)
                     randX = Random.Range(-1.25f, 1.25f);
                 lastObjectPlaced = Instantiate(preyPrefabs[0], gameObject.transform, true);
             }
-            else if (typeToSpawn > 0.05)
+            else if (typeToSpawn > 0.1)
             {
                 if (Mathf.Abs(randX) > 1.25)
                     randX = Random.Range(-1.25f, 1.25f);

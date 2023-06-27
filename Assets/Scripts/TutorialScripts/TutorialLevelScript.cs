@@ -194,7 +194,8 @@ public class TutorialLevelScript : LevelScript
         if(startMoving && startRocksTimer > 0)
             startRocksTimer -= Time.deltaTime;
 
-        if (startRocksTimer <= 0 && rockPath == null && !(preyRunsShown == TipStatus.BeenSeen && died == TipStatus.BeenSeen && upgradeTipShown == TipStatus.BeenSeen))
+        if (startRocksTimer <= 0 && rockPath == null && !(preyRunsShown == TipStatus.BeenSeen && died == TipStatus.BeenSeen && upgradeTipShown == TipStatus.BeenSeen)
+            && UpgradeScreen.activeSelf == false)
         {
             Vector3 rockPathPos = new Vector3(gameObject.transform.position.x + 0.9f, gameObject.transform.position.y, rockPathZOffset);
             rockPath = Instantiate(rockPathPrefab, gameObject.transform, true);

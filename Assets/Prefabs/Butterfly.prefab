@@ -1454,7 +1454,7 @@ MonoBehaviour:
   name: Butterfly
   preyFleeDistance: 3.5
   preySpeed: 2.75
-  evoPoints: 55
+  evoPoints: 65
 --- !u!1 &8554124482612550876
 GameObject:
   m_ObjectHideFlags: 0

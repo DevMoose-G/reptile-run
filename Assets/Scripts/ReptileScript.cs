@@ -13,18 +13,21 @@ public class ReptileScript : MonoBehaviour
     private float playerSpeed = 3.5f;
     public bool canMove = true;
     public bool devMode = false; // for some reason, now i can't play the game b/c player moves too slow on unity simulator
-    public GameObject tongue;
+    [HideInInspector] public GameObject tongue;
 
     private float GRAVITY = 2.0f;
-    
-    public GameObject level;
-    public GameObject UI;
-    public GameObject particleSystem;
 
-    public GameObject damageIndicator;
+    [HideInInspector] public GameObject level;
+    [HideInInspector] public GameObject UI;
+    [HideInInspector] public GameObject particleSystem;
+
+    [HideInInspector] public GameObject damageIndicator;
+    [HideInInspector] public GameObject evoText;
+    [HideInInspector] public GameObject evoImage;
+    [HideInInspector] public GameObject evoIndicator;
     private float fadeSpeed = 0.35f;
 
-    public Animator animator;
+    [HideInInspector] public Animator animator;
 
     private Vector2 touchStartPosition;
     private Vector2 touchLastPosition;
@@ -37,7 +40,11 @@ public class ReptileScript : MonoBehaviour
     public float tongueTimer = 0.0f;
 
     public float health = GameState.current.reptiles[GameState.current.current_reptile_idx].MAX_HEALTH;
-    public GameObject battleStage;
+    public float attackSpeed = GameState.current.reptiles[GameState.current.current_reptile_idx].attackSpeed; // num of seconds it takes to hit an attack
+    private float attackTimer = 0.0f;
+    public float damage = GameState.current.reptiles[GameState.current.current_reptile_idx].damage;
+
+    [HideInInspector] public GameObject battleStage;
 
     internal float HURT_TIME = 0.75f;
     internal float timeSinceHurt = 0.0f;
@@ -46,14 +53,24 @@ public class ReptileScript : MonoBehaviour
     private float evolveTimer = 0.0f;
     private float EVOLVE_TIME = 2.0f; // half the time of particle system
 
+    [HideInInspector] public AudioSource audioSource;
+    public AudioClip walkSound;
+    public AudioClip hitSound;
+    public AudioClip hurtSound;
+    public AudioClip wrongSound;
+
     // Start is called before the first frame update
     void Start()
     {
         controller = gameObject.GetComponent<Rigidbody>();
+        audioSource = gameObject.GetComponent<AudioSource>();
 
         UI = GameObject.Find("UIDocument");
         level = GameObject.Find("Level");
         damageIndicator = GameObject.Find("Indicator");
+        evoText = GameObject.Find("EvoText");
+        evoImage = GameObject.Find("EvoImage");
+        evoIndicator = GameObject.Find("EvoIndicator");
 
         particleSystem = gameObject.transform.Find("ParticleSystem").gameObject;
 
@@ -88,6 +105,18 @@ public class ReptileScript : MonoBehaviour
 
             timeSinceHurt = HURT_TIME;
         }
+    }
+
+    public void SetAudio(AudioClip clip, bool start, bool looping)
+    {
+        if (clip == walkSound)
+            return;// turn off walk sound for now
+        if (audioSource.clip != clip)
+            audioSource.clip = clip;
+        audioSource.loop = looping;
+        if(start)
+            audioSource.Play();
+        else audioSource.Pause();
     }
 
     void Evolve(int stage_num) { // stage 1, 2, 3
@@ -135,29 +164,58 @@ public class ReptileScript : MonoBehaviour
             {
                 // defeated all enemies so go get the crown
                 animator.SetBool("isMoving", true);
+
+                SetAudio(walkSound, true, true);
+                
                 controller.MovePosition(transform.position + (new Vector3(0, 0, 1.0f) * Time.deltaTime * playerSpeed));
             } else
             {
                 print("PICKED UP CROWN");
+
+                SetAudio(walkSound, false, true);
+
                 animator.SetBool("isMoving", false);
             }
         }
         // move close to current opponent
         else if (Vector3.Distance(battleStage.GetComponent<BattleStageScript>().opponentsOrdering[0].transform.position, gameObject.transform.position) > 4.5f) {
             animator.SetBool("isMoving", true);
+
+            SetAudio(walkSound, true, true);
+            attackTimer = 0;
+
             controller.MovePosition(transform.position + (new Vector3(0, 0, 1.0f) * Time.deltaTime * playerSpeed));
         } else // no longer moving
         {
             animator.SetBool("isMoving", false);
+
+            SetAudio(walkSound, false, true);
+
+            // auto attacking now
+            attackTimer += Time.deltaTime;
+            if(attackTimer >= attackSpeed)
+            {
+                animator.SetTrigger("attack");
+                SetAudio(hitSound, true, false);
+                attackTimer = 0;
+
+                battleStage.GetComponent<BattleStageScript>().DamageOpponent(GameState.current.currentReptile().damage);
+            }
         }
 
-        // tap to attack (timing)
+        
+
+
+        // tap to attack (timing) 
+        /*
         if (Input.touchCount > 0)
         { 
             theTouch = Input.GetTouch(0);
             if (theTouch.phase == TouchPhase.Began)
             {
+                
                 animator.SetTrigger("attack");
+                SetAudio(hitSound, true, false);
 
                 damageIndicator.transform.position = theTouch.position;
                 float timingRatio = UI.GetComponent<UI>().ratioInnerOuterCircle();
@@ -182,6 +240,7 @@ public class ReptileScript : MonoBehaviour
                 battleStage.GetComponent<BattleStageScript>().DamageOpponent(currentDamage);
             }
         }
+        */
     }
 
     void CheckDamageAnimation()
@@ -190,6 +249,11 @@ public class ReptileScript : MonoBehaviour
         GameObject mesh = model.transform.Find("Mesh").gameObject;
         if (timeSinceHurt > 0)
         {
+            if(timeSinceHurt == HURT_TIME)
+            {
+                SetAudio(hurtSound, true, false);
+            }
+
             gameObject.GetComponent<CapsuleCollider>().enabled = false;
             tongue.transform.Find("Tongue").gameObject.GetComponent<BoxCollider>().enabled = false;
 
@@ -237,6 +301,12 @@ public class ReptileScript : MonoBehaviour
         {
             Color prevColor = damageIndicator.GetComponent<TMP_Text>().color;
             damageIndicator.GetComponent<TMP_Text>().color = new Color(prevColor.r, prevColor.g, prevColor.b, prevColor.a - (Time.deltaTime * fadeSpeed));
+
+            prevColor = evoText.GetComponent<TMP_Text>().color;
+            evoText.GetComponent<TMP_Text>().color = new Color(prevColor.r, prevColor.g, prevColor.b, prevColor.a - (Time.deltaTime * fadeSpeed));
+
+            prevColor = evoImage.GetComponent<UnityEngine.UI.Image>().color;
+            evoImage.GetComponent<UnityEngine.UI.Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, prevColor.a - (Time.deltaTime * fadeSpeed));
         }
 
         if (health <= 0)
@@ -378,10 +448,16 @@ public class ReptileScript : MonoBehaviour
 
         if (canMove)
         {
-            if(move.magnitude > 0 || level.GetComponent<LevelScript>().isMoving)
+            if (move.magnitude > 0 || level.GetComponent<LevelScript>().isMoving)
+            {
                 animator.SetBool("isMoving", true);
+                SetAudio(walkSound, true, true);
+            }
             else
+            {
                 animator.SetBool("isMoving", false);
+                SetAudio(walkSound, false, true);
+            }
 
         }
         else
@@ -389,6 +465,8 @@ public class ReptileScript : MonoBehaviour
             print("STOPPED MOVING");
             move = new Vector3(0, 0, 0);
             animator.SetBool("isMoving", false);
+            SetAudio(walkSound, false, true);
+
         }
 
         controller.MovePosition(transform.position + (move * Time.deltaTime * playerSpeed));

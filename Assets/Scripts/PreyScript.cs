@@ -5,6 +5,8 @@ using UnityEngine;
 public class PreyScript : MonoBehaviour
 {
     private GameObject player;
+    private Animator animator;
+
     public string name;
     public float preyFleeDistance = 2.5f;
     public float preySpeed = 15f;
@@ -17,6 +19,7 @@ public class PreyScript : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Reptile");
+        animator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -27,18 +30,23 @@ public class PreyScript : MonoBehaviour
             fleeing = true;
         }
         if (fleeing) {
-            fleeingTimer += Time.deltaTime;
             if (fleeingTimer > fleeingTime) {
                 Destroy(gameObject);
             }
             // fly/walk away if player gets too close (either left or right depending on which side is closest to edge)
             if (gameObject.transform.position.x > 0)
             {
-                move = new Vector3(1.0f, 1.0f, 0);
+                animator.SetInteger("walk_direction", 1);
+                if(fleeingTimer > 1.0f) 
+                    move = new Vector3(1.0f, 1.0f, 0);
             }
             else {
-                move = new Vector3(-1.0f, 1.0f, 0);
+                animator.SetInteger("walk_direction", -1);
+                if (fleeingTimer > 1.0f)
+                    move = new Vector3(-1.0f, 1.0f, 0);
             }
+
+            fleeingTimer += Time.deltaTime;
 
             if (name == "Butterfly")
                 move.y = 0.0f;

@@ -13,7 +13,6 @@ public class UI : MonoBehaviour
     public float timerTillShown = GameState.current.reptiles[GameState.current.current_reptile_idx].attackSpeed;
 
     public Label yourHealth;
-    public Label theirHealth;
 
     public GameObject player;
     public GameObject level;
@@ -66,6 +65,9 @@ public class UI : MonoBehaviour
 
     public void SetupBattleUI()
     {
+        IStyle opponentInfoStyle = opponentInfo.style;
+        opponentInfoStyle.visibility = Visibility.Hidden;
+        return;
         IStyle style = OuterCircle.style;
         style.width = MAX_SIZE;
         style.height = MAX_SIZE;
@@ -77,8 +79,7 @@ public class UI : MonoBehaviour
         IStyle quickTimeStyle = quickTime.style;
         quickTimeStyle.display = DisplayStyle.None;
 
-        IStyle opponentInfoStyle = opponentInfo.style;
-        opponentInfoStyle.visibility = Visibility.Hidden;
+        
     }
 
     public void GetUIVariables()
@@ -355,13 +356,12 @@ public class UI : MonoBehaviour
         else if (node.category == "AttackSpeed")
         {
             GameState.current.currentReptile().attackSpeed /= node.amount;
+            player.GetComponent<ReptileScript>().attackSpeed = GameState.current.currentReptile().attackSpeed;
         }
         else if (node.category == "Damage")
         {
-            print("Got here");
             GameState.current.currentReptile().damage += node.amount;
-            print(node.amount);
-            print(GameState.current.currentReptile().damage);
+            player.GetComponent<ReptileScript>().damage = GameState.current.currentReptile().damage;
         }
 
         UpdateUpgrades();
@@ -379,7 +379,13 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     internal void Update()
     {
-        EVPoints.text = GameState.current.currentReptile().evoPoints.ToString();
+        float evoPoints = GameState.current.currentReptile().evoPoints;
+        if (evoPoints >= 1000000)
+            EVPoints.text = (evoPoints / 1000000.0f).ToString("F2") + "m";
+        else if (evoPoints >= 1000)
+            EVPoints.text = (evoPoints / 1000.0f).ToString("F2") + "k";
+        else
+            EVPoints.text = GameState.current.currentReptile().evoPoints.ToString();
         if (player.GetComponent<ReptileScript>().health < 0)
         {
             yourHealth.text = "0";
@@ -392,6 +398,7 @@ public class UI : MonoBehaviour
         if (GameObject.Find("Level").GetComponent<LevelScript>().pauseGame)
             return;
 
+        return;
         // making outer circle smaller but still centered
         IStyle quickTimeStyle = quickTime.style;
         IStyle outerStyle = OuterCircle.style;
@@ -405,6 +412,7 @@ public class UI : MonoBehaviour
                 outerStyle.width = MAX_SIZE;
                 outerStyle.height = MAX_SIZE;
                 timerTillShown = GameState.current.currentReptile().attackSpeed;
+                player.GetComponent<ReptileScript>().SetAudio(player.GetComponent<ReptileScript>().wrongSound, true, false);
             }
 
             if (outerStyle.display == DisplayStyle.None) // if outer circle is invisible, wait for timerTillShown to hit 0, then show both circles

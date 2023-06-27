@@ -25,7 +25,7 @@ public class StoreScript : MonoBehaviour
 
     private void BackToGame(ClickEvent evt)
     {
-        SceneManager.LoadSceneAsync(0);
+        SceneManager.LoadScene(0);
     }
 
     // Update is called once per frame
