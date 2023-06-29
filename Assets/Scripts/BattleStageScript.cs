@@ -14,7 +14,7 @@ public class BattleStageScript : MonoBehaviour
     private Animator currentOpponentAnimator;
 
     internal float timeSinceLastAttack = 0.0f;
-    internal float DEFEAT_TIMER = 2.0f;
+    internal float DEFEAT_TIMER = 0.5f;
     internal float timeAfterDefeat = 0.0f;
 
     internal int defeatedOpponents = 0;
@@ -45,6 +45,9 @@ public class BattleStageScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (level.GetComponent<LevelScript>().pauseGame)
+            return;
+
         timeSinceLastAttack += Time.deltaTime;
 
         if(crown != null)
@@ -70,6 +73,8 @@ public class BattleStageScript : MonoBehaviour
             }
             else
             {
+                timeAfterDefeat = 0.0f;
+
                 GameState.current.addEvoPoints(currentOpponent.evoPoints);
 
                 Destroy(opponentsOrdering[0]);
