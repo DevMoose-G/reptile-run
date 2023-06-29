@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using TMPro;
 
 public class TutorialLevelScript : LevelScript
 {
@@ -16,6 +17,11 @@ public class TutorialLevelScript : LevelScript
 
     public float timeSinceTip = 0.0f;
     private float timeSincePrey = 0.0f;
+
+    private GameObject reptileRunTitle;
+
+    private float moveAroundTimer = 4.0f;
+    private GameObject moveAroundTip;
 
     public TipStatus hitRock = TipStatus.NotSeen;
     private GameObject hitRockLabel;
@@ -44,8 +50,8 @@ public class TutorialLevelScript : LevelScript
     public TipStatus battleStageShown = TipStatus.NotSeen;
     private GameObject battleStageTip;
 
-    public TipStatus timingAttackShown = TipStatus.NotSeen;
-    private GameObject timingAttackTip;
+    public TipStatus autoAttackShown = TipStatus.NotSeen;
+    private GameObject autoAttackTip;
 
     public TipStatus crownShown = TipStatus.NotSeen;
     private GameObject crownTip;
@@ -69,8 +75,9 @@ public class TutorialLevelScript : LevelScript
 
         base.Start();
 
-        // SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(2));
+        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(2));
 
+        moveAroundTip = GameObject.Find("MoveAroundTip");
         hitRockLabel = GameObject.Find("HitRock");
         diedLabel = GameObject.Find("Died");
         diedFromMapTip = GameObject.Find("DiedFromMapTip");
@@ -80,7 +87,7 @@ public class TutorialLevelScript : LevelScript
         afterPreyTip = GameObject.Find("AfterPreyTip");
         preyRunsTip = GameObject.Find("PreyRunsTip");
         battleStageTip = GameObject.Find("BattleStageIntroTip");
-        timingAttackTip = GameObject.Find("TimingAttackTip");
+        autoAttackTip = GameObject.Find("AutoAttackTip");
         crownTip = GameObject.Find("CrownTip");
         endOfTutorialTip = GameObject.Find("EndOfTutorialTip");
 
@@ -90,6 +97,7 @@ public class TutorialLevelScript : LevelScript
     }
 
     void TurnOffAllLabels() {
+        moveAroundTip.SetActive(false);
         diedLabel.SetActive(false);
         diedFromMapTip.SetActive(false);
         hitRockLabel.SetActive(false);
@@ -99,7 +107,7 @@ public class TutorialLevelScript : LevelScript
         afterPreyTip.SetActive(false);
         preyRunsTip.SetActive(false);
         battleStageTip.SetActive(false);
-        timingAttackTip.SetActive(false);
+        autoAttackTip.SetActive(false);
         crownTip.SetActive(false);
         endOfTutorialTip.SetActive(false);
     }
@@ -115,7 +123,7 @@ public class TutorialLevelScript : LevelScript
         evoPointsTipShown = (TipStatus)PlayerPrefs.GetInt("evoPointsTipShown", (int)TipStatus.NotSeen);
         preyRunsShown = (TipStatus)PlayerPrefs.GetInt("preyRunsShown", (int)TipStatus.NotSeen);
         battleStageShown = (TipStatus)PlayerPrefs.GetInt("battleStageShown", (int)TipStatus.NotSeen);
-        timingAttackShown = (TipStatus)PlayerPrefs.GetInt("timingAttackShown", (int)TipStatus.NotSeen);
+        autoAttackShown = (TipStatus)PlayerPrefs.GetInt("autoAttackShown", (int)TipStatus.NotSeen);
         crownShown = (TipStatus)PlayerPrefs.GetInt("crownShown", (int)TipStatus.NotSeen);
         endOfTutorialShown = (TipStatus)PlayerPrefs.GetInt("endOfTutorialShown", (int)TipStatus.NotSeen);
     }
@@ -140,8 +148,8 @@ public class TutorialLevelScript : LevelScript
             preyRunsShown = TipStatus.BeenSeen;
         if (battleStageShown == TipStatus.JustSeen)
             battleStageShown = TipStatus.BeenSeen;
-        if (timingAttackShown == TipStatus.JustSeen)
-            timingAttackShown = TipStatus.BeenSeen;
+        if (autoAttackShown == TipStatus.JustSeen)
+            autoAttackShown = TipStatus.BeenSeen;
         if (crownShown == TipStatus.JustSeen)
             crownShown = TipStatus.BeenSeen;
         if (endOfTutorialShown == TipStatus.JustSeen)
@@ -182,19 +190,21 @@ public class TutorialLevelScript : LevelScript
             EndRun();
             PlayerPrefs.Save();
         }
-        if (player.GetComponent<ReptileScript>().health <= 0)
+        if (player.GetComponent<ReptileScript>().health < 0.99f)
         {
             EndRun();
         }
 
         if(Mathf.Abs(player.transform.position.x) > 0.25f)
         {
+            moveAroundTip.SetActive(false);
             startMoving = true;
         }
+
         if(startMoving && startRocksTimer > 0)
             startRocksTimer -= Time.deltaTime;
 
-        if (startRocksTimer <= 0 && rockPath == null && !(preyRunsShown == TipStatus.BeenSeen && died == TipStatus.BeenSeen && upgradeTipShown == TipStatus.BeenSeen)
+        if (startRocksTimer <= 0 && rockPath == null && !(preyRunsShown == TipStatus.BeenSeen && upgradeTipShown == TipStatus.BeenSeen)
             && UpgradeScreen.activeSelf == false)
         {
             Vector3 rockPathPos = new Vector3(gameObject.transform.position.x + 0.9f, gameObject.transform.position.y, rockPathZOffset);
@@ -203,6 +213,19 @@ public class TutorialLevelScript : LevelScript
         }
 
         // start of tips
+        if (startMoving == false && isMoving == true && rockPath == null && afterPreyShown == TipStatus.NotSeen)
+        {
+            moveAroundTimer -= Time.deltaTime;
+            if (moveAroundTimer <= 0)
+            {
+                moveAroundTip.SetActive(true);
+                Color prevColor = moveAroundTip.GetComponent<TMP_Text>().color;
+                moveAroundTip.GetComponent<TMP_Text>().color = new Color(prevColor.r, prevColor.g, prevColor.b, prevColor.a + (Time.deltaTime * 0.75f));
+
+                timeSinceTip = 0.0f;
+            }
+        }
+
         if (hitRock == TipStatus.JustSeen)
         {
             hitRock = TipStatus.BeenSeen;
@@ -239,7 +262,7 @@ public class TutorialLevelScript : LevelScript
         }
 
         // upgrade tip on screen
-        if (UpgradeScreen.activeSelf && swipeUpTipShown == TipStatus.BeenSeen && upgradeTipShown == TipStatus.NotSeen)
+        if (UpgradeScreen.activeSelf && swipeUpTipShown == TipStatus.BeenSeen && upgradeTipShown == TipStatus.NotSeen && GameObject.Find("LoadingScreen") != null)
         {
             PauseGame();
             upgradeTip.SetActive(true);
@@ -291,9 +314,10 @@ public class TutorialLevelScript : LevelScript
             lastObjectPlaced = player;
         }
         // increasingly hard obstacles until died == TipStatus.BeenSeen && upgradeScreen == TipStatus.BeenSeen
-        if (preyRunsShown == TipStatus.BeenSeen && (died != TipStatus.BeenSeen || upgradeTipShown != TipStatus.BeenSeen))
+        if (preyRunsShown == TipStatus.BeenSeen && (upgradeTipShown != TipStatus.BeenSeen))
         {
-            minZ_SpawnDistance -= 0.1f * Time.deltaTime; 
+            if(minZ_SpawnDistance >= ending_SpawnDistance)
+                minZ_SpawnDistance -= 0.5f * Time.deltaTime; 
             // creating the level as you go
             if (lastObjectPlaced != null
                     && (Vector3.Distance(player.transform.position, lastObjectPlaced.transform.position) < 50 || lastObjectPlaced.transform.position.y < -2))/*if off map*/
@@ -312,7 +336,7 @@ public class TutorialLevelScript : LevelScript
                 // percents: stone/0.9, ladybug/0.075, spider/0.025
                 if (typeToSpawn > 0.1)
                 {
-                    lastObjectPlaced = Instantiate(treePrefab, gameObject.transform, true);
+                    lastObjectPlaced = Instantiate(rockPrefab, gameObject.transform, true);
                     float randRot = Random.Range(0.0f, 360.0f);
                     lastObjectPlaced.transform.Rotate(0, randRot, 0);
                 }
@@ -369,10 +393,10 @@ public class TutorialLevelScript : LevelScript
         }
 
         // timing attacks tip
-        if(battleStage != null && battleStageShown == TipStatus.BeenSeen && timeSinceTip > 1.5f && timingAttackShown == TipStatus.NotSeen)
+        if(battleStage != null && battleStageShown == TipStatus.BeenSeen && timeSinceTip > 1.5f && autoAttackShown == TipStatus.NotSeen)
         {
-            timingAttackTip.SetActive(true);
-            timingAttackShown = TipStatus.JustSeen;
+            autoAttackTip.SetActive(true);
+            autoAttackShown = TipStatus.JustSeen;
             PauseGame();
             timeSinceTip = 0.0f;
         }
@@ -381,7 +405,7 @@ public class TutorialLevelScript : LevelScript
         float playerDistBattleStage = 0.0f;
         if (battleStage != null)
             playerDistBattleStage = (gameObject.transform.position.z + battleStage.transform.position.z) + player.transform.position.z;
-        if (timingAttackShown == TipStatus.BeenSeen && playerDistBattleStage >= 8 && crownShown == TipStatus.NotSeen)
+        if (autoAttackShown == TipStatus.BeenSeen && playerDistBattleStage >= 8 && crownShown == TipStatus.NotSeen)
         {
             crownShown = TipStatus.JustSeen;
             crownTip.SetActive(true);
@@ -401,7 +425,7 @@ public class TutorialLevelScript : LevelScript
             Vector3 currPos = gameObject.GetComponent<Transform>().position;
             gameObject.GetComponent<Transform>().position = new Vector3(currPos.x, currPos.y, currPos.z - Time.deltaTime * levelSpeed);
         }
-        else if (!stationary)
+        else if (!stationary && (!playerCam.GetComponent<CameraScript>().stageIntro && !playerCam.GetComponent<CameraScript>().tutorialIntro))
         {
             if (Input.touchCount > 0)
             { // currently touching
@@ -446,7 +470,7 @@ public class TutorialLevelScript : LevelScript
         PlayerPrefs.SetInt("evoPointsTipShown", (int)evoPointsTipShown);
         PlayerPrefs.SetInt("preyRunsShown", (int)preyRunsShown);
         PlayerPrefs.SetInt("battleStageShown", (int)battleStageShown);
-        PlayerPrefs.SetInt("timingAttackShown", (int)timingAttackShown);
+        PlayerPrefs.SetInt("autoAttackShown", (int)autoAttackShown);
         PlayerPrefs.SetInt("crownShown", (int)crownShown);
         PlayerPrefs.SetInt("endOfTutorialShown", (int)endOfTutorialShown);
     }

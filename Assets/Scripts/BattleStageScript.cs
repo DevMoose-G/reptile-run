@@ -14,6 +14,8 @@ public class BattleStageScript : MonoBehaviour
     private Animator currentOpponentAnimator;
 
     internal float timeSinceLastAttack = 0.0f;
+    internal float DEFEAT_TIMER = 2.0f;
+    internal float timeAfterDefeat = 0.0f;
 
     internal int defeatedOpponents = 0;
 
@@ -55,32 +57,48 @@ public class BattleStageScript : MonoBehaviour
             timeSinceLastAttack = 0.0f;
             DamagePlayer(currentOpponent.damage);
         }
+
+        // check if opponent is dead
+        if (currentOpponent != null && currentOpponent.health <= 0)
+        {
+            timeSinceLastAttack = 0.0f;
+
+            // wait a few seconds
+            if (timeAfterDefeat < DEFEAT_TIMER)
+            {
+                timeAfterDefeat += Time.deltaTime;
+            }
+            else
+            {
+                GameState.current.addEvoPoints(currentOpponent.evoPoints);
+
+                Destroy(opponentsOrdering[0]);
+                defeatedOpponents++;
+
+                currentOpponent = null;
+
+                opponentsOrdering.RemoveAt(0);
+                if (opponentsOrdering.Count > 0)
+                {
+                    currentOpponent = opponentsOrdering[0].GetComponent<OpponentScript>();
+                    UI.GetComponent<UI>().opponentName.text = currentOpponent.Name;
+
+                    // pause while player is moving
+                    IStyle outerStyle = UI.GetComponent<UI>().OuterCircle.style;
+                    IStyle innerStyle = UI.GetComponent<UI>().InnerCircle.style;
+                    outerStyle.display = DisplayStyle.None;
+                    innerStyle.display = DisplayStyle.None;
+                    UI.GetComponent<UI>().timerTillShown = 1.0f;
+
+                    timeSinceLastAttack = -1.0f;
+                }
+            }
+        }
     }
 
     public void DamageOpponent(float amount) {
         currentOpponent.health -= amount;
-
-        if (currentOpponent.health <= 0) {
-            timeSinceLastAttack = 0.0f;
-            GameState.current.addEvoPoints(currentOpponent.evoPoints);
-            Destroy(opponentsOrdering[0]);
-            opponentsOrdering.RemoveAt(0);
-            defeatedOpponents++;
-            if (opponentsOrdering.Count > 0)
-            {
-                currentOpponent = opponentsOrdering[0].GetComponent<OpponentScript>();
-                UI.GetComponent<UI>().opponentName.text = currentOpponent.Name;
-
-                // pause while player is moving
-                IStyle outerStyle = UI.GetComponent<UI>().OuterCircle.style;
-                IStyle innerStyle = UI.GetComponent<UI>().InnerCircle.style;
-                outerStyle.display = DisplayStyle.None;
-                innerStyle.display = DisplayStyle.None;
-                UI.GetComponent<UI>().timerTillShown = 1.0f;
-
-                timeSinceLastAttack = -1.0f;
-            }
-        }
+        
     }
 
     public void DamagePlayer(float amount)

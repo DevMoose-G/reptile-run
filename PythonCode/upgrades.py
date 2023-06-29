@@ -6,7 +6,7 @@ upgrades = {"nodes":[], "nodes_obtained":[]}
 upgrades_wanted = 350
 i = 0
 tongue_length = 5
-amounts = {"Tongue":(2.0, 1.15), "Health":1.0, "Damage":0.75,
+amounts = {"Tongue":(2.0, 1.2), "Health":1.0, "Damage":0.75,
            "AttackSpeed":1.15}
 levels = {"Tongue":1, "Health":1, "Damage":1,
            "AttackSpeed":1}

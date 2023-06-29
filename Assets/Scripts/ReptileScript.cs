@@ -103,6 +103,9 @@ public class ReptileScript : MonoBehaviour
             Debug.Log("You hit a " + collision.gameObject.name);
             health -= 1.0f;
 
+            if (health < 1.0f)
+                health = 0; // lingering health won't save you
+
             timeSinceHurt = HURT_TIME;
         }
     }

@@ -13,8 +13,12 @@ public class UI : MonoBehaviour
     public float timerTillShown = GameState.current.reptiles[GameState.current.current_reptile_idx].attackSpeed;
 
     public Label yourHealth;
+    public VisualElement extraHealth;
+
+    public Slider volumeSlider;
 
     public GameObject player;
+    public GameObject playerCam;
     public GameObject level;
     public GameObject upgradeScreen;
     public Button playGame;
@@ -47,6 +51,7 @@ public class UI : MonoBehaviour
     void Start()
     {
 
+        playerCam = GameObject.Find("Main Camera");
         player = GameObject.Find("Reptile");
         level = GameObject.Find("Level");
 
@@ -92,12 +97,15 @@ public class UI : MonoBehaviour
         OuterCircle = root.Q<VisualElement>("OuterCircle");
         InnerCircle = root.Q<VisualElement>("InnerCircle");
         yourHealth = root.Q<Label>("Health");
+        extraHealth = root.Q<VisualElement>("ExtraHealth");
 
         opponentName = root.Q<Label>("OpponentName");
         opponentInfo = root.Q<GroupBox>("OpponentInfo");
         opponentHealthBar = root.Q<VisualElement>("HealthBar");
 
         VisualElement upgradeRoot = upgradeScreen.GetComponent<UIDocument>().rootVisualElement;
+
+        volumeSlider = upgradeRoot.Q<Slider>("VolumeSlider");
 
         playGame = upgradeRoot.Q<Button>("PlayGame");
         playGame.UnregisterCallback<ClickEvent>(StartGame);
@@ -290,7 +298,8 @@ public class UI : MonoBehaviour
                 upgrades[i].UnregisterCallback<ClickEvent, UpgradeNode>(BuyUpgrade, TrickleDown.TrickleDown);
                 upgrades[i].UnregisterCallback<ClickEvent, UpgradeNode>(AdUpgrade, TrickleDown.TrickleDown);
 
-                if (GameState.current.currentReptile().evoPoints >= nodes[i].cost || adUpgradeCounter >= MAX_NUM_OF_AD_UPGRADES || adsManager == null) // if you have enough evo points, show the cost
+                if (GameState.current.currentReptile().evoPoints >= nodes[i].cost || adUpgradeCounter >= MAX_NUM_OF_AD_UPGRADES || adsManager == null
+                    || adsManager.GetComponent<AdsInitializer>().rewardedAd == null) // if you have enough evo points, show the cost
                 {
                     upgrades[i].Q<Label>("EvoAmount").text = nodes[i].cost.ToString();
                     upgrades[i].RegisterCallback<ClickEvent, UpgradeNode>(BuyUpgrade, nodes[i]);
@@ -379,6 +388,13 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     internal void Update()
     {
+        if (upgradeScreen.activeSelf)
+        {
+            print((volumeSlider.value) / 100);
+            player.GetComponent<AudioSource>().volume = (volumeSlider.value) / 100;
+            playerCam.GetComponent<AudioSource>().volume = (volumeSlider.value)/100;
+        }
+
         float evoPoints = GameState.current.currentReptile().evoPoints;
         if (evoPoints >= 1000000)
             EVPoints.text = (evoPoints / 1000000.0f).ToString("F2") + "m";
@@ -392,13 +408,16 @@ public class UI : MonoBehaviour
         }
         else
         {
-            yourHealth.text = (System.Math.Truncate(player.GetComponent<ReptileScript>().health * 100) / 100).ToString();
+            yourHealth.text = ( (int)player.GetComponent<ReptileScript>().health).ToString();
+            IStyle extraHealthStyle = extraHealth.style;
+            float extraHealthAmount = player.GetComponent<ReptileScript>().health - (int)player.GetComponent<ReptileScript>().health;
+            extraHealthStyle.height = new StyleLength(Length.Percent(extraHealthAmount * 100));
         }
 
         if (GameObject.Find("Level").GetComponent<LevelScript>().pauseGame)
             return;
 
-        return;
+        return; // getting rid of timing code
         // making outer circle smaller but still centered
         IStyle quickTimeStyle = quickTime.style;
         IStyle outerStyle = OuterCircle.style;

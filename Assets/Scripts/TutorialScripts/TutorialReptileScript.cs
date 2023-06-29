@@ -41,7 +41,7 @@ public class TutorialReptileScript : ReptileScript
             if (level.GetComponent<TutorialLevelScript>().hitRock == TutorialLevelScript.TipStatus.NotSeen)
             {
                 level.GetComponent<TutorialLevelScript>().hitRock = TutorialLevelScript.TipStatus.JustSeen;
-            } else if (health == 0.0f && level.GetComponent<TutorialLevelScript>().died == TutorialLevelScript.TipStatus.NotSeen)
+            } else if (health < 1.0f && level.GetComponent<TutorialLevelScript>().died == TutorialLevelScript.TipStatus.NotSeen)
             {
                 level.GetComponent<TutorialLevelScript>().died = TutorialLevelScript.TipStatus.JustSeen;
             }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CameraScript : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class CameraScript : MonoBehaviour
     bool battleMode = false;
     GameObject player;
     GameObject UI;
+    private GameObject reptileRunTitle;
 
     public bool stageIntro = false;
     public bool tutorialIntro = false;
@@ -29,6 +31,9 @@ public class CameraScript : MonoBehaviour
     {
         player = GameObject.Find("Reptile");
         UI = GameObject.Find("UIDocument");
+
+        reptileRunTitle = GameObject.Find("ReptileRunTitle");
+
         starterPos = gameObject.transform.position;
         starterPos.x = player.transform.position.x;
         starterQuat = gameObject.transform.rotation;
@@ -48,11 +53,18 @@ public class CameraScript : MonoBehaviour
             UI.GetComponent<UI>().UISetActive(false);
             gameObject.transform.position = new Vector3(player.GetComponent<Transform>().position.x, 5.5f, player.GetComponent<Transform>().position.z + cameraOffset);
         }
+
+        // reptileRunTitle.GetComponent<TMP_Text>().characterSpacing += 3.5f * Time.deltaTime;
+
         if (stageTutorialTimer < 2.0f)
         {
             stageTutorialTimer += Time.deltaTime;
             return;
         }
+
+        Color preColor = reptileRunTitle.GetComponent<TMP_Text>().color;
+        reptileRunTitle.GetComponent<TMP_Text>().color = new Color(preColor.r, preColor.g, preColor.b, preColor.a - (Time.deltaTime) );
+
         float percent = (stageIntroTimer / STAGEINTRO_TIME);
 
         gameObject.transform.position = new Vector3(player.GetComponent<Transform>().position.x, (5.5f * (1-percent)) + cameraYOffset*percent, player.GetComponent<Transform>().position.z + cameraOffset);
@@ -137,7 +149,11 @@ public class CameraScript : MonoBehaviour
     {
         // wait for loading to finish
         if (GameObject.Find("LoadingScreen") != null)
+        {
+            if(reptileRunTitle != null)
+                reptileRunTitle.SetActive(false);
             return;
+        }
 
         if(stageIntro)
         {
@@ -145,6 +161,8 @@ public class CameraScript : MonoBehaviour
             return;
         } else if (tutorialIntro)
         {
+            if(reptileRunTitle.activeSelf == false)
+                reptileRunTitle.SetActive(true);
             TutorialStageIntro();
             return;
         }

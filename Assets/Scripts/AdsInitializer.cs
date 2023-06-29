@@ -22,7 +22,7 @@ public class AdsInitializer : MonoBehaviour
 
     public UpgradeNode data_for_BoughtUpgrade;
 
-    private RewardedAd rewardedAd;
+    public RewardedAd rewardedAd;
 
     public void Start()
     {

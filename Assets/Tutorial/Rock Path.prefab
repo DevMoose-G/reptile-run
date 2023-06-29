@@ -481,6 +481,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9106434762998706270, guid: d24f8afacb318ca4e8a9f9e5ca32b748,
+        type: 3}
+      propertyPath: ableToFlee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9106434762998706270, guid: d24f8afacb318ca4e8a9f9e5ca32b748,
+        type: 3}
+      propertyPath: preyFleeDistance
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d24f8afacb318ca4e8a9f9e5ca32b748, type: 3}
 --- !u!4 &4533989097749193403 stripped
@@ -571,6 +581,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4559361127222372488}
     m_Modifications:
+    - target: {fileID: 125130646, guid: 7318798068b803e42b8cde32693884fc, type: 3}
+      propertyPath: startFleeTimer
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 125130646, guid: 7318798068b803e42b8cde32693884fc, type: 3}
+      propertyPath: preyFleeDistance
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5184524378122951384, guid: 7318798068b803e42b8cde32693884fc,
         type: 3}
       propertyPath: m_RootOrder

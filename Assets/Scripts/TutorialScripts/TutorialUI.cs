@@ -10,6 +10,7 @@ public class TutorialUI : UI
     void Start()
     {
 
+        playerCam = GameObject.Find("Main Camera");
         player = GameObject.Find("Reptile");
         level = GameObject.Find("Level");
 

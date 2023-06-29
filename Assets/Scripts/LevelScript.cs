@@ -15,13 +15,13 @@ public class LevelScript : MonoBehaviour
 
     protected GameObject lastObjectPlaced = null;
     protected static float starting_minZ_SpawnDistance = 6.0f;
-    protected float minZ_SpawnDistance = starting_minZ_SpawnDistance; // decreases as time goes by
+    public float minZ_SpawnDistance = starting_minZ_SpawnDistance; // decreases as time goes by
     protected float ending_SpawnDistance = 3.0f; // make it so that this decreases as you get more totalEvopoints (closer to evolutions)
     public GameObject player;
     public GameObject playerCam;
     public GameObject battleStage;
 
-    public GameObject treePrefab;
+    public GameObject rockPrefab;
     public List<GameObject> preyPrefabs;
     public GameObject battleStagePrefab;
     protected GameObject UI;
@@ -170,7 +170,7 @@ public class LevelScript : MonoBehaviour
             Debug.Log("You have fallen off the map");
             EndRun();
         }
-        if (player.GetComponent<ReptileScript>().health <= 0)
+        if (player.GetComponent<ReptileScript>().health < 1.0f)
         {
             EndRun();
         }
@@ -204,20 +204,20 @@ public class LevelScript : MonoBehaviour
             float randX = Random.Range(-1.35f, 1.35f);
             float randZ = Random.Range(minZ_SpawnDistance, minZ_SpawnDistance * 1.5f);
             Vector3 newObject_position = lastObjectPlaced.transform.position + new Vector3(0.0f, 0.0f, randZ);
-            newObject_position.x = randX;
 
             float typeToSpawn = Random.Range(0.0f, 1.0f);
             // percents: stone/0.2, ladybug/0.45, spider/0.25, butterfly/0.10
             if (typeToSpawn > 0.8)
             {
-                lastObjectPlaced = Instantiate(treePrefab, gameObject.transform, true);
+                lastObjectPlaced = Instantiate(rockPrefab, gameObject.transform, true);
                 float randRot = Random.Range(0.0f, 360.0f);
                 lastObjectPlaced.transform.Rotate(0, randRot, 0);
             }
-            else if (typeToSpawn > 0.35)
+            else if (typeToSpawn > 0.35) // ladybug
             {
                 if (Mathf.Abs(randX) > 1.25)
                     randX = Random.Range(-1.25f, 1.25f);
+                newObject_position.y = -0.009f;
                 lastObjectPlaced = Instantiate(preyPrefabs[0], gameObject.transform, true);
             }
             else if (typeToSpawn > 0.1)
@@ -232,7 +232,9 @@ public class LevelScript : MonoBehaviour
                     randX = Random.Range(-1.2f, 1.2f);
                 lastObjectPlaced = Instantiate(preyPrefabs[2], gameObject.transform, true);
             }
+            newObject_position.x = randX;
             lastObjectPlaced.transform.position = newObject_position;
+            print(newObject_position);
         }
 
         // adding decoration
@@ -247,7 +249,6 @@ public class LevelScript : MonoBehaviour
             int typeToSpawn = Random.Range(0, 6);
             lastDecorationPlaced = Instantiate(flowers[typeToSpawn], gameObject.transform, true);
             lastDecorationPlaced.transform.position = newObject_position;
-
         }
 
         // deleting objects that have passed

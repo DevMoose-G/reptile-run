@@ -9,6 +9,8 @@ public class StoreScript : MonoBehaviour
     public Button backButton;
     public Label crownsLabel;
 
+    public GameObject loadingScreen;
+
     void Awake()
     {
         SaveGameScript.Load();
@@ -21,11 +23,15 @@ public class StoreScript : MonoBehaviour
         backButton.RegisterCallback<ClickEvent>(BackToGame);
 
         crownsLabel = root.Q<Label>("CrownsLabel");
+
+        loadingScreen = GameObject.Find("LoadingScreen");
+        loadingScreen.SetActive(false);
     }
 
     private void BackToGame(ClickEvent evt)
     {
-        SceneManager.LoadScene(0);
+        loadingScreen.SetActive(true);
+        SceneManager.LoadSceneAsync(0);
     }
 
     // Update is called once per frame

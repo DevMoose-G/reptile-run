@@ -1295,4 +1295,6 @@ MonoBehaviour:
   name: Spider
   preyFleeDistance: 8
   preySpeed: 2.25
-  evoPoints: 30
+  evoPoints: 25
+  startFleeTimer: 1
+  ableToFlee: 1

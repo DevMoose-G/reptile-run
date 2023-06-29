@@ -107,5 +107,19 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.1955352, y: 1.6183355, z: 1.9950681}
-  m_Center: {x: 0.009317756, y: 0.7309483, z: 0.2969978}
+  m_Size: {x: 2.1955352, y: 1.4969803, z: 1.8888817}
+  m_Center: {x: 0.009317756, y: 0.67027074, z: 0.28941345}
+--- !u!136 &3166891431791186505
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135636056782827073}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.9184653
+  m_Height: 2.4980297
+  m_Direction: 0
+  m_Center: {x: 0.026524782, y: 0.813312, z: 0.32082492}

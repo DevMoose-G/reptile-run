@@ -40,7 +40,7 @@ public class TongueScript : MonoBehaviour
             switch (prey.name)
             {
                 case "Ladybug":
-                    reptile.health += 0.25f;
+                    reptile.health += 0.1f;
                     reptile.damageIndicator.GetComponent<TMP_Text>().text = "Health powerup";
                     reptile.damageIndicator.GetComponent<TMP_Text>().color = new Color(0.9f, 0.2f, 0, 1);
                     break;
