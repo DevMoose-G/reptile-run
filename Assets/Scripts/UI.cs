@@ -12,6 +12,8 @@ public class UI : MonoBehaviour
     public GroupBox quickTime;
     public float timerTillShown = GameState.current.reptiles[GameState.current.current_reptile_idx].attackSpeed;
 
+    public VisualTreeAsset battleUI;
+
     public Label yourHealth;
     public VisualElement extraHealth;
 
@@ -85,6 +87,32 @@ public class UI : MonoBehaviour
         quickTimeStyle.display = DisplayStyle.None;
 
         
+    }
+
+    public void SwitchToBattleUI()
+    {
+        GetComponent<UIDocument>().visualTreeAsset = battleUI;
+
+        VisualElement root = GetComponent<UIDocument>().rootVisualElement;
+        opponentName = root.Q<Label>("OpponentName");
+        opponentInfo = root.Q<GroupBox>("OpponentInfo");
+        opponentHealthBar = root.Q<VisualElement>("HealthBar");
+
+        root.Q<Label>("YourName").text = GameState.current.currentReptile().name;
+        root.Q<Label>("YourSpecies").text = "the " + GameState.current.currentReptile().species;
+
+        for (int i = 1; i <= 4; i++)
+        {
+            if (i <= GameState.current.currentReptile().moves.Count)
+            {
+                root.Q<Button>("Move" + i.ToString() ).Q<Label>("Name").text = GameState.current.currentReptile().moves[i-1].name;
+            } else
+            {
+                // hide the move
+                IStyle moveStyle = root.Q<Button>("Move" + i.ToString()).style;
+                moveStyle.visibility = Visibility.Hidden;
+            }
+        }
     }
 
     public void GetUIVariables()

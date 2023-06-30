@@ -3,7 +3,24 @@ using System.Collections.Generic;
 using System.Collections;
 
 [System.Serializable]
+public class MoveData
+{
+    public string name = "";
+    public float coolDownTime = 0.0f;
+    public bool auto = false;
+
+    public MoveData(string n, float cooldown)
+    {
+        this.name = n;
+        this.coolDownTime = cooldown;
+    }
+}
+
+[System.Serializable]
 public class ReptileData {
+    public string name = "";
+    public string species = "";
+
     public int evoPoints = 0;
     public int totalEvoPoints = 0; // the total accumulated evo points
 
@@ -21,6 +38,8 @@ public class ReptileData {
     public float stage1Evolution = 3500f;
     public float stage2Evolution = 9800f;
 
+    public List<MoveData> moves = new List<MoveData>();
+
     public Dictionary<string, int> stage_levels = new Dictionary<string, int>(); // each reptile has progress on what level they are on
 
     public ReptileData()
@@ -28,6 +47,13 @@ public class ReptileData {
         // stage level first
         stage_levels.Add("ForestStage", 1);
         evoPoints = 0;
+        name = "Gary";
+        species = "Gecko";
+
+        moves.Add(new MoveData("Bite", 2.0f));
+        moves.Add(new MoveData("Counter", 4.0f));
+        moves.Add(new MoveData("Hydro Wave", 4.0f));
+        moves.Add(new MoveData("Quick Attack", 4.0f));
     }
 
 }
@@ -44,8 +70,6 @@ public class GameState
     public int crowns; 
 
     public GameState() {
-
-        
 
         // load gary gecko as first reptile
         reptiles.Add(new ReptileData());

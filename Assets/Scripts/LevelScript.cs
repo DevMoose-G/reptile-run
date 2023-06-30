@@ -191,6 +191,7 @@ public class LevelScript : MonoBehaviour
                 print("BATTLE STAGE");
                 print(player.GetComponent<ReptileScript>().battleStage);
                 playerCam.GetComponent<CameraScript>().BattleModeSetup(battleStage);
+                UI.GetComponent<UI>().SwitchToBattleUI();
             }
         }
 
