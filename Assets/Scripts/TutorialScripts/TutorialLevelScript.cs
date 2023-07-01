@@ -235,7 +235,7 @@ public class TutorialLevelScript : LevelScript
         }
 
         // died from hitting rock
-        if (died == TipStatus.JustSeen)
+        if (died == TipStatus.JustSeen && hitRock == TipStatus.BeenSeen)
         {
             died = TipStatus.BeenSeen;
             PauseGame();
@@ -355,10 +355,9 @@ public class TutorialLevelScript : LevelScript
         // battle stage intro tip
         // enter battle stage (if battle stage is not created, you have seen preytip & diedTip & upgradeTip & you have traveled 5 units of level
         // & you are 3 units in front of last gameobject
-        if (battleStage == null && preyRunsShown == TipStatus.BeenSeen && died == TipStatus.BeenSeen && upgradeTipShown == TipStatus.BeenSeen 
+        if (battleStage == null && preyRunsShown == TipStatus.BeenSeen && upgradeTipShown == TipStatus.BeenSeen 
             && gameObject.transform.position.z < -5 && player.gameObject.transform.position.z > lastObjectPlaced.transform.position.z + 3)
         {
-            Debug.Log("ENTERING BATTLE STAGE");
             battleStage = Instantiate(battleStagePrefab, gameObject.transform, true);
             battleStage.transform.position = new Vector3(0, 0, player.transform.position.z + 5.0f);
 
@@ -366,8 +365,6 @@ public class TutorialLevelScript : LevelScript
             player.GetComponent<Transform>().position = new Vector3(0, player.transform.position.y, player.transform.position.z);
 
             player.GetComponent<ReptileScript>().battleStage = battleStage;
-            print("BATTLE STAGE");
-            print(player.GetComponent<ReptileScript>().battleStage);
             playerCam.GetComponent<CameraScript>().BattleModeSetup(battleStage);
 
             battleStageShown = TipStatus.JustSeen;
@@ -387,8 +384,6 @@ public class TutorialLevelScript : LevelScript
             player.GetComponent<Transform>().position = new Vector3(0, player.transform.position.y, player.transform.position.z);
 
             player.GetComponent<ReptileScript>().battleStage = battleStage;
-            print("BATTLE STAGE");
-            print(player.GetComponent<ReptileScript>().battleStage);
             playerCam.GetComponent<CameraScript>().BattleModeSetup(battleStage);
         }
 
@@ -432,7 +427,6 @@ public class TutorialLevelScript : LevelScript
                 Touch theTouch = Input.GetTouch(0);
                 if (swipeUpTip.activeSelf) {
                     // check if it is a vertical swipe
-                    print(player.GetComponent<ReptileScript>().tongueOut);
                     if (player.GetComponent<ReptileScript>().tongueOut)
                     {
                         if(UpgradeScreen.activeSelf == false)

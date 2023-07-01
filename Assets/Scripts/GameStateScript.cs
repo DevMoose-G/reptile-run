@@ -67,7 +67,7 @@ public class GameState
 
     public int current_reptile_idx = 0;
     
-    public int crowns; 
+    public int crowns;
 
     public GameState() {
 
@@ -90,7 +90,6 @@ public class GameState
     public float progressTowardsEvolution() {
         
         if (currentReptile().currentEvolution == 1) {
-            Debug.Log(reptiles[current_reptile_idx].totalEvoPoints / reptiles[current_reptile_idx].stage1Evolution);
             return reptiles[current_reptile_idx].totalEvoPoints / reptiles[current_reptile_idx].stage1Evolution;
         } else if (currentReptile().currentEvolution == 2)
         {

@@ -22,8 +22,6 @@ public class AdsInitializer : MonoBehaviour
 
     public UpgradeNode data_for_BoughtUpgrade;
 
-    public RewardedAd rewardedAd;
-
     public void Start()
     {
         // When true all events raised by GoogleMobileAds will be raised
@@ -37,10 +35,10 @@ public class AdsInitializer : MonoBehaviour
     public void LoadRewardedAd()
     {
         // Clean up the old ad before loading a new one.
-        if (rewardedAd != null)
+        if (AdsManager.rewardedAd != null)
         {
-            rewardedAd.Destroy();
-            rewardedAd = null;
+            AdsManager.rewardedAd.Destroy();
+            AdsManager.rewardedAd = null;
         }
 
         Debug.Log("Loading the rewarded ad.");
@@ -64,7 +62,9 @@ public class AdsInitializer : MonoBehaviour
                 Debug.Log("Rewarded ad loaded with response : "
                           + ad.GetResponseInfo());
 
-                rewardedAd = ad;
+                AdsManager.rewardedAd = ad;
+
+                GameObject.Find("UIDocument").GetComponent<UI>().UpdateUpgrades();
             });
     }
 
@@ -73,9 +73,9 @@ public class AdsInitializer : MonoBehaviour
         const string rewardMsg =
             "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
 
-        if (rewardedAd != null && rewardedAd.CanShowAd())
+        if (AdsManager.rewardedAd != null && AdsManager.rewardedAd.CanShowAd())
         {
-            rewardedAd.Show((Reward reward) =>
+            AdsManager.rewardedAd.Show((Reward reward) =>
             {
                 Debug.Log(System.String.Format(rewardMsg, reward.Type, reward.Amount));
                 // Grant a reward.
@@ -103,15 +103,19 @@ public class AdsInitializer : MonoBehaviour
             // Reload the ad so that we can show another as soon as possible.
             LoadRewardedAd();
         };
+
+        ad.OnAdPaid += (AdValue val) =>
+        {
+            if (AdsManager.rewardedAd.CanShowAd() == false)
+            {
+                LoadRewardedAd();
+            }
+        };
     }
 
     void OnDestroy()
     {
-        if(rewardedAd != null)
-        {
-            rewardedAd.Destroy();
-            rewardedAd = null;
-        }
+        
     }
 
     /*

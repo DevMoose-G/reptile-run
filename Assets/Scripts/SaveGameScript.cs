@@ -28,7 +28,6 @@ public static class SaveGameScript
 
         StreamReader reader = new StreamReader(Application.persistentDataPath + "/game.rr");
         string jsonData = reader.ReadToEnd();
-        Debug.Log(jsonData);
         reader.Close();
         GameState.current = JsonUtility.FromJson<GameState>(jsonData);
 
@@ -45,7 +44,6 @@ public static class SaveGameScript
 
     public static void Clear()
     {
-        Debug.Log("CLEARING DATA");
         GameState.current = new GameState();
         
         if (System.IO.File.Exists(Application.persistentDataPath + "/game.rr"))

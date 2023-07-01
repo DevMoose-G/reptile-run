@@ -100,7 +100,6 @@ public class ReptileScript : MonoBehaviour
         }
         else if (collision.gameObject.name != "Floor" && collision.gameObject.GetComponent<PreyScript>() == null)
         {
-            Debug.Log("You hit a " + collision.gameObject.name);
             health -= 1.0f;
 
             if (health < 1.0f)
@@ -130,7 +129,6 @@ public class ReptileScript : MonoBehaviour
             GameObject loadedModel = Resources.Load("Evolutions/Gecko_Stage1") as GameObject;
             GameObject newModel = Instantiate(loadedModel, gameObject.transform);
             newModel.transform.localPosition = new Vector3(0, 0.676f, 0);
-            print(newModel.name);
             newModel.name = "Model";
             animator = gameObject.transform.Find("Model").gameObject.GetComponent<Animator>();
         } else if(stage_num == 2) {
@@ -138,7 +136,6 @@ public class ReptileScript : MonoBehaviour
             GameObject loadedModel = Resources.Load("Evolutions/Gecko_Stage2") as GameObject;
             GameObject newModel = Instantiate(loadedModel, gameObject.transform);
             newModel.transform.localPosition = new Vector3(0, 0.676f, 0);
-            print(newModel.name);
             newModel.name = "Model";
             animator = gameObject.transform.Find("Model").gameObject.GetComponent<Animator>();
         }
@@ -148,7 +145,6 @@ public class ReptileScript : MonoBehaviour
             GameObject loadedModel = Resources.Load("Evolutions/Gecko_Stage3") as GameObject;
             GameObject newModel = Instantiate(loadedModel, gameObject.transform);
             newModel.transform.localPosition = new Vector3(0, 0.676f, 0);
-            print(newModel.name);
             newModel.name = "Model";
             animator = gameObject.transform.Find("Model").gameObject.GetComponent<Animator>();
             tongue.transform.localPosition = new Vector3(0, 0.076f, 0.84f);
@@ -161,6 +157,8 @@ public class ReptileScript : MonoBehaviour
     }
 
     internal void BattleUpdate() {
+        if (level.GetComponent<LevelScript>().pauseGame)
+            return;
 
         if (battleStage.GetComponent<BattleStageScript>().opponentsOrdering.Count == 0) {
             if (battleStage.GetComponent<BattleStageScript>().crown != null)
@@ -173,7 +171,6 @@ public class ReptileScript : MonoBehaviour
                 controller.MovePosition(transform.position + (new Vector3(0, 0, 1.0f) * Time.deltaTime * playerSpeed));
             } else
             {
-                print("PICKED UP CROWN");
 
                 SetAudio(walkSound, false, true);
 
@@ -465,7 +462,6 @@ public class ReptileScript : MonoBehaviour
         }
         else
         {
-            print("STOPPED MOVING");
             move = new Vector3(0, 0, 0);
             animator.SetBool("isMoving", false);
             SetAudio(walkSound, false, true);

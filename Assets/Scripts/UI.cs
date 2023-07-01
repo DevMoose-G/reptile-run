@@ -58,37 +58,20 @@ public class UI : MonoBehaviour
         level = GameObject.Find("Level");
 
         adsManager = GameObject.Find("Ads Manager");
-        adsManager.GetComponent<AdsInitializer>().LoadRewardedAd();
+        if (AdsManager.rewardedAd == null || AdsManager.rewardedAd.CanShowAd() == false)
+        {
+            adsManager.GetComponent<AdsInitializer>().LoadRewardedAd();
+        }
 
         GetUIDocuments();
 
         GetUIVariables();
         UpdateUpgrades();
-        SetupBattleUI();
 
         progressScreen.SetActive(false);
         winScreen.SetActive(false);
 
         volumeSlider.value = PlayerPrefs.GetFloat("volume", volumeSlider.value);
-    }
-
-    public void SetupBattleUI()
-    {
-        IStyle opponentInfoStyle = opponentInfo.style;
-        opponentInfoStyle.visibility = Visibility.Hidden;
-        return;
-        IStyle style = OuterCircle.style;
-        style.width = MAX_SIZE;
-        style.height = MAX_SIZE;
-
-        IStyle innerStyle = InnerCircle.style;
-        innerStyle.width = MIN_SIZE;
-        innerStyle.height = MIN_SIZE;
-
-        IStyle quickTimeStyle = quickTime.style;
-        quickTimeStyle.display = DisplayStyle.None;
-
-
     }
 
     public void SwitchToBattleUI()
@@ -314,6 +297,8 @@ public class UI : MonoBehaviour
 
     public void UpdateUpgrades()
     {
+        if (upgrade1 == null)
+            GetUIVariables();
         IStyle upgrade1Style = upgrade1.style;
         IStyle upgrade2Style = upgrade2.style;
         IStyle upgrade3Style = upgrade3.style;
@@ -335,7 +320,7 @@ public class UI : MonoBehaviour
                 upgrades[i].UnregisterCallback<ClickEvent, UpgradeNode>(AdUpgrade, TrickleDown.TrickleDown);
 
                 if (GameState.current.currentReptile().evoPoints >= nodes[i].cost || adUpgradeCounter >= MAX_NUM_OF_AD_UPGRADES || adsManager == null
-                    || adsManager.GetComponent<AdsInitializer>().rewardedAd == null) // if you have enough evo points, show the cost
+                    || AdsManager.rewardedAd.CanShowAd() == false) // if you have enough evo points, show the cost
                 {
                     upgrades[i].Q<Label>("EvoAmount").text = nodes[i].cost.ToString();
                     upgrades[i].RegisterCallback<ClickEvent, UpgradeNode>(BuyUpgrade, nodes[i]);
@@ -369,12 +354,10 @@ public class UI : MonoBehaviour
         }
         adsManager.GetComponent<AdsInitializer>().data_for_BoughtUpgrade = data;
         adsManager.GetComponent<AdsInitializer>().ShowRewardedAd();
-        adsManager.GetComponent<AdsInitializer>().LoadRewardedAd();
     }
 
     public void BuyUpgrade(ClickEvent evt, UpgradeNode node)
     {
-        print("Buying UPGRADE");
         if (GameState.current.currentReptile().evoPoints >= node.cost)
         {
             GameState.current.subtractEvoPoints(node.cost);
@@ -389,7 +372,6 @@ public class UI : MonoBehaviour
         GameState.current.currentReptile().upgradeTree.nodes_obtained.Add(node.id);
 
         // apply the upgrade
-        print(node.category);
         if (node.category == "Tongue")
         {
             GameState.current.currentReptile().tonguePeakLength += node.amount;
@@ -417,7 +399,6 @@ public class UI : MonoBehaviour
 
     public void StartGame(ClickEvent evt)
     {
-        print("TRYING TO PLAY GAME");
         GameObject.Find("Level").GetComponent<LevelScript>().isMoving = true;
         upgradeScreen.SetActive(false);
         player.GetComponent<ReptileScript>().animator.SetBool("isMoving", true);
@@ -429,7 +410,6 @@ public class UI : MonoBehaviour
     {
         if (upgradeScreen.activeSelf)
         {
-            print((volumeSlider.value) / 100);
             player.GetComponent<AudioSource>().volume = (volumeSlider.value) / 100;
             playerCam.GetComponent<AudioSource>().volume = (volumeSlider.value) / 100;
         }
@@ -455,6 +435,13 @@ public class UI : MonoBehaviour
 
         if (GameObject.Find("Level").GetComponent<LevelScript>().pauseGame)
             return;
+
+        // if in battle mode
+        if(GetComponent<UIDocument>().visualTreeAsset == battleUI)
+        {
+            VisualElement root = GetComponent<UIDocument>().rootVisualElement;
+            // root.Q<Button>("Move" + i.ToString()).Q<VisualElement>("Cooldown").text = GameState.current.currentReptile().moves[i - 1].name;
+        }
 
         return; // getting rid of timing code
         // making outer circle smaller but still centered

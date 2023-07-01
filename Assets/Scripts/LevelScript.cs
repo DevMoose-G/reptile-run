@@ -40,7 +40,6 @@ public class LevelScript : MonoBehaviour
         SaveGameScript.Load();
 
         playerCam = GameObject.Find("Main Camera");
-        print("REAWAKING LEVEL");
 
         // check if you need tutoral
         
@@ -64,15 +63,17 @@ public class LevelScript : MonoBehaviour
         lastObjectPlaced = GameObject.Find("StartingRock");
         UI = GameObject.Find("UIDocument");
         UpgradeScreen = GameObject.Find("UpgradeScreen");
-
-        switch(GameState.current.currentReptile().stage_levels["ForestStage"])
+        if (!isTutorial)
         {
-            case 1:
-                battleStagePrefab = Resources.Load("Prefabs/1_BattleStage") as GameObject;
-                break;
-            case 2:
-                battleStagePrefab = Resources.Load("Prefabs/2_BattleStage") as GameObject;
-                break;
+            switch (GameState.current.currentReptile().stage_levels["ForestStage"])
+            {
+                case 1:
+                    battleStagePrefab = Resources.Load("Prefabs/1_BattleStage") as GameObject;
+                    break;
+                case 2:
+                    battleStagePrefab = Resources.Load("Prefabs/2_BattleStage") as GameObject;
+                    break;
+            }
         }
 
         flowers.Add(Resources.Load("Prefabs/flower01") as GameObject);
@@ -114,20 +115,16 @@ public class LevelScript : MonoBehaviour
 
         
         VisualElement bgImage = progressRoot.Q<VisualElement>("BGImage");
-        print(bgImage);
         IStyle bgStyle = bgImage.style;
         switch (GameState.current.currentReptile().currentEvolution)
         {
             case 1:
-                print("ALSO HERE");
                 bgStyle.backgroundImage = Background.FromTexture2D(Resources.Load("Evolutions/GeckoStage2_whiteout") as Texture2D);
                 break;
             case 2:
-                print("GOT HERE");
                 bgStyle.backgroundImage = Background.FromTexture2D(Resources.Load("Evolutions/Gecko3-whiteout") as Texture2D);
                 break;
         }
-        print(bgStyle.backgroundImage);
         
 
         /*
@@ -148,7 +145,6 @@ public class LevelScript : MonoBehaviour
 
     public void EndGame(ClickEvent evt)
     {
-        print("ENDING GAME");
         PlayerPrefs.SetInt("NumberOfRuns", PlayerPrefs.GetInt("NumberOfRuns", 0) + 1);
         PlayerPrefs.Save();
         if (isTutorial)
@@ -167,7 +163,6 @@ public class LevelScript : MonoBehaviour
     {
         if (Mathf.Abs(player.transform.position.x) > 1.5)
         { // you have falled off map
-            Debug.Log("You have fallen off the map");
             EndRun();
         }
         if (player.GetComponent<ReptileScript>().health < 1.0f)
@@ -180,7 +175,6 @@ public class LevelScript : MonoBehaviour
             // enter battle stage
             if (battleStage == null)
             {
-                Debug.Log("ENTERING BATTLE STAGE");
                 battleStage = Instantiate(battleStagePrefab, gameObject.transform, true);
                 battleStage.transform.position = new Vector3(0, 0, player.transform.position.z + 5.0f);
 
@@ -188,8 +182,6 @@ public class LevelScript : MonoBehaviour
                 player.GetComponent<Transform>().position = new Vector3(0, player.transform.position.y, player.transform.position.z);
 
                 player.GetComponent<ReptileScript>().battleStage = battleStage;
-                print("BATTLE STAGE");
-                print(player.GetComponent<ReptileScript>().battleStage);
                 playerCam.GetComponent<CameraScript>().BattleModeSetup(battleStage);
                 UI.GetComponent<UI>().SwitchToBattleUI();
             }
@@ -235,7 +227,6 @@ public class LevelScript : MonoBehaviour
             }
             newObject_position.x = randX;
             lastObjectPlaced.transform.position = newObject_position;
-            print(newObject_position);
         }
 
         // adding decoration

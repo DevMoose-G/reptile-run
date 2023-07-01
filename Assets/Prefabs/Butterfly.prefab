@@ -1452,10 +1452,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Butterfly
-  preyFleeDistance: 5
-  preySpeed: 2.75
+  preyFleeDistance: 7
+  preySpeed: 3
   evoPoints: 60
-  startFleeTimer: 1
+  startFleeTimer: 1.55
   ableToFlee: 1
 --- !u!1 &8554124482612550876
 GameObject:

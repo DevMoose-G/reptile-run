@@ -34,7 +34,6 @@ public class TutorialReptileScript : ReptileScript
         }
         else if (collision.gameObject.name != "Floor" && collision.gameObject.GetComponent<PreyScript>() == null && level.GetComponent<TutorialLevelScript>().isMoving)
         {
-            Debug.Log("You hit a " + collision.gameObject.name);
             health -= 1.0f;
 
             timeSinceHurt = HURT_TIME;

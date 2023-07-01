@@ -24,6 +24,8 @@ public class TutorialUI : UI
 
         progressScreen.SetActive(false);
         winScreen.SetActive(false);
+
+        volumeSlider.value = PlayerPrefs.GetFloat("volume", volumeSlider.value);
     }
 
     void Update()
