@@ -47,7 +47,7 @@ public class UI : MonoBehaviour
     private int MAX_NUM_OF_AD_UPGRADES = 1;
     public int adUpgradeCounter = 0;
 
-    public List<bool> UIActiveStates = new List<bool>{true, true, true, true};
+    public List<bool> UIActiveStates = new List<bool> { true, true, true, true };
 
     // Start is called before the first frame update
     void Start()
@@ -68,6 +68,8 @@ public class UI : MonoBehaviour
 
         progressScreen.SetActive(false);
         winScreen.SetActive(false);
+
+        volumeSlider.value = PlayerPrefs.GetFloat("volume", volumeSlider.value);
     }
 
     public void SetupBattleUI()
@@ -86,7 +88,7 @@ public class UI : MonoBehaviour
         IStyle quickTimeStyle = quickTime.style;
         quickTimeStyle.display = DisplayStyle.None;
 
-        
+
     }
 
     public void SwitchToBattleUI()
@@ -105,8 +107,9 @@ public class UI : MonoBehaviour
         {
             if (i <= GameState.current.currentReptile().moves.Count)
             {
-                root.Q<Button>("Move" + i.ToString() ).Q<Label>("Name").text = GameState.current.currentReptile().moves[i-1].name;
-            } else
+                root.Q<Button>("Move" + i.ToString()).Q<Label>("Name").text = GameState.current.currentReptile().moves[i - 1].name;
+            }
+            else
             {
                 // hide the move
                 IStyle moveStyle = root.Q<Button>("Move" + i.ToString()).style;
@@ -152,14 +155,14 @@ public class UI : MonoBehaviour
         {
             VisualElement winRoot = winScreen.GetComponent<UIDocument>().rootVisualElement;
             winScreenContinue = winRoot.Q<Button>("Continue");
-            if(level != null)
+            if (level != null)
                 winScreenContinue.RegisterCallback<ClickEvent>(level.GetComponent<LevelScript>().EndGame);
         }
     }
 
     public void GetUIDocuments()
     {
-        if(upgradeScreen == null)
+        if (upgradeScreen == null)
             upgradeScreen = GameObject.Find("UpgradeScreen");
         if (winScreen == null)
             winScreen = GameObject.Find("WinScreen");
@@ -167,7 +170,8 @@ public class UI : MonoBehaviour
             progressScreen = GameObject.Find("ProgressScreen");
     }
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         UpgradeTree.Load();
     }
 
@@ -186,7 +190,8 @@ public class UI : MonoBehaviour
             gameObject.GetComponent<UIDocument>().enabled = on;
             progressScreen.SetActive(on);
             upgradeScreen.SetActive(on);
-        } else
+        }
+        else
         {
             GetUIDocuments();
 
@@ -283,8 +288,9 @@ public class UI : MonoBehaviour
         return ret;
     }
 
-    public float ratioInnerOuterCircle() {
-        if(quickTime.style.display == DisplayStyle.None)
+    public float ratioInnerOuterCircle()
+    {
+        if (quickTime.style.display == DisplayStyle.None)
         {
             return -1.0f;
         }
@@ -293,7 +299,8 @@ public class UI : MonoBehaviour
         return innerStyle.width.value.value / outerStyle.width.value.value;
     }
 
-    public void circleHit() {
+    public void circleHit()
+    {
         // resets the outer circle
         IStyle style = OuterCircle.style;
         style.width = MAX_SIZE;
@@ -305,7 +312,8 @@ public class UI : MonoBehaviour
         innerStyle.display = DisplayStyle.None;
     }
 
-    public void UpdateUpgrades() {
+    public void UpdateUpgrades()
+    {
         IStyle upgrade1Style = upgrade1.style;
         IStyle upgrade2Style = upgrade2.style;
         IStyle upgrade3Style = upgrade3.style;
@@ -332,7 +340,8 @@ public class UI : MonoBehaviour
                     upgrades[i].Q<Label>("EvoAmount").text = nodes[i].cost.ToString();
                     upgrades[i].RegisterCallback<ClickEvent, UpgradeNode>(BuyUpgrade, nodes[i]);
                 }
-                else { // else write, show add
+                else
+                { // else write, show add
                     upgrades[i].Q<Label>("EvoAmount").text = "Watch Ad";
                     upgrades[i].RegisterCallback<ClickEvent, UpgradeNode>(AdUpgrade, nodes[i]);
                 }
@@ -354,7 +363,8 @@ public class UI : MonoBehaviour
 
     private void AdUpgrade(ClickEvent evt, UpgradeNode data)
     {
-        if(adUpgradeCounter >= MAX_NUM_OF_AD_UPGRADES) {
+        if (adUpgradeCounter >= MAX_NUM_OF_AD_UPGRADES)
+        {
             return; // stop watching ads after you hit max ads
         }
         adsManager.GetComponent<AdsInitializer>().data_for_BoughtUpgrade = data;
@@ -375,7 +385,7 @@ public class UI : MonoBehaviour
     public void ApplyUpgrade(ClickEvent evt, UpgradeNode node)
     {
         print("BOUGHT UPGRADE");
-        
+
         GameState.current.currentReptile().upgradeTree.nodes_obtained.Add(node.id);
 
         // apply the upgrade
@@ -386,7 +396,8 @@ public class UI : MonoBehaviour
             GameState.current.currentReptile().tongueRetractionSpeed *= node.amount2;
             GameState.current.currentReptile().tongueSpeed *= node.amount2;
         }
-        else if (node.category == "Health") { 
+        else if (node.category == "Health")
+        {
             GameState.current.currentReptile().MAX_HEALTH += node.amount;
             player.GetComponent<ReptileScript>().health = GameState.current.currentReptile().MAX_HEALTH;
         }
@@ -420,7 +431,7 @@ public class UI : MonoBehaviour
         {
             print((volumeSlider.value) / 100);
             player.GetComponent<AudioSource>().volume = (volumeSlider.value) / 100;
-            playerCam.GetComponent<AudioSource>().volume = (volumeSlider.value)/100;
+            playerCam.GetComponent<AudioSource>().volume = (volumeSlider.value) / 100;
         }
 
         float evoPoints = GameState.current.currentReptile().evoPoints;
@@ -436,7 +447,7 @@ public class UI : MonoBehaviour
         }
         else
         {
-            yourHealth.text = ( (int)player.GetComponent<ReptileScript>().health).ToString();
+            yourHealth.text = ((int)player.GetComponent<ReptileScript>().health).ToString();
             IStyle extraHealthStyle = extraHealth.style;
             float extraHealthAmount = player.GetComponent<ReptileScript>().health - (int)player.GetComponent<ReptileScript>().health;
             extraHealthStyle.height = new StyleLength(Length.Percent(extraHealthAmount * 100));
@@ -451,8 +462,9 @@ public class UI : MonoBehaviour
         IStyle outerStyle = OuterCircle.style;
         IStyle innerStyle = InnerCircle.style;
 
-        if (quickTimeStyle.display != DisplayStyle.None && progressScreen != null && !progressScreen.activeSelf) {
-            
+        if (quickTimeStyle.display != DisplayStyle.None && progressScreen != null && !progressScreen.activeSelf)
+        {
+
 
             if (outerStyle.width.value.value <= MIN_SIZE) // resets circle once it hits the inner circle
             {
@@ -465,7 +477,8 @@ public class UI : MonoBehaviour
             if (outerStyle.display == DisplayStyle.None) // if outer circle is invisible, wait for timerTillShown to hit 0, then show both circles
             {
                 timerTillShown -= Time.deltaTime;
-                if (timerTillShown <= 0) {
+                if (timerTillShown <= 0)
+                {
                     timerTillShown = GameState.current.currentReptile().attackSpeed;
                     outerStyle.display = DisplayStyle.Flex;
                     innerStyle.display = DisplayStyle.Flex;
@@ -486,7 +499,12 @@ public class UI : MonoBehaviour
                 outerStyle.top = 32 - (outerStyle.height.value.value / 2) - (innerStyle.height.value.value / 2);
                 outerStyle.left = (innerStyle.height.value.value / 2) - (outerStyle.width.value.value / 2) + 32;
             }
-        } 
+        }
 
+    }
+
+    void OnDestroy()
+    {
+        PlayerPrefs.SetFloat("volume", volumeSlider.value);
     }
 }
