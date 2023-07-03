@@ -42,7 +42,7 @@ public class CameraScript : MonoBehaviour
     public void BattleModeSetup(GameObject battleStage) {
         RenderSettings.fog = false;
         battleMode = true;
-        gameObject.transform.position = new Vector3(17.5f, 0.75f, battleStage.transform.position.z - 1.5f);
+        gameObject.transform.position = new Vector3(19.5f, 0.75f, battleStage.transform.position.z - 1.5f);
         gameObject.transform.Rotate(0, -90, 0);
     }
 
@@ -79,7 +79,6 @@ public class CameraScript : MonoBehaviour
         {
             tutorialIntro = false;
             UI.GetComponent<UI>().UISetActive(true);
-            UI.GetComponent<UI>().SetupBattleUI();
         }
     }
 
@@ -140,7 +139,6 @@ public class CameraScript : MonoBehaviour
             stageIntro = false;
             stageIntroTimer = 0.0f;
             UI.GetComponent<UI>().UISetActive(true);
-            UI.GetComponent<UI>().SetupBattleUI();
         }
 
     }

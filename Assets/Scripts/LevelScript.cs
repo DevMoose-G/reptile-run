@@ -165,7 +165,7 @@ public class LevelScript : MonoBehaviour
         { // you have falled off map
             EndRun();
         }
-        if (player.GetComponent<ReptileScript>().health < 1.0f)
+        if (player.GetComponent<ReptileScript>().health <= 0.0f)
         {
             EndRun();
         }
@@ -175,6 +175,8 @@ public class LevelScript : MonoBehaviour
             // enter battle stage
             if (battleStage == null)
             {
+                UI.GetComponent<UI>().SwitchToBattleUI();
+
                 battleStage = Instantiate(battleStagePrefab, gameObject.transform, true);
                 battleStage.transform.position = new Vector3(0, 0, player.transform.position.z + 5.0f);
 
@@ -183,7 +185,6 @@ public class LevelScript : MonoBehaviour
 
                 player.GetComponent<ReptileScript>().battleStage = battleStage;
                 playerCam.GetComponent<CameraScript>().BattleModeSetup(battleStage);
-                UI.GetComponent<UI>().SwitchToBattleUI();
             }
         }
 
@@ -199,30 +200,32 @@ public class LevelScript : MonoBehaviour
             Vector3 newObject_position = lastObjectPlaced.transform.position + new Vector3(0.0f, 0.0f, randZ);
 
             float typeToSpawn = Random.Range(0.0f, 1.0f);
-            // percents: stone/0.2, ladybug/0.45, spider/0.25, butterfly/0.10
-            if (typeToSpawn > 0.8)
+            // percents: stone/0.3, ladybug/0.45, spider/0.175, butterfly/0.075
+            if (typeToSpawn > 0.7)
             {
                 lastObjectPlaced = Instantiate(rockPrefab, gameObject.transform, true);
                 float randRot = Random.Range(0.0f, 360.0f);
                 lastObjectPlaced.transform.Rotate(0, randRot, 0);
             }
-            else if (typeToSpawn > 0.35) // ladybug
+            else if (typeToSpawn > 0.25) // ladybug
             {
                 if (Mathf.Abs(randX) > 1.25)
                     randX = Random.Range(-1.25f, 1.25f);
                 newObject_position.y = -0.009f;
                 lastObjectPlaced = Instantiate(preyPrefabs[0], gameObject.transform, true);
             }
-            else if (typeToSpawn > 0.1)
+            else if (typeToSpawn > 0.075)
             {
                 if (Mathf.Abs(randX) > 1.25)
                     randX = Random.Range(-1.25f, 1.25f);
+                newObject_position.z += 0.5f;
                 lastObjectPlaced = Instantiate(preyPrefabs[1], gameObject.transform, true);
             }
             else // butterfly
             {
                 if(Mathf.Abs(randX) > 1.2)
                     randX = Random.Range(-1.2f, 1.2f);
+                newObject_position.z += 1.0f; // adds some space from last object so you can actually react to butterfly
                 lastObjectPlaced = Instantiate(preyPrefabs[2], gameObject.transform, true);
             }
             newObject_position.x = randX;

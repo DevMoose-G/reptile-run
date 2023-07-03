@@ -5204,8 +5204,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 623}
-  m_SizeDelta: {x: 730.30005, y: 163.19995}
+  m_AnchoredPosition: {x: 0, y: -743}
+  m_SizeDelta: {x: 878.4, y: 218}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &207096701
 MonoBehaviour:
@@ -5254,14 +5254,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.95
+  m_fontSize: 63.75
   m_fontSizeBase: 58
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -5542,8 +5542,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 123.4202, y: -320.52}
-  m_SizeDelta: {x: 613.9995, y: 228.23}
+  m_AnchoredPosition: {x: 255.03, y: -459.2}
+  m_SizeDelta: {x: 479.6, y: 189.9323}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &453279923
 MonoBehaviour:
@@ -5565,7 +5565,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Your reptile will attack automatically based on how far it has evolved.
+  m_text: Here is your move list. Press Bite once the bar below fills up.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5592,7 +5592,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 59.85
+  m_fontSize: 50.9
   m_fontSizeBase: 58
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5922,7 +5922,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -169.32}
+  m_AnchoredPosition: {x: 0, y: -130}
   m_SizeDelta: {x: 495.57068, y: 95.63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &688249901
@@ -7015,7 +7015,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerTillShown: 3.5
-  battleUI: {fileID: 0}
+  battleUI: {fileID: 9197481963319205126, guid: c5214baffc153d249afcc97586cd7849,
+    type: 3}
   player: {fileID: 0}
   playerCam: {fileID: 0}
   level: {fileID: 0}
@@ -7952,8 +7953,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 623}
-  m_SizeDelta: {x: 730.30005, y: 163.19995}
+  m_AnchoredPosition: {x: 0, y: 545}
+  m_SizeDelta: {x: 1046.3, y: 187.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1667098917
 MonoBehaviour:
@@ -8003,14 +8004,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 41.05
+  m_fontSize: 54.95
   m_fontSizeBase: 58
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -8582,7 +8583,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -748}
-  m_SizeDelta: {x: 1119.3, y: 191.2314}
+  m_SizeDelta: {x: 878.4, y: 218}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2028365600
 MonoBehaviour:
@@ -8632,7 +8633,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 55.95
+  m_fontSize: 57.25
   m_fontSizeBase: 58
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8852,8 +8853,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 623}
-  m_SizeDelta: {x: 860.83, y: 163.2}
+  m_AnchoredPosition: {x: 0, y: 545}
+  m_SizeDelta: {x: 1046.3, y: 177.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2113369528
 MonoBehaviour:
@@ -8903,14 +8904,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 47.75
+  m_fontSize: 54.6
   m_fontSizeBase: 58
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0

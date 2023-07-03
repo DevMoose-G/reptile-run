@@ -1759,8 +1759,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Ladybug
-  preyFleeDistance: 6
-  preySpeed: 2
+  preyFleeDistance: 6.5
+  preySpeed: 2.25
   evoPoints: 5
   startFleeTimer: 1.25
   ableToFlee: 1

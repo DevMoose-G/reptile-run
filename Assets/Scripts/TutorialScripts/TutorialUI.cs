@@ -20,7 +20,6 @@ public class TutorialUI : UI
 
         GetUIVariables();
         UpdateUpgrades();
-        SetupBattleUI();
 
         progressScreen.SetActive(false);
         winScreen.SetActive(false);

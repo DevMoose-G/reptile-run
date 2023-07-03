@@ -1293,8 +1293,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Spider
-  preyFleeDistance: 8
-  preySpeed: 2.25
-  evoPoints: 25
+  preyFleeDistance: 7.5
+  preySpeed: 2.75
+  evoPoints: 55
   startFleeTimer: 1
   ableToFlee: 1

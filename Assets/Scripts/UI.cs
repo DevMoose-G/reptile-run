@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -66,7 +67,14 @@ public class UI : MonoBehaviour
         GetUIDocuments();
 
         GetUIVariables();
-        UpdateUpgrades();
+        try
+        {
+            UpdateUpgrades();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("UPDATE UPGRADES STILL DOES NOT WORK FROM START FUNCTION. MAYBE B/C of INTRO SEQUENCE?");
+        }
 
         progressScreen.SetActive(false);
         winScreen.SetActive(false);
@@ -79,9 +87,12 @@ public class UI : MonoBehaviour
         GetComponent<UIDocument>().visualTreeAsset = battleUI;
 
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
-        opponentName = root.Q<Label>("OpponentName");
         opponentInfo = root.Q<GroupBox>("OpponentInfo");
-        opponentHealthBar = root.Q<VisualElement>("HealthBar");
+        IStyle opponentInfoStyle = opponentInfo.style;
+        opponentInfoStyle.visibility = Visibility.Visible;
+
+        opponentName = opponentInfo.Q<Label>("OpponentName");
+        opponentHealthBar = opponentInfo.Q<VisualElement>("OpponentHealthBar");
 
         root.Q<Label>("YourName").text = GameState.current.currentReptile().name;
         root.Q<Label>("YourSpecies").text = "the " + GameState.current.currentReptile().species;
@@ -90,7 +101,10 @@ public class UI : MonoBehaviour
         {
             if (i <= GameState.current.currentReptile().moves.Count)
             {
-                root.Q<Button>("Move" + i.ToString()).Q<Label>("Name").text = GameState.current.currentReptile().moves[i - 1].name;
+                Button currentButton = root.Q<Button>("Move" + i.ToString());
+                MoveData currentMove = GameState.current.currentReptile().moves[i - 1];
+                currentButton.Q<Label>("Name").text = currentMove.name;
+                currentButton.RegisterCallback<ClickEvent, MoveData>(PressedMove, currentMove);
             }
             else
             {
@@ -112,10 +126,6 @@ public class UI : MonoBehaviour
         InnerCircle = root.Q<VisualElement>("InnerCircle");
         yourHealth = root.Q<Label>("Health");
         extraHealth = root.Q<VisualElement>("ExtraHealth");
-
-        opponentName = root.Q<Label>("OpponentName");
-        opponentInfo = root.Q<GroupBox>("OpponentInfo");
-        opponentHealthBar = root.Q<VisualElement>("HealthBar");
 
         VisualElement upgradeRoot = upgradeScreen.GetComponent<UIDocument>().rootVisualElement;
 
@@ -169,10 +179,10 @@ public class UI : MonoBehaviour
             UIActiveStates[2] = progressScreen.activeSelf;
             UIActiveStates[3] = winScreen.activeSelf;
             // turns all UI stuff off
-            winScreen.SetActive(on);
-            gameObject.GetComponent<UIDocument>().enabled = on;
-            progressScreen.SetActive(on);
-            upgradeScreen.SetActive(on);
+            winScreen.SetActive(false);
+            gameObject.GetComponent<UIDocument>().enabled = false;
+            progressScreen.SetActive(false);
+            upgradeScreen.SetActive(false);
         }
         else
         {
@@ -181,19 +191,19 @@ public class UI : MonoBehaviour
             gameObject.GetComponent<UIDocument>().enabled = UIActiveStates[0];
             upgradeScreen.SetActive(UIActiveStates[1]);
             progressScreen.SetActive(UIActiveStates[2]);
-            winScreen.SetActive(UIActiveStates[3]);
+            // winScreen.SetActive(UIActiveStates[3]); KEEP WIN SCREEN ALWAYS OFF
 
             GetUIVariables();
-            IStyle quickTimeStyle = quickTime.style;
-            quickTimeStyle.display = DisplayStyle.None;
-
-            IStyle opponentInfoStyle = opponentInfo.style;
-            opponentInfoStyle.visibility = Visibility.Hidden;
 
             UpdateUpgrades();
 
             GetUIVariables();
         }
+    }
+
+    private void PressedMove(ClickEvent evt, MoveData move)
+    {
+        player.GetComponent<ReptileScript>().PerformMove(move);
     }
 
     private void StoreScene(ClickEvent evt)
@@ -299,10 +309,6 @@ public class UI : MonoBehaviour
     {
         if (upgrade1 == null)
             GetUIVariables();
-        IStyle upgrade1Style = upgrade1.style;
-        IStyle upgrade2Style = upgrade2.style;
-        IStyle upgrade3Style = upgrade3.style;
-        IStyle upgrade4Style = upgrade4.style;
 
         UpgradeGroup nodeGroup = GameState.current.currentReptile().upgradeTree.GetUpgradeGroup();
         List<UpgradeNode> nodes = nodeGroup.toList();
@@ -440,54 +446,21 @@ public class UI : MonoBehaviour
         if(GetComponent<UIDocument>().visualTreeAsset == battleUI)
         {
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
-            // root.Q<Button>("Move" + i.ToString()).Q<VisualElement>("Cooldown").text = GameState.current.currentReptile().moves[i - 1].name;
-        }
 
-        return; // getting rid of timing code
-        // making outer circle smaller but still centered
-        IStyle quickTimeStyle = quickTime.style;
-        IStyle outerStyle = OuterCircle.style;
-        IStyle innerStyle = InnerCircle.style;
-
-        if (quickTimeStyle.display != DisplayStyle.None && progressScreen != null && !progressScreen.activeSelf)
-        {
-
-
-            if (outerStyle.width.value.value <= MIN_SIZE) // resets circle once it hits the inner circle
-            {
-                outerStyle.width = MAX_SIZE;
-                outerStyle.height = MAX_SIZE;
-                timerTillShown = GameState.current.currentReptile().attackSpeed;
-                player.GetComponent<ReptileScript>().SetAudio(player.GetComponent<ReptileScript>().wrongSound, true, false);
-            }
-
-            if (outerStyle.display == DisplayStyle.None) // if outer circle is invisible, wait for timerTillShown to hit 0, then show both circles
-            {
-                timerTillShown -= Time.deltaTime;
-                if (timerTillShown <= 0)
-                {
-                    timerTillShown = GameState.current.currentReptile().attackSpeed;
-                    outerStyle.display = DisplayStyle.Flex;
-                    innerStyle.display = DisplayStyle.Flex;
-                }
-            }
+            // your health
+            IStyle yourHealthBarStyle = root.Q<VisualElement>("YourHealthBar").style;
+            if (player.GetComponent<ReptileScript>().health < 0)
+                yourHealthBarStyle.width = new StyleLength(Length.Percent(0));
             else
+                yourHealthBarStyle.width = new StyleLength(Length.Percent( (player.GetComponent<ReptileScript>().health / GameState.current.currentReptile().MAX_HEALTH) * 100.0f));
+
+            for (int i = 0; i < GameState.current.currentReptile().moves.Count; i++)
             {
-                circleSpeed = (MAX_SIZE - MIN_SIZE) / GameState.current.currentReptile().attackSpeed;
-
-                timerTillShown -= Time.deltaTime;
-
-                outerStyle.unityBackgroundImageTintColor = new StyleColor(new Color(1 - ratioInnerOuterCircle(), ratioInnerOuterCircle(), 0, 1));
-                innerStyle.unityBackgroundImageTintColor = new StyleColor(new Color(1 - ratioInnerOuterCircle(), ratioInnerOuterCircle(), 0, 1));
-
-                outerStyle.width = OuterCircle.style.width.value.value - (Time.deltaTime * circleSpeed);
-                outerStyle.height = OuterCircle.style.height.value.value - (Time.deltaTime * circleSpeed);
-
-                outerStyle.top = 32 - (outerStyle.height.value.value / 2) - (innerStyle.height.value.value / 2);
-                outerStyle.left = (innerStyle.height.value.value / 2) - (outerStyle.width.value.value / 2) + 32;
+                MoveData currentMove = GameState.current.currentReptile().moves[i];
+                IStyle cooldownStyle = root.Q<Button>("Move" + (i + 1).ToString()).Q<VisualElement>("Cooldown").style;
+                cooldownStyle.width = new StyleLength(Length.Percent( (currentMove.timer / currentMove.coolDownTime) * 100.0f) );
             }
         }
-
     }
 
     void OnDestroy()

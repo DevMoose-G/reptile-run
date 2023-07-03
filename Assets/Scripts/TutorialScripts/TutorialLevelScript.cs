@@ -190,7 +190,7 @@ public class TutorialLevelScript : LevelScript
             EndRun();
             PlayerPrefs.Save();
         }
-        if (player.GetComponent<ReptileScript>().health < 0.99f)
+        if (player.GetComponent<ReptileScript>().health <= 0.0f)
         {
             EndRun();
         }
@@ -358,6 +358,8 @@ public class TutorialLevelScript : LevelScript
         if (battleStage == null && preyRunsShown == TipStatus.BeenSeen && upgradeTipShown == TipStatus.BeenSeen 
             && gameObject.transform.position.z < -5 && player.gameObject.transform.position.z > lastObjectPlaced.transform.position.z + 3)
         {
+            UI.GetComponent<UI>().SwitchToBattleUI();
+
             battleStage = Instantiate(battleStagePrefab, gameObject.transform, true);
             battleStage.transform.position = new Vector3(0, 0, player.transform.position.z + 5.0f);
 
@@ -377,6 +379,8 @@ public class TutorialLevelScript : LevelScript
         if(battleStage == null && battleStageShown == TipStatus.BeenSeen 
             && gameObject.transform.position.z < -5 && player.gameObject.transform.position.z > lastObjectPlaced.transform.position.z + 3)
         {
+            UI.GetComponent<UI>().SwitchToBattleUI();
+
             battleStage = Instantiate(battleStagePrefab, gameObject.transform, true);
             battleStage.transform.position = new Vector3(0, 0, player.transform.position.z + 5.0f);
 
@@ -398,10 +402,10 @@ public class TutorialLevelScript : LevelScript
 
         // there's the crown tip
         float playerDistBattleStage = 0.0f;
-        if (battleStage != null)
-            playerDistBattleStage = (gameObject.transform.position.z + battleStage.transform.position.z) + player.transform.position.z;
-        if (autoAttackShown == TipStatus.BeenSeen && playerDistBattleStage >= 8 && crownShown == TipStatus.NotSeen)
+        if (battleStage != null && autoAttackShown == TipStatus.BeenSeen && battleStage.transform.position.z < 5.1 && player.transform.position.z > 3.4f && crownShown == TipStatus.NotSeen)
         {
+            PauseGame();
+            timeSinceTip = 0.0f;
             crownShown = TipStatus.JustSeen;
             crownTip.SetActive(true);
         }
@@ -411,6 +415,7 @@ public class TutorialLevelScript : LevelScript
             endOfTutorialShown = TipStatus.JustSeen;
             endOfTutorialTip.SetActive(true);
             PauseGame();
+            timeSinceTip = 0.0f;
         }
 
 

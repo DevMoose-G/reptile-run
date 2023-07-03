@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using TMPro;
 
 public class BattleStageScript : MonoBehaviour
 {
     internal GameObject UI;
     public GameObject level;
     public GameObject player;
+    public GameObject playerCam;
     public GameObject crown;
     public List<GameObject> opponentsOrdering;
     internal OpponentScript currentOpponent;
     private Animator currentOpponentAnimator;
 
     internal float timeSinceLastAttack = 0.0f;
-    internal float DEFEAT_TIMER = 0.5f;
+    internal float DEFEAT_TIMER = 0.25f;
     internal float timeAfterDefeat = 0.0f;
 
     internal int defeatedOpponents = 0;
@@ -25,16 +27,8 @@ public class BattleStageScript : MonoBehaviour
         UI = GameObject.Find("UIDocument");
         level = GameObject.Find("Level");
         player = GameObject.Find("Reptile");
+        playerCam = GameObject.Find("Main Camera");
         crown = GameObject.Find("Crown");
-
-        UI.GetComponent<UI>().quickTime.style.display = DisplayStyle.Flex;
-
-        VisualElement root = UI.GetComponent<UIDocument>().rootVisualElement;
-        UI.GetComponent<UI>().opponentInfo = root.Q<GroupBox>("OpponentInfo");
-        IStyle opponentInfoStyle = UI.GetComponent<UI>().opponentInfo.style;
-        opponentInfoStyle.visibility = Visibility.Visible;
-        UI.GetComponent<UI>().opponentName = root.Q<Label>("OpponentName");
-        UI.GetComponent<UI>().opponentHealthBar = root.Q<VisualElement>("HealthBar");
 
         currentOpponent = opponentsOrdering[0].GetComponent<OpponentScript>();
         currentOpponentAnimator = currentOpponent.GetComponent<Animator>();
@@ -56,7 +50,7 @@ public class BattleStageScript : MonoBehaviour
         IStyle healthbarStyle = UI.GetComponent<UI>().opponentHealthBar.style;
         healthbarStyle.width = new StyleLength(Length.Percent((currentOpponent.health / currentOpponent.MAX_HEALTH) * 100));
 
-        if (timeSinceLastAttack >= currentOpponent.attackSpeed && player.GetComponent<ReptileScript>().health > 0 && currentOpponent != null) {
+        if (currentOpponent != null && timeSinceLastAttack >= currentOpponent.attackSpeed && player.GetComponent<ReptileScript>().health > 0) {
             timeSinceLastAttack = 0.0f;
             DamagePlayer(currentOpponent.damage);
         }
@@ -76,6 +70,22 @@ public class BattleStageScript : MonoBehaviour
                 timeAfterDefeat = 0.0f;
 
                 GameState.current.addEvoPoints(currentOpponent.evoPoints);
+
+                Vector3 reptilePosScreen = playerCam.GetComponent<Camera>().WorldToScreenPoint(player.transform.position);
+                if (reptilePosScreen.x > 1200)
+                {
+                    reptilePosScreen.x = 1200;
+                }
+                else if (reptilePosScreen.x < 15)
+                {
+                    reptilePosScreen.x = 15;
+                }
+                reptilePosScreen.y += 55;
+                GameObject.Find("Indicators").transform.position = reptilePosScreen;
+
+                player.GetComponent<ReptileScript>().evoText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
+                player.GetComponent<ReptileScript>().evoText.GetComponent<TMP_Text>().text = currentOpponent.evoPoints.ToString();
+                player.GetComponent<ReptileScript>().evoImage.GetComponent<UnityEngine.UI.Image>().color = new Color(1, 1, 1, 1);
 
                 Destroy(opponentsOrdering[0]);
                 defeatedOpponents++;

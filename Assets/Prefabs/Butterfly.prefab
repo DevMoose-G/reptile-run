@@ -1454,7 +1454,7 @@ MonoBehaviour:
   name: Butterfly
   preyFleeDistance: 7
   preySpeed: 3
-  evoPoints: 60
+  evoPoints: 120
   startFleeTimer: 1.55
   ableToFlee: 1
 --- !u!1 &8554124482612550876

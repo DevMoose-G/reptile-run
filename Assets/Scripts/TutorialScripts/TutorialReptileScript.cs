@@ -36,6 +36,9 @@ public class TutorialReptileScript : ReptileScript
         {
             health -= 1.0f;
 
+            if (health < 0.99f)
+                health = 0; // lingering health won't save you if you hit a rock
+
             timeSinceHurt = HURT_TIME;
             if (level.GetComponent<TutorialLevelScript>().hitRock == TutorialLevelScript.TipStatus.NotSeen)
             {

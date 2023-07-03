@@ -15,8 +15,6 @@ public class ReptileScript : MonoBehaviour
     public bool devMode = false; // for some reason, now i can't play the game b/c player moves too slow on unity simulator
     [HideInInspector] public GameObject tongue;
 
-    private float GRAVITY = 2.0f;
-
     [HideInInspector] public GameObject level;
     [HideInInspector] public GameObject UI;
     [HideInInspector] public GameObject particleSystem;
@@ -41,7 +39,6 @@ public class ReptileScript : MonoBehaviour
 
     public float health = GameState.current.reptiles[GameState.current.current_reptile_idx].MAX_HEALTH;
     public float attackSpeed = GameState.current.reptiles[GameState.current.current_reptile_idx].attackSpeed; // num of seconds it takes to hit an attack
-    private float attackTimer = 0.0f;
     public float damage = GameState.current.reptiles[GameState.current.current_reptile_idx].damage;
 
     [HideInInspector] public GameObject battleStage;
@@ -103,7 +100,7 @@ public class ReptileScript : MonoBehaviour
             health -= 1.0f;
 
             if (health < 1.0f)
-                health = 0; // lingering health won't save you
+                health = 0; // lingering health won't save you if you hit a rock
 
             timeSinceHurt = HURT_TIME;
         }
@@ -182,7 +179,13 @@ public class ReptileScript : MonoBehaviour
             animator.SetBool("isMoving", true);
 
             SetAudio(walkSound, true, true);
-            attackTimer = 0;
+
+            // clears all the move timers to 0
+            for (int i = 0; i < GameState.current.currentReptile().moves.Count; i++)
+            {
+                MoveData currentMove = GameState.current.currentReptile().moves[i];
+                currentMove.timer = 0.0f;
+            }
 
             controller.MovePosition(transform.position + (new Vector3(0, 0, 1.0f) * Time.deltaTime * playerSpeed));
         } else // no longer moving
@@ -191,56 +194,27 @@ public class ReptileScript : MonoBehaviour
 
             SetAudio(walkSound, false, true);
 
-            // auto attacking now
-            attackTimer += Time.deltaTime;
-            if(attackTimer >= attackSpeed)
+            // handling move cooldowns during battlemode
+            for(int i = 0; i < GameState.current.currentReptile().moves.Count; i++)
             {
-                animator.SetTrigger("attack");
-                SetAudio(hitSound, true, false);
-                attackTimer = 0;
-
-                battleStage.GetComponent<BattleStageScript>().DamageOpponent(GameState.current.currentReptile().damage);
+                MoveData currentMove = GameState.current.currentReptile().moves[i];
+                currentMove.timer += Time.deltaTime / attackSpeed; // attackSpeed is the number of seconds it takes to complete a second of attacking 
             }
         }
+    }
 
-        
-
-
-        // tap to attack (timing) 
-        /*
-        if (Input.touchCount > 0)
-        { 
-            theTouch = Input.GetTouch(0);
-            if (theTouch.phase == TouchPhase.Began)
+    public void PerformMove(MoveData move)
+    {
+        if (move.timer > move.coolDownTime)
+        {
+            if (move.name == "Bite")
             {
-                
-                animator.SetTrigger("attack");
                 SetAudio(hitSound, true, false);
-
-                damageIndicator.transform.position = theTouch.position;
-                float timingRatio = UI.GetComponent<UI>().ratioInnerOuterCircle();
-                if (timingRatio > 0.90)
-                {
-                    damageIndicator.GetComponent<TMP_Text>().text = "Perfect";
-                    damageIndicator.GetComponent<TMP_Text>().color = new Color(0, 1, 0, 1);
-                }
-                else if (timingRatio > 0.70)
-                {
-                    damageIndicator.GetComponent<TMP_Text>().text = "A little early";
-                    damageIndicator.GetComponent<TMP_Text>().color = new Color(0.75f, 0.6f, 0, 1);
-                }
-                else 
-                {
-                    damageIndicator.GetComponent<TMP_Text>().text = "Too early";
-                    damageIndicator.GetComponent<TMP_Text>().color = new Color(1, 0.0f, 0, 1);
-                }
-
-                float currentDamage = ( Mathf.Pow(16.0f, timingRatio) / 16.0f ) * GameState.current.currentReptile().damage;
-                UI.GetComponent<UI>().circleHit();
-                battleStage.GetComponent<BattleStageScript>().DamageOpponent(currentDamage);
+                animator.SetTrigger("attack");
+                battleStage.GetComponent<BattleStageScript>().DamageOpponent(GameState.current.currentReptile().damage * move.damageMultiplier);
+                move.timer = 0;
             }
         }
-        */
     }
 
     void CheckDamageAnimation()
@@ -297,7 +271,7 @@ public class ReptileScript : MonoBehaviour
         */
 
         // makes damage indicators slowly fade away
-        if (damageIndicator.GetComponent<TMP_Text>().color.a > 0)
+        if (damageIndicator.GetComponent<TMP_Text>().color.a > 0 || evoText.GetComponent<TMP_Text>().color.a > 0)
         {
             Color prevColor = damageIndicator.GetComponent<TMP_Text>().color;
             damageIndicator.GetComponent<TMP_Text>().color = new Color(prevColor.r, prevColor.g, prevColor.b, prevColor.a - (Time.deltaTime * fadeSpeed));

@@ -7,6 +7,8 @@ public class MoveData
 {
     public string name = "";
     public float coolDownTime = 0.0f;
+    public float timer = 0.0f;
+    public float damageMultiplier = 1.0f;
     public bool auto = false;
 
     public MoveData(string n, float cooldown)
@@ -51,9 +53,6 @@ public class ReptileData {
         species = "Gecko";
 
         moves.Add(new MoveData("Bite", 2.0f));
-        moves.Add(new MoveData("Counter", 4.0f));
-        moves.Add(new MoveData("Hydro Wave", 4.0f));
-        moves.Add(new MoveData("Quick Attack", 4.0f));
     }
 
 }
