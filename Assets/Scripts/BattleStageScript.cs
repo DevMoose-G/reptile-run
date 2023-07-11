@@ -47,8 +47,11 @@ public class BattleStageScript : MonoBehaviour
         if(crown != null)
             crown.transform.Rotate(0, 50.0f * Time.deltaTime, 0, Space.World);
 
-        IStyle healthbarStyle = UI.GetComponent<UI>().opponentHealthBar.style;
-        healthbarStyle.width = new StyleLength(Length.Percent((currentOpponent.health / currentOpponent.MAX_HEALTH) * 100));
+        if (currentOpponent != null)
+        {
+            IStyle healthbarStyle = UI.GetComponent<UI>().opponentHealthBar.style;
+            healthbarStyle.width = new StyleLength(Length.Percent((currentOpponent.health / currentOpponent.MAX_HEALTH) * 100));
+        }
 
         if (currentOpponent != null && timeSinceLastAttack >= currentOpponent.attackSpeed && player.GetComponent<ReptileScript>().health > 0) {
             timeSinceLastAttack = 0.0f;

@@ -85,7 +85,7 @@ public class ReptileScript : MonoBehaviour
     {
         if(collision.gameObject.name == "Crown") {
             GameState.current.crowns += 1;
-            GameState.current.currentReptile().stage_levels["Forest Stage"] += 1; // next level of stage
+            GameState.current.currentReptile().stage_levels["ForestStage"] += 1; // next level of stage
 
             Destroy(collision.gameObject);
 
@@ -211,7 +211,7 @@ public class ReptileScript : MonoBehaviour
             {
                 SetAudio(hitSound, true, false);
                 animator.SetTrigger("attack");
-                battleStage.GetComponent<BattleStageScript>().DamageOpponent(GameState.current.currentReptile().damage * move.damageMultiplier);
+                battleStage.GetComponent<BattleStageScript>().DamageOpponent(damage * move.damageMultiplier);
                 move.timer = 0;
             }
         }

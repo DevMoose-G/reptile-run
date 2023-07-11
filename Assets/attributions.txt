@@ -6,6 +6,12 @@
 
 <a href="https://www.flaticon.com/free-icons/volume" title="volume icons">Volume icons created by apien - Flaticon</a>
 
+<a href="https://www.flaticon.com/free-icons/video" title="video icons">Video icons created by vectaicon - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/close" title="close icons">Close icons created by Pixel perfect - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/info" title="info icons">Info icons created by Freepik - Flaticon</a>
+
 # sound too
 Buzzer sound:
 Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=47985">Pixabay</a>

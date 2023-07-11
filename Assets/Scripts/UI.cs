@@ -40,6 +40,8 @@ public class UI : MonoBehaviour
     public GameObject winScreen;
     public Button winScreenContinue;
 
+    public GameObject adOffersScreen;
+
     private float MAX_SIZE = 128;
     private float MIN_SIZE = 42;
     private float circleSpeed;
@@ -71,11 +73,12 @@ public class UI : MonoBehaviour
         {
             UpdateUpgrades();
         }
-        catch (Exception e)
+        catch
         {
             Debug.LogError("UPDATE UPGRADES STILL DOES NOT WORK FROM START FUNCTION. MAYBE B/C of INTRO SEQUENCE?");
         }
 
+        // adOffersScreen.SetActive(false);
         progressScreen.SetActive(false);
         winScreen.SetActive(false);
 
@@ -105,6 +108,7 @@ public class UI : MonoBehaviour
                 MoveData currentMove = GameState.current.currentReptile().moves[i - 1];
                 currentButton.Q<Label>("Name").text = currentMove.name;
                 currentButton.RegisterCallback<ClickEvent, MoveData>(PressedMove, currentMove);
+                currentButton.Q<Button>("Info").RegisterCallback<ClickEvent, MoveData>(MoveInfoToggle, currentMove);
             }
             else
             {
@@ -113,6 +117,12 @@ public class UI : MonoBehaviour
                 moveStyle.visibility = Visibility.Hidden;
             }
         }
+    }
+
+    void MoveInfoToggle(ClickEvent evt, MoveData moveData)
+    {
+        // Spawn a Label with a background that describes the move
+        // evt.position
     }
 
     public void GetUIVariables()
@@ -127,21 +137,24 @@ public class UI : MonoBehaviour
         yourHealth = root.Q<Label>("Health");
         extraHealth = root.Q<VisualElement>("ExtraHealth");
 
-        VisualElement upgradeRoot = upgradeScreen.GetComponent<UIDocument>().rootVisualElement;
+        if (upgradeScreen.activeSelf)
+        {
+            VisualElement upgradeRoot = upgradeScreen.GetComponent<UIDocument>().rootVisualElement;
 
-        volumeSlider = upgradeRoot.Q<Slider>("VolumeSlider");
+            volumeSlider = upgradeRoot.Q<Slider>("VolumeSlider");
 
-        playGame = upgradeRoot.Q<Button>("PlayGame");
-        playGame.UnregisterCallback<ClickEvent>(StartGame);
-        playGame.RegisterCallback<ClickEvent>(StartGame);
+            playGame = upgradeRoot.Q<Button>("PlayGame");
+            playGame.UnregisterCallback<ClickEvent>(StartGame);
+            playGame.RegisterCallback<ClickEvent>(StartGame);
 
-        storeButton = upgradeRoot.Q<Button>("Store");
-        storeButton.RegisterCallback<ClickEvent>(StoreScene);
+            storeButton = upgradeRoot.Q<Button>("Store");
+            storeButton.RegisterCallback<ClickEvent>(StoreScene);
 
-        upgrade1 = upgradeRoot.Q<Button>("Upgrade1");
-        upgrade2 = upgradeRoot.Q<Button>("Upgrade2");
-        upgrade3 = upgradeRoot.Q<Button>("Upgrade3");
-        upgrade4 = upgradeRoot.Q<Button>("Upgrade4");
+            upgrade1 = upgradeRoot.Q<Button>("Upgrade1");
+            upgrade2 = upgradeRoot.Q<Button>("Upgrade2");
+            upgrade3 = upgradeRoot.Q<Button>("Upgrade3");
+            upgrade4 = upgradeRoot.Q<Button>("Upgrade4");
+        }
 
         // anything you do hear has to be redone when you renable winScreen
         if (winScreen != null && winScreen.activeSelf)
@@ -161,6 +174,8 @@ public class UI : MonoBehaviour
             winScreen = GameObject.Find("WinScreen");
         if (progressScreen == null)
             progressScreen = GameObject.Find("ProgressScreen");
+        if (adOffersScreen == null)
+            adOffersScreen = GameObject.Find("AdOffers");
     }
 
     private void OnEnable()
@@ -178,11 +193,13 @@ public class UI : MonoBehaviour
             UIActiveStates[1] = upgradeScreen.activeSelf;
             UIActiveStates[2] = progressScreen.activeSelf;
             UIActiveStates[3] = winScreen.activeSelf;
+            UIActiveStates[4] = adOffersScreen.activeSelf;
             // turns all UI stuff off
             winScreen.SetActive(false);
             gameObject.GetComponent<UIDocument>().enabled = false;
             progressScreen.SetActive(false);
             upgradeScreen.SetActive(false);
+            adOffersScreen.SetActive(false);
         }
         else
         {
@@ -191,7 +208,8 @@ public class UI : MonoBehaviour
             gameObject.GetComponent<UIDocument>().enabled = UIActiveStates[0];
             upgradeScreen.SetActive(UIActiveStates[1]);
             progressScreen.SetActive(UIActiveStates[2]);
-            // winScreen.SetActive(UIActiveStates[3]); KEEP WIN SCREEN ALWAYS OFF
+            // winScreen.SetActive(UIActiveStates[3]); KEEP WIN SCREEN OFF IF UI WAS TURNED OFF
+            adOffersScreen.SetActive(UIActiveStates[4]);
 
             GetUIVariables();
 

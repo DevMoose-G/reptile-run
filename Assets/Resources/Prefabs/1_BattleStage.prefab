@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: {fileID: 0}
   player: {fileID: 0}
+  playerCam: {fileID: 0}
   crown: {fileID: 0}
   opponentsOrdering:
   - {fileID: 8500182299379306922}
@@ -425,7 +426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2.5
-  attackSpeed: 1.5
+  attackSpeed: 2
   health: 7
   MAX_HEALTH: 7
   evoPoints: 450
@@ -700,7 +701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  attackSpeed: 1.75
+  attackSpeed: 2.25
   health: 4
   MAX_HEALTH: 4
   evoPoints: 220
@@ -960,7 +961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 3
-  attackSpeed: 1.1
+  attackSpeed: 1.5
   health: 9
   MAX_HEALTH: 9
   evoPoints: 640
@@ -1052,8 +1053,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f6f52ca335a504e99c20df086a83d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0.25
-  attackSpeed: 2
+  damage: 0.5
+  attackSpeed: 2.5
   health: 2
   MAX_HEALTH: 2
   evoPoints: 100
