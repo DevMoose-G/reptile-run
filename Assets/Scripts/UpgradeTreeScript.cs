@@ -28,10 +28,10 @@ public class UpgradeTree
 {
     // public static UpgradeTree current = new UpgradeTree();
 
-    // [System.NonSerialized]
+    
     public List<UpgradeNode> nodes;
 
-    public List<int> nodes_obtained;
+    
 
     public UpgradeTree() {
         // nodes = new Dictionary<string, UpgradeNode> { };
@@ -46,45 +46,7 @@ public class UpgradeTree
             GameState.current.currentReptile().upgradeTree = JsonUtility.FromJson<UpgradeTree>(jsonData.text);
         }
     }
-
-    public UpgradeGroup GetUpgradeGroup() {
-        UpgradeGroup cat_nodes = new UpgradeGroup();
-
-        // look for upgrades
-        int i = 0;
-        while (!cat_nodes.isFull() && i < nodes.Count) // while there are nodes to look through and the group has not been filled
-        {
-            UpgradeNode node = nodes[i];
-            if (!nodes_obtained.Contains(node.id)) { // if not previously bought
-                if(node.category == "Tongue" && cat_nodes.tongueUpgrade == null)
-                    cat_nodes.tongueUpgrade = node;
-                if (node.category == "Health" && cat_nodes.healthUpgrade == null)
-                    cat_nodes.healthUpgrade = node;
-                if (node.category == "Damage" && cat_nodes.damageUpgrade == null)
-                    cat_nodes.damageUpgrade = node;
-                if (node.category == "AttackSpeed" && cat_nodes.attackSpeedUpgrade == null)
-                    cat_nodes.attackSpeedUpgrade = node;
-            }
-            i ++;
-        }
-
-        return cat_nodes;
-    }
-
-    public List<UpgradeNode> FirstAvailableNodes(int num) {
-        List<UpgradeNode> avail_nodes = new List<UpgradeNode>();
-        int i = 0;
-        while(num > 0 && i < nodes.Count) 
-        {
-            UpgradeNode node = nodes[i];
-            if (!nodes_obtained.Contains(node.id)) { // if available and not previously bought
-                avail_nodes.Add(node);
-                num--;
-            }
-            i++;
-        }
-        return avail_nodes;
-    }
+    
 }
 
 [System.Serializable]

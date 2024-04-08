@@ -834,6 +834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingScreen: {fileID: 0}
+  podium: {fileID: 0}
 --- !u!1 &1981841420
 GameObject:
   m_ObjectHideFlags: 0

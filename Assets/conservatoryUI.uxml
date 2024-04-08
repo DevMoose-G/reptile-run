@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-direction: row-reverse;">
+        <ui:Button text="Back to Stage" display-tooltip-when-elided="true" name="BackToStage" style="-unity-font: url(&apos;project://database/Assets/Fonts/Tsukimi_Rounded/TsukimiRounded-Bold.ttf?fileID=12800000&amp;guid=caf3d058790db5c488efcbe3f5553cd7&amp;type=3#TsukimiRounded-Bold&apos;); -unity-font-definition: initial; -unity-font-style: normal; background-color: rgb(238, 184, 105); font-size: 12%; padding-left: 1.5%; padding-right: 1.5px; padding-top: 0.5%; padding-bottom: 0.5%; margin-left: 1%; margin-right: 1%; margin-top: 1.5%; margin-bottom: 0.5%;" />
+    </ui:VisualElement>
+</ui:UXML>

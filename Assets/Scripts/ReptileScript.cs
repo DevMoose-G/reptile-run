@@ -119,35 +119,24 @@ public class ReptileScript : MonoBehaviour
     }
 
     void Evolve(int stage_num) { // stage 1, 2, 3
+
+        GameState.current.currentReptile().currentEvolution = stage_num;
+
         GameObject model = transform.Find("Model").gameObject;
         GameObject mesh = transform.Find("Model").Find("Mesh").gameObject;
-        if (stage_num == 1) {
-            DestroyImmediate(model);
-            GameObject loadedModel = Resources.Load("Evolutions/Gecko_Stage1") as GameObject;
-            GameObject newModel = Instantiate(loadedModel, gameObject.transform);
-            newModel.transform.localPosition = new Vector3(0, 0.676f, 0);
-            newModel.name = "Model";
-            animator = gameObject.transform.Find("Model").gameObject.GetComponent<Animator>();
-        } else if(stage_num == 2) {
-            DestroyImmediate(model);
-            GameObject loadedModel = Resources.Load("Evolutions/Gecko_Stage2") as GameObject;
-            GameObject newModel = Instantiate(loadedModel, gameObject.transform);
-            newModel.transform.localPosition = new Vector3(0, 0.676f, 0);
-            newModel.name = "Model";
-            animator = gameObject.transform.Find("Model").gameObject.GetComponent<Animator>();
-        }
-        else if (stage_num == 3)
+
+        DestroyImmediate(model);
+        GameObject loadedModel = Resources.Load(GameState.current.currentReptile().getModelLocation()) as GameObject;
+        GameObject newModel = Instantiate(loadedModel, gameObject.transform);
+        newModel.transform.localPosition = new Vector3(0, 0.676f, 0);
+        newModel.name = "Model";
+        animator = gameObject.transform.Find("Model").gameObject.GetComponent<Animator>();
+
+        if (stage_num == 3)
         {
-            DestroyImmediate(model);
-            GameObject loadedModel = Resources.Load("Evolutions/Gecko_Stage3") as GameObject;
-            GameObject newModel = Instantiate(loadedModel, gameObject.transform);
-            newModel.transform.localPosition = new Vector3(0, 0.676f, 0);
-            newModel.name = "Model";
-            animator = gameObject.transform.Find("Model").gameObject.GetComponent<Animator>();
             tongue.transform.localPosition = new Vector3(0, 0.076f, 0.84f);
         }
         
-        GameState.current.currentReptile().currentEvolution = stage_num;
         evolveTimer = 0;
 
         level.GetComponent<LevelScript>().pauseGame = false;

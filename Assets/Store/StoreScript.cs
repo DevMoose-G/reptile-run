@@ -98,6 +98,7 @@ public class StoreScript : MonoBehaviour
     }
     // TABS CODE END
 
+
     void FillInReptileData()
     {
         UQueryBuilder<Button> buttons = root.Query<Button>(className: "reptileButton");
@@ -105,11 +106,9 @@ public class StoreScript : MonoBehaviour
         print(CurrentEvolution);
         buttons.ForEach((Button button) => {
             string reptile_name = button.hierarchy.parent.name.Substring(0, button.hierarchy.parent.name.IndexOf("Row"));
-            print(reptile_name);
             int reptile_stage = Int32.Parse(button.name.Substring(5));
             if(reptile_stage > CurrentEvolution)
             {
-                print("FADING TO BLACK");
                 // fade it to black
                 IStyle picStyle = button.Query<VisualElement>("Pic").AtIndex(0).style;
                 print(button.Query<VisualElement>("Pic").AtIndex(0).name);
@@ -119,6 +118,27 @@ public class StoreScript : MonoBehaviour
                 // button.RegisterCallback<ClickEvent>()
             }
         });
+
+        UQueryBuilder<GroupBox> buy_boxes = root.Query<GroupBox>(className: "buy-box");
+        buy_boxes.ForEach((GroupBox groupBox) => {
+            string reptile_name = groupBox.hierarchy.parent.name.Substring(0, groupBox.hierarchy.parent.name.IndexOf("Row"));
+            Button buyButton = groupBox.Q<Button>("BuyButton");
+            buyButton.RegisterCallback<ClickEvent, string>(buyEggButton, reptile_name);
+            print(reptile_name);
+        });
+    }
+
+    void buyEggButton(ClickEvent evt, string reptile_name)
+    {
+        if (GameState.current.addEgg(reptile_name) == false)
+        {
+            Debug.Log("DID NOT HAVE ENOUGH TO BUY EGG");
+            // show some error message
+        }
+        else
+        {
+            Debug.Log("BOUGHT EGG");
+        }
     }
 
     void reptileButtonClick(ClickEvent evt)
@@ -157,5 +177,10 @@ public class StoreScript : MonoBehaviour
     void Update()
     {
         crownsLabel.text = GameState.current.crowns.ToString();
+    }
+
+    void OnDestroy()
+    {
+        SaveGameScript.Save();
     }
 }

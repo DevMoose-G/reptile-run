@@ -600,7 +600,7 @@ MonoBehaviour:
   treeModel: {fileID: 1093910475669316081, guid: 0e2708590e854424fbcaf4164e97a4b6,
     type: 3}
   addLoadingScreen: 1
-  loadingScreenOn: 1
+  loadingScreenOn: 0
 --- !u!1 &451385277
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 451385279}
   - component: {fileID: 451385278}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: LoadingCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -670,7 +670,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 963194227}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -736,7 +736,7 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 7563b6bd124cfb24bb90deef7fcee6f1,
     type: 3}
-  m_SortingOrder: 3
+  m_SortingOrder: 5
 --- !u!4 &494945538
 Transform:
   m_ObjectHideFlags: 0
@@ -750,7 +750,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &494945539
 MonoBehaviour:
@@ -1004,7 +1004,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &846711578
 GameObject:
@@ -6474,7 +6474,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1266244826 stripped
 GameObject:
@@ -6759,7 +6759,7 @@ Transform:
   m_Children:
   - {fileID: 451385281}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2019398878
 GameObject:
@@ -7227,7 +7227,7 @@ PrefabInstance:
     - target: {fileID: 5955910984956847332, guid: 11d6384b008e6b34e9b628e2d4811aeb,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5955910984956847332, guid: 11d6384b008e6b34e9b628e2d4811aeb,
         type: 3}

@@ -328,7 +328,7 @@ public class UI : MonoBehaviour
         if (upgrade1 == null)
             GetUIVariables();
 
-        UpgradeGroup nodeGroup = GameState.current.currentReptile().upgradeTree.GetUpgradeGroup();
+        UpgradeGroup nodeGroup = GameState.current.currentReptile().GetUpgradeGroup();
         List<UpgradeNode> nodes = nodeGroup.toList();
         List<VisualElement> upgrades = new List<VisualElement> { upgrade1, upgrade2, upgrade3, upgrade4 };
         for (int i = 0; i < nodes.Count; i++)
@@ -393,7 +393,7 @@ public class UI : MonoBehaviour
     {
         print("BOUGHT UPGRADE");
 
-        GameState.current.currentReptile().upgradeTree.nodes_obtained.Add(node.id);
+        GameState.current.currentReptile().nodes_obtained.Add(node.id);
 
         // apply the upgrade
         if (node.category == "Tongue")

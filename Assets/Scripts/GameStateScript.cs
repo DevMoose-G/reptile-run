@@ -3,6 +3,28 @@ using System.Collections.Generic;
 using System.Collections;
 
 [System.Serializable]
+public class EggData
+{
+    public string species = "";
+    public int crownCost = 0;
+    public float HATCH_TIMER = 0;
+    public float hatchTimer = 0;
+
+    public string getModelLocation()
+    {
+        if (species == "Gecko")
+        {
+            return "Eggs/GeckoEgg";
+        }
+        else if (species == "Chameleon")
+        {
+            return "Eggs/CamilaEgg";
+        }
+        return "";
+    }
+}
+
+[System.Serializable]
 public class MoveData
 {
     public string name = "";
@@ -26,7 +48,11 @@ public class ReptileData {
     public int evoPoints = 0;
     public int totalEvoPoints = 0; // the total accumulated evo points
 
+    [System.NonSerialized]
     public UpgradeTree upgradeTree;
+
+    public List<int> nodes_obtained;
+
     public int currentEvolution = 1; // stage 1 of evolution
 
     public float tongueSpeed = 20.0f;
@@ -55,6 +81,74 @@ public class ReptileData {
         moves.Add(new MoveData("Bite", 2.0f));
     }
 
+    public string getModelLocation()
+    {
+        if(species == "Gecko")
+        {
+            if (currentEvolution == 1)
+            {
+                return "Evolutions/Gecko_Stage1";
+            }
+            else if (currentEvolution == 2)
+            {
+                return "Evolutions/Gecko_Stage2";
+            }
+            else if (currentEvolution == 3)
+            {
+                return "Evolutions/Gecko_Stage3";
+            }
+        } else if (species == "Chameleon")
+        {
+
+        }
+
+        return "";
+    }
+
+    public UpgradeGroup GetUpgradeGroup()
+    {
+        UpgradeGroup cat_nodes = new UpgradeGroup();
+
+        // look for upgrades
+        int i = 0;
+        while (!cat_nodes.isFull() && i < upgradeTree.nodes.Count) // while there are nodes to look through and the group has not been filled
+        {
+            UpgradeNode node = upgradeTree.nodes[i];
+            if (!nodes_obtained.Contains(node.id))
+            { // if not previously bought
+                if (node.category == "Tongue" && cat_nodes.tongueUpgrade == null)
+                    cat_nodes.tongueUpgrade = node;
+                if (node.category == "Health" && cat_nodes.healthUpgrade == null)
+                    cat_nodes.healthUpgrade = node;
+                if (node.category == "Damage" && cat_nodes.damageUpgrade == null)
+                    cat_nodes.damageUpgrade = node;
+                if (node.category == "AttackSpeed" && cat_nodes.attackSpeedUpgrade == null)
+                    cat_nodes.attackSpeedUpgrade = node;
+            }
+            i++;
+        }
+
+        return cat_nodes;
+    }
+
+    // not used so far
+    public List<UpgradeNode> FirstAvailableNodes(int num)
+    {
+        List<UpgradeNode> avail_nodes = new List<UpgradeNode>();
+        int i = 0;
+        while (num > 0 && i < upgradeTree.nodes.Count)
+        {
+            UpgradeNode node = upgradeTree.nodes[i];
+            if (!nodes_obtained.Contains(node.id))
+            { // if available and not previously bought
+                avail_nodes.Add(node);
+                num--;
+            }
+            i++;
+        }
+        return avail_nodes;
+    }
+
 }
 
 [System.Serializable]
@@ -63,6 +157,7 @@ public class GameState
     public static GameState current = new GameState();
 
     public List<ReptileData> reptiles = new List<ReptileData> { };
+    public List<EggData> eggs = new List<EggData> { };
 
     public int current_reptile_idx = 0;
     
@@ -79,6 +174,34 @@ public class GameState
     public ReptileData currentReptile()
     {
         return reptiles[current_reptile_idx];
+    }
+
+    public bool addEgg(string species)
+    {
+        EggData egg = new EggData();
+        egg.species = species;
+        switch (species)
+        {
+            case "Gecko":
+                egg.HATCH_TIMER = 4.0f;
+                egg.hatchTimer = 4.0f;
+                egg.crownCost = 2;
+                break;
+            case "Chameleon":
+                egg.HATCH_TIMER = 4.0f;
+                egg.hatchTimer = 4.0f;
+                egg.crownCost = 6;
+                break;
+        }
+
+        if(egg.crownCost > crowns)
+        {
+            return false;
+        }
+        crowns -= egg.crownCost;
+
+        eggs.Add(egg);
+        return true;
     }
     
     public void Clear()

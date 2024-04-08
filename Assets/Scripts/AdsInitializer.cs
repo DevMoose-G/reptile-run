@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.SceneManagement;
 using GoogleMobileAds.Api;
 
 public class AdsInitializer : MonoBehaviour
@@ -14,10 +15,12 @@ public class AdsInitializer : MonoBehaviour
     // These ad units are configured to always serve test ads.
 #if UNITY_ANDROID
         private string _adUnitId = "ca-app-pub-5931616599429277/3428048774";
+        private string _interstitialAdUnitId = "ca-app-pub-5931616599429277/2893541742";
 #elif UNITY_IPHONE
         private string _adUnitId = "ca-app-pub-5931616599429277/6307501160";
 #else
     private string _adUnitId = "unused";
+    private string _interstitialAdUnitId = "unused";
     #endif
 
     public UpgradeNode data_for_BoughtUpgrade;
@@ -29,6 +32,80 @@ public class AdsInitializer : MonoBehaviour
         MobileAds.RaiseAdEventsOnUnityMainThread = true;
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(initStatus => { });
+    }
+
+    
+
+    // Loads the rewarded ad.
+    public void LoadInterstitialAd()
+    {
+        // Clean up the old ad before loading a new one.
+        if (AdsManager.interstitialAd != null)
+        {
+            AdsManager.interstitialAd.Destroy();
+            AdsManager.interstitialAd = null;
+        }
+
+        Debug.Log("Loading the interstitial ad.");
+
+        // create our request used to load the ad.
+        var adRequest = new AdRequest();
+        // adRequest.Keywords.Add("unity-admob-sample");
+
+        // send the request to load the ad.
+        InterstitialAd.Load(_adUnitId, adRequest,
+            (InterstitialAd ad, LoadAdError error) =>
+            {
+                // if error is not null, the load request failed.
+                if (error != null || ad == null)
+                {
+                    Debug.LogError("interstitial ad failed to load an ad " +
+                                   "with error : " + error);
+                    return;
+                }
+
+                Debug.Log("Interstitial ad loaded with response : "
+                          + ad.GetResponseInfo());
+
+                AdsManager.interstitialAd = ad;
+
+                RegisterEventHandlers(ad);
+            });
+    }
+
+    public void ShowInterstitialAd()
+    {
+        if (AdsManager.interstitialAd != null && AdsManager.interstitialAd.CanShowAd())
+        {
+            AdsManager.interstitialAd.Show();
+        } else
+        {
+            Debug.LogError("Interstitial ad is not ready yet.");
+        }
+    }
+
+    private void RegisterEventHandlers(InterstitialAd ad)
+    {
+
+        // Raised when a click is recorded for an ad.
+        ad.OnAdClicked += () =>
+        {
+            Debug.Log("Interstitial ad was clicked.");
+            SceneManager.LoadSceneAsync(0);
+        };
+        // Raised when the ad closed full screen content.
+        ad.OnAdFullScreenContentClosed += () =>
+        {
+            Debug.Log("Interstitial ad was closed.");
+            SceneManager.LoadSceneAsync(0);
+        };
+        // Raised when the ad failed to open full screen content.
+        ad.OnAdFullScreenContentFailed += (AdError error) =>
+        {
+            Debug.LogError("Interstitial ad failed to open full screen content with error : "
+                + error);
+            SceneManager.LoadSceneAsync(0);
+        };
     }
 
     // Loads the rewarded ad.
@@ -63,6 +140,8 @@ public class AdsInitializer : MonoBehaviour
                           + ad.GetResponseInfo());
 
                 AdsManager.rewardedAd = ad;
+
+                RegisterReloadHandler(ad);
 
                 GameObject.Find("UIDocument").GetComponent<UI>().UpdateUpgrades();
             });

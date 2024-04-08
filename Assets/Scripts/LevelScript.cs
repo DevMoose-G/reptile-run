@@ -34,6 +34,9 @@ public class LevelScript : MonoBehaviour
     private List<GameObject> flowers = new List<GameObject> { }; // list of flower prefabs for decoration
     public GameObject lastDecorationPlaced;
 
+    private GameObject adsManager;
+
+
     void Awake()
     {
 
@@ -41,8 +44,14 @@ public class LevelScript : MonoBehaviour
 
         playerCam = GameObject.Find("Main Camera");
 
+        adsManager = GameObject.Find("Ads Manager");
+        if (AdsManager.interstitialAd == null || AdsManager.interstitialAd.CanShowAd() == false)
+        {
+            adsManager.GetComponent<AdsInitializer>().LoadInterstitialAd();
+        }
+
         // check if you need tutoral
-        
+
         if (PlayerPrefs.GetInt("FinishTutorial", 0) == 0)
         {
             SceneManager.LoadSceneAsync(2);// tutorial scene
@@ -82,6 +91,20 @@ public class LevelScript : MonoBehaviour
         flowers.Add(Resources.Load("Prefabs/flower04") as GameObject);
         flowers.Add(Resources.Load("Prefabs/flower05") as GameObject);
         flowers.Add(Resources.Load("Prefabs/flower06") as GameObject);
+
+        // change after conservatory disables it
+        RenderSettings.fog = true;
+
+        // check if we need to enabled AdOffer Screen
+        if (AdsManager.timeTillAdOffer <= 0)
+        {
+            GameObject.Find("AdOffers").SetActive(true);
+            AdsManager.timeTillAdOffer = AdsManager.AD_OFFER_TIMER;
+        } else
+        {
+            GameObject.Find("AdOffers").SetActive(false);
+            GameObject.Find("LoadingCanvas").SetActive(true);
+        }
     }
 
     public string GetCurrentStage()
@@ -147,6 +170,9 @@ public class LevelScript : MonoBehaviour
     {
         PlayerPrefs.SetInt("NumberOfRuns", PlayerPrefs.GetInt("NumberOfRuns", 0) + 1);
         PlayerPrefs.Save();
+
+        
+
         if (isTutorial)
         {
             SceneManager.LoadSceneAsync(2);
@@ -154,13 +180,27 @@ public class LevelScript : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadSceneAsync(0);
+            if (AdsManager.timeTillAd < 0)
+            {
+                adsManager.GetComponent<AdsInitializer>().ShowInterstitialAd();
+                AdsManager.timeTillAd = AdsManager.AD_TIMER;
+            }
+            else
+            {
+                SceneManager.LoadSceneAsync(0);
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isMoving)
+        {
+            AdsManager.timeTillAd -= Time.deltaTime;
+            AdsManager.timeTillAdOffer -= Time.deltaTime;
+        }
+
         if (Mathf.Abs(player.transform.position.x) > 1.5)
         { // you have falled off map
             EndRun();

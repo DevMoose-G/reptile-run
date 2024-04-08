@@ -1,0 +1,17 @@
+{
+  "eggs": [
+    {
+      "species": "Gecko",
+      "crownCost": 2,
+      "HATCH_TIMER": 2.5,
+      "hatchTimer": 0.0
+    },
+    {
+      "species": "Chameleon",
+      "crownCost": 6,
+      "HATCH_TIMER": 60,
+      "hatchTimer": 0.0
+    }
+  ]
+  
+}
