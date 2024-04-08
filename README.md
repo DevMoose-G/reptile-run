@@ -9,8 +9,8 @@ A 3D platformer mobile game where you capture reptiles and evolve them.
     <span><img alt="Image of the store menu for the game" src="https://github.com/DevMoose-G/reptile-run/blob/main/Promotional/Screenshots/StoreIMG.PNG?raw=true" width="128"></span>
 </div>
 
-<video controls width="500">
-  <source src="https://github.com/DevMoose-G/reptile-run/blob/main/Promotional/Screenshots/Runthrough.mov?raw=true" type="video/mov" />
-</video>
+https://github.com/DevMoose-G/reptile-run/assets/84728280/9e3df8d6-aa9c-457a-b916-47ed53f230bc
 
+<hr/>
+<br/>
 Built in Unity
